@@ -46,8 +46,8 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
   assert.match(homeHtml, /og:title" content="Pesan Cinta"/);
   assert.match(workshopHtml, /<title>The Inner Compass Workshop Batch 3 Makassar<\/title>/);
   assert.match(workshopHtml, /og:title" content="The Inner Compass Workshop Batch 3 Makassar"/);
-  assert.match(workshopHtml, /og:image" content="https:\/\/pesancinta\.my\/g16\.jpeg"/);
-  assert.match(workshopHtml, /twitter:image" content="https:\/\/pesancinta\.my\/g16\.jpeg"/);
+  assert.match(workshopHtml, /og:image" content="https:\/\/pesancinta\.my\/g17\.jpeg"/);
+  assert.match(workshopHtml, /twitter:image" content="https:\/\/pesancinta\.my\/g17\.jpeg"/);
   assert.match(viteConfig, /the-inner-compass-workshop\/index\.html/);
   assert.match(vercelConfig, /"source": "\/the-inner-compass-workshop"/);
   assert.match(vercelConfig, /"destination": "\/the-inner-compass-workshop\/index\.html"/);
