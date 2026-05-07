@@ -9,7 +9,7 @@ export function Hero() {
   ];
 
   return (
-    <header className="relative isolate min-h-screen overflow-hidden bg-page px-5 py-7 sm:px-8 lg:px-12 lg:py-9">
+    <header className="relative isolate min-h-screen overflow-hidden bg-page px-5 pt-0 pb-7 sm:px-8 lg:px-12 lg:pt-0 lg:pb-9">
       <video className="absolute inset-0 -z-40 h-full w-full object-cover opacity-85 saturate-95" autoPlay muted loop playsInline aria-hidden="true">
         <source src="/hero.webm" type="video/webm" />
       </video>
@@ -18,15 +18,16 @@ export function Hero() {
 
       <div className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-7xl flex-col justify-between gap-12">
         <div className="flex items-center justify-between gap-6 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-primary/72">
-          <span>{hero.eyebrow}</span>
-          <span className="hidden text-accent sm:inline">{hero.badge}</span>
+          <div className="flex items-center" aria-label="Pesan Cinta">
+            <img className="w-48 sm:w-64 ml-[-20px] object-left" src="/pesancinta.png" alt="Pesan Cinta" />
+          </div>
+          <span className="max-w-56 text-right leading-5 sm:max-w-none">{hero.eyebrow}</span>
         </div>
 
         <div className="max-w-5xl">
           <div className="mb-6 flex max-w-xl flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
             <span>Mulai Hari Ini</span>
             <span className="hidden h-px w-16 bg-accent/55 sm:block" aria-hidden="true" />
-            <span className="text-primary/78">Inner Compass / Batch 3</span>
           </div>
           <h1 className="max-w-5xl font-serif text-[clamp(3.4rem,8.6vw,7.4rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-primary drop-shadow-[0_1rem_3rem_rgb(0_0_0_/_0.32)]">
             {headlineLines.map((line, index) => (
@@ -52,9 +53,12 @@ export function Hero() {
               </div>
             ))}
           </div>
-          <CtaButton href={registrationUrl} location="hero" targetName="registration-whatsapp" className="sm:min-w-56">
-            {hero.ctaLabel}
-          </CtaButton>
+          <div className="flex flex-col gap-3 lg:items-end">
+            <CtaButton href={registrationUrl} location="hero" targetName="registration-whatsapp" className="sm:min-w-56">
+              {hero.ctaLabel}
+            </CtaButton>
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">{hero.badge}</span>
+          </div>
         </div>
       </div>
     </header>

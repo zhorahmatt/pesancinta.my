@@ -2,6 +2,7 @@ import { contacts, event, investmentText, registrationMessage } from '../content
 import { createWhatsAppUrl } from '../lib/whatsapp';
 import { CtaButton } from './CtaButton';
 
+const organizerLogos = ['/startupglobal.png', '/pesancinta.png'];
 const sponsorLogos = ['/sponsor1.png', '/sponsor2.png', '/sponsor3.png'];
 
 export function ContactFooter() {
@@ -30,7 +31,7 @@ export function ContactFooter() {
               location={`footer-${contact.name.toLowerCase()}`}
               targetName={`contact-${contact.name.toLowerCase()}`}
               variant="secondary"
-              className="group min-h-28 flex-col items-start justify-between rounded-none border-white/14 bg-transparent p-4 text-left hover:border-accent/45 hover:bg-white/[0.035]"
+              className="group min-h-28 flex-col items-start justify-between rounded-none border-white/14 bg-transparent p-4 text-left hover:border-accent/45 hover:bg-page/[0.035]"
             >
               <span className="text-[0.65rem] uppercase tracking-[0.2em] text-accent">WhatsApp</span>
               <span className="font-serif text-2xl font-semibold tracking-[-0.04em] text-primary">{contact.name}</span>
@@ -40,21 +41,28 @@ export function ContactFooter() {
         </div>
 
         <div className="mt-12 border-t border-white/14 pt-6">
-          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.22em] text-accent">Organizer & Partners</p>
-          <div className="flex flex-wrap gap-x-7 gap-y-4 text-sm font-semibold uppercase tracking-[0.14em] text-muted">
-            {[...event.organizers, ...event.partners].map((partner) => (
-              <span key={partner} className="border-b border-white/14 pb-2">
-                {partner}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
-            {sponsorLogos.map((logo, index) => (
-              <div key={logo} className="flex min-h-24 items-center justify-center border border-white/14 bg-white/[0.025] px-5 py-4">
-                <img className="max-h-12 w-auto object-contain" src={logo} alt={`Sponsor ${index + 1}`} loading="lazy" />
+          <div className="grid gap-4 lg:grid-cols-[1fr_1.2fr] lg:items-stretch">
+            <section className="border border-white/14 bg-page/[0.025] p-4 sm:p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Organizer</p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                {organizerLogos.map((logo) => (
+                  <div key={logo} className="flex h-36 items-center justify-center bg-page px-3 py-4">
+                    <img className="max-h-32 max-w-40 object-contain" src={logo} alt="Organizer logo" loading="lazy" />
+                  </div>
+                ))}
               </div>
-            ))}
+            </section>
+
+            <section className="border border-white/14 bg-page/[0.025] p-4 sm:p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Partners & Sponsors</p>
+              <div className="mt-4 grid max-w-2xl gap-3 sm:grid-cols-3">
+                {sponsorLogos.map((logo, index) => (
+                  <div key={logo} className="flex h-28 items-center justify-center bg-page px-4 py-4">
+                    <img className="max-h-12 max-w-32 object-contain" src={logo} alt={`Sponsor ${index + 1}`} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         </div>
 
