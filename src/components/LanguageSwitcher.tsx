@@ -42,7 +42,7 @@ export function LanguageSwitcher({ locale, options, onChange, isMobileVisible }:
   return (
     <nav
       ref={switcherRef}
-      className={`fixed bottom-24 right-4 z-50 transition duration-300 sm:bottom-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 ${
+      className={`fixed bottom-32 right-4 z-50 transition duration-300 sm:bottom-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 ${
         isMobileVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none sm:pointer-events-auto sm:translate-y-0 sm:opacity-100'
       }`}
       aria-label="Language selector"

@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ContactFooter } from '../components/ContactFooter';
 import { EmpathySection } from '../components/EmpathySection';
 import { Hero } from '../components/Hero';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { MobileFloatingCta } from '../components/MobileFloatingCta';
 import { PhotoProof } from '../components/PhotoProof';
 import { TrainerProfiles } from '../components/TrainerProfiles';
 import { WorkshopPillars } from '../components/WorkshopPillars';
@@ -35,6 +36,8 @@ function getInitialLocale(): WorkshopLocale {
 export function InnerCompassWorkshopPage() {
   const [locale, setLocale] = useState<WorkshopLocale>(getInitialLocale);
   const [isMobileSwitcherVisible, setIsMobileSwitcherVisible] = useState(true);
+  const [isHeroInView, setIsHeroInView] = useState(true);
+  const heroRef = useRef<HTMLDivElement>(null);
   const content = workshopLocales[locale];
   const registrationUrl = createWhatsAppUrl(contacts[0].phone, content.registrationMessage);
   const languageOptions = workshopLocaleOrder.map((locale) => ({
@@ -71,6 +74,20 @@ export function InnerCompassWorkshopPage() {
   }, []);
 
   useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsHeroInView(entry.isIntersecting),
+      { rootMargin: '0px 0px -68% 0px', threshold: 0 },
+    );
+
+    observer.observe(hero);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -97,7 +114,10 @@ export function InnerCompassWorkshopPage() {
   return (
     <main>
       <LanguageSwitcher locale={locale} options={languageOptions} onChange={setLocale} isMobileVisible={isMobileSwitcherVisible} />
-      <Hero content={content.hero} registrationUrl={registrationUrl} />
+      <MobileFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isMobileSwitcherVisible && !isHeroInView} />
+      <div ref={heroRef}>
+        <Hero content={content.hero} registrationUrl={registrationUrl} />
+      </div>
       <EmpathySection content={content.empathy} />
       <WorkshopPillars content={content.pillars} />
       <PhotoProof content={content.photoProof} />

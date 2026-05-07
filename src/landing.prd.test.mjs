@@ -23,7 +23,7 @@ test('routing maps home and workshop pages', () => {
   assert.match(home, /The Inner Compass Workshop · 13-14 Juni 2026/);
   assert.match(home, /href="\/the-inner-compass-workshop"/);
 
-  assert.match(workshop, /<LanguageSwitcher[\s\S]*<Hero content=\{content\.hero\}[\s\S]*<EmpathySection content=\{content\.empathy\}[\s\S]*<WorkshopPillars content=\{content\.pillars\}[\s\S]*<PhotoProof content=\{content\.photoProof\}[\s\S]*<TrainerProfiles content=\{content\.trainers\}[\s\S]*<ContactFooter content=\{content\.footer\}/);
+  assert.match(workshop, /<LanguageSwitcher[\s\S]*<MobileFloatingCta[\s\S]*<Hero content=\{content\.hero\}[\s\S]*<EmpathySection content=\{content\.empathy\}[\s\S]*<WorkshopPillars content=\{content\.pillars\}[\s\S]*<PhotoProof content=\{content\.photoProof\}[\s\S]*<TrainerProfiles content=\{content\.trainers\}[\s\S]*<ContactFooter content=\{content\.footer\}/);
 });
 
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
@@ -31,6 +31,7 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const content = read('./content/landing.ts');
   const hero = read('./components/Hero.tsx');
   const footer = read('./components/ContactFooter.tsx');
+  const mobileCta = read('./components/MobileFloatingCta.tsx');
   const empathy = read('./components/EmpathySection.tsx');
   const pillars = read('./components/WorkshopPillars.tsx');
   const trainers = read('./components/TrainerProfiles.tsx');
@@ -64,6 +65,9 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
   assert.match(switcher, /isMobileVisible/);
   assert.match(workshop, /addEventListener\('scroll'/);
   assert.match(workshop, /setIsMobileSwitcherVisible\(false\)/);
+  assert.match(mobileCta, /sm:hidden/);
+  assert.match(mobileCta, /location="mobile-floating"/);
+  assert.match(mobileCta, /isVisible/);
   assert.match(empathy, /key=\{index\}/);
   assert.match(pillars, /key=\{index\}/);
   assert.match(trainers, /key=\{index\}/);
