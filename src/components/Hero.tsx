@@ -1,0 +1,62 @@
+import { event, hero, registrationUrl } from '../content/landing';
+import { CtaButton } from './CtaButton';
+
+export function Hero() {
+  const headlineLines = ['Hidupmu,', 'Kamu Navigatornya.'];
+  const eventDetails = [
+    ['Tanggal', event.date],
+    ['Tempat', event.venue],
+  ];
+
+  return (
+    <header className="relative isolate min-h-screen overflow-hidden bg-page px-5 py-7 sm:px-8 lg:px-12 lg:py-9">
+      <video className="absolute inset-0 -z-40 h-full w-full object-cover opacity-85 saturate-95" autoPlay muted loop playsInline aria-hidden="true">
+        <source src="/hero.webm" type="video/webm" />
+      </video>
+      <div className="absolute inset-0 -z-30 bg-[linear-gradient(90deg,rgb(8_39_67_/_0.62)_0%,rgb(8_39_67_/_0.24)_46%,rgb(8_39_67_/_0.5)_100%),linear-gradient(0deg,rgb(7_31_54_/_0.78)_0%,transparent_34%,rgb(7_31_54_/_0.34)_100%)]" aria-hidden="true" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-64 bg-gradient-to-t from-page-deep to-transparent" aria-hidden="true" />
+
+      <div className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-7xl flex-col justify-between gap-12">
+        <div className="flex items-center justify-between gap-6 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-primary/72">
+          <span>{hero.eyebrow}</span>
+          <span className="hidden text-accent sm:inline">{hero.badge}</span>
+        </div>
+
+        <div className="max-w-5xl">
+          <div className="mb-6 flex max-w-xl flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+            <span>Mulai Hari Ini</span>
+            <span className="hidden h-px w-16 bg-accent/55 sm:block" aria-hidden="true" />
+            <span className="text-primary/78">Inner Compass / Batch 3</span>
+          </div>
+          <h1 className="max-w-5xl font-serif text-[clamp(3.4rem,8.6vw,7.4rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-primary drop-shadow-[0_1rem_3rem_rgb(0_0_0_/_0.32)]">
+            {headlineLines.map((line, index) => (
+              <span key={line} className={index === 1 ? 'block text-accent' : 'block'}>
+                {line}
+              </span>
+            ))}
+          </h1>
+          <p className="mt-8 max-w-2xl text-lg leading-8 text-primary/78 sm:text-xl">
+            Saat hidup terasa dikendalikan tuntutan, tubuh sering tahu arah pulang sebelum pikiran berani mengakuinya.
+          </p>
+        </div>
+
+        <div className="grid gap-6 border-t border-white/16 pt-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+          <div className="grid max-w-3xl gap-5 text-sm sm:grid-cols-[1.1fr_1fr_1.2fr] sm:gap-8">
+            <div className="font-semibold leading-6 text-primary/78">
+              2 hari untuk berhenti sejenak dan kembali menentukan arah.
+            </div>
+            {eventDetails.map(([label, value]) => (
+              <div key={label}>
+                <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-accent">{label}</div>
+                <div className="mt-2 font-semibold leading-6 text-primary/82">{value}</div>
+              </div>
+            ))}
+          </div>
+          <CtaButton href={registrationUrl} location="hero" targetName="registration-whatsapp" className="sm:min-w-56">
+            {hero.ctaLabel}
+          </CtaButton>
+        </div>
+      </div>
+    </header>
+  );
+}
