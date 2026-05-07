@@ -1,3 +1,5 @@
+import { trackCtaClick } from '../lib/tracking';
+
 const quote = 'We stand for a World where love leads, heals and connect us';
 
 export function PesanCintaHomePage() {
@@ -21,6 +23,7 @@ export function PesanCintaHomePage() {
           <a
             className="mt-4 inline-flex max-w-86 flex-col items-center justify-center rounded-full bg-accent px-6 py-3 text-center text-ink shadow-[0_22px_56px_rgb(243_198_81/0.24)] transition duration-200 hover:-translate-y-0.5 hover:bg-accent-deep sm:mt-6 sm:max-w-none sm:px-8"
             href="/the-inner-compass-workshop"
+            onClick={() => trackCtaClick({ location: 'home', target: 'inner-compass-workshop' })}
           >
             <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-ink/70">Upcoming Class</span>
             <span className="mt-1 text-base font-extrabold leading-5 sm:text-lg">The Inner Compass Workshop · 13-14 Juni 2026</span>
