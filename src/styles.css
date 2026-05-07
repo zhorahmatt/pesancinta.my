@@ -172,6 +172,161 @@ img {
   animation: hero-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) 820ms forwards, hero-cta-glow 3.8s ease-in-out 1.9s infinite;
 }
 
+@keyframes pesan-home-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.5rem, 0) scale(0.98);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes pesan-home-float-left {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-1.5deg);
+  }
+
+  50% {
+    transform: translate3d(0.4rem, -0.8rem, 0) rotate(-0.6deg);
+  }
+}
+
+@keyframes pesan-home-float-right {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(1.5deg);
+  }
+
+  50% {
+    transform: translate3d(-0.4rem, -0.7rem, 0) rotate(0.5deg);
+  }
+}
+
+.pesan-home {
+  background:
+    radial-gradient(circle at 18% 18%, rgb(255 255 255 / 0.52), transparent 18rem),
+    radial-gradient(circle at 82% 14%, rgb(255 255 255 / 0.34), transparent 20rem),
+    linear-gradient(135deg, #fff7ba 0%, #f5ef9f 46%, #fff6b4 100%);
+}
+
+.pesan-home-grain {
+  opacity: 0.32;
+  background-image:
+    repeating-radial-gradient(circle at 0 0, rgb(31 115 223 / 0.09) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.22) 0 1px, transparent 1px 5px);
+  mix-blend-mode: soft-light;
+}
+
+.pesan-home-thread {
+  position: absolute;
+  z-index: -10;
+  width: 22rem;
+  height: 22rem;
+  border: 2px solid rgb(255 255 255 / 0.46);
+  border-color: rgb(255 255 255 / 0.46) transparent transparent rgb(255 255 255 / 0.46);
+  border-radius: 48% 52% 44% 56%;
+  pointer-events: none;
+}
+
+.pesan-home-thread-left {
+  left: 8%;
+  bottom: 20%;
+  transform: rotate(38deg);
+}
+
+.pesan-home-thread-right {
+  right: 17%;
+  bottom: 24%;
+  transform: rotate(-18deg);
+}
+
+.pesan-home-logo,
+.pesan-home-copy,
+.pesan-home-founder {
+  opacity: 0;
+  animation: pesan-home-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.pesan-home-logo {
+  animation-delay: 80ms;
+}
+
+.pesan-home-copy {
+  animation-delay: 220ms;
+}
+
+.pesan-home-founder {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  width: min(34vw, 21rem);
+  margin-bottom: -1.5rem;
+}
+
+.pesan-home-founder-left {
+  animation-delay: 460ms;
+}
+
+.pesan-home-founder-right {
+  animation-delay: 560ms;
+}
+
+.pesan-home-founder img {
+  width: 100%;
+  max-height: min(38vh, 31rem);
+  object-fit: contain;
+  filter: drop-shadow(0 1.2rem 2.2rem rgb(31 115 223 / 0.14));
+}
+
+.pesan-home-founder-left img {
+  animation: pesan-home-float-left 7s ease-in-out 1.2s infinite;
+}
+
+.pesan-home-founder-right img {
+  animation: pesan-home-float-right 7.5s ease-in-out 1.35s infinite;
+}
+
+@media (max-width: 640px) {
+  .pesan-home-thread {
+    width: 12rem;
+    height: 12rem;
+    border-width: 2px;
+  }
+
+  .pesan-home-thread-left {
+    left: -16%;
+    bottom: 27%;
+  }
+
+  .pesan-home-thread-right {
+    right: -10%;
+    bottom: 18%;
+  }
+
+  .pesan-home-founder {
+    width: 54vw;
+    margin-bottom: -1.25rem;
+  }
+
+  .pesan-home-founder-left {
+    margin-right: -0.75rem;
+  }
+
+  .pesan-home-founder-right {
+    margin-left: -0.75rem;
+  }
+
+  .pesan-home-founder img {
+    max-height: 32vh;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -186,7 +341,11 @@ img {
   .hero-backdrop-drift,
   .hero-reveal,
   .hero-line-reveal,
-  .hero-cta-glow {
+  .hero-cta-glow,
+  .pesan-home-logo,
+  .pesan-home-copy,
+  .pesan-home-founder,
+  .pesan-home-founder img {
     opacity: 1;
     transform: none;
     filter: none;
