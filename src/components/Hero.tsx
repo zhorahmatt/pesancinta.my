@@ -6,6 +6,7 @@ export function Hero() {
   const eventDetails = [
     ['Tanggal', event.date],
     ['Tempat', event.venue],
+    ['Kota', event.city],
   ];
 
   return (
@@ -17,7 +18,7 @@ export function Hero() {
       <div className="absolute inset-x-0 bottom-0 -z-10 h-64 bg-gradient-to-t from-page-deep to-transparent" aria-hidden="true" />
 
       <div className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-7xl flex-col justify-between gap-12">
-        <div className="flex items-center justify-between gap-6 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-primary/72">
+        <div className="-mt-4 flex items-center justify-between gap-6 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-primary/72 sm:-mt-6">
           <div className="flex items-center" aria-label="Pesan Cinta">
             <img className="w-48 sm:w-64 ml-[-20px] object-left" src="/pesancinta.png" alt="Pesan Cinta" />
           </div>
@@ -41,23 +42,23 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="grid gap-6 border-t border-white/16 pt-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-          <div className="grid max-w-3xl gap-5 text-sm sm:grid-cols-[1.1fr_1fr_1.2fr] sm:gap-8">
-            <div className="font-semibold leading-6 text-primary/78">
-              2 hari untuk berhenti sejenak dan kembali menentukan arah.
-            </div>
-            {eventDetails.map(([label, value]) => (
-              <div key={label}>
-                <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-accent">{label}</div>
-                <div className="mt-2 font-semibold leading-6 text-primary/82">{value}</div>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-col gap-3 lg:items-end">
+        <div className="grid gap-6 border-t border-white/16 pt-6 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
+          <div className="flex flex-wrap items-center gap-4">
             <CtaButton href={registrationUrl} location="hero" targetName="registration-whatsapp" className="sm:min-w-56">
               {hero.ctaLabel}
             </CtaButton>
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">{hero.badge}</span>
+          </div>
+          <div className="grid max-w-3xl justify-items-center gap-5 text-center text-xs sm:grid-cols-3 sm:items-start sm:gap-8 lg:justify-self-end">
+            {/* <div className="font-semibold leading-6 text-primary/78">
+              2 hari untuk berhenti sejenak dan kembali menentukan arah.
+            </div> */}
+            {eventDetails.map(([label, value]) => (
+              <div key={label}>
+                <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-accent">{label}</div>
+                <div className="mt-1 font-semibold leading-5 text-primary/82">{value}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -25,7 +25,7 @@ export const hero = {
 
 export const event = {
   name: 'The Inner Compass Workshop Batch 3',
-  city: 'Makassar',
+  city: 'Makassar, Indonesia',
   venue: 'Toraja D, Four Points',
   date: '13-14 Juni 2026',
   time: '09.00 - 21.00 WITA',
