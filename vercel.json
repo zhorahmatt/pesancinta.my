@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/the-inner-compass-workshop",
+      "destination": "/the-inner-compass-workshop/index.html"
+    },
+    {
+      "source": "/the-inner-compass-workshop/",
+      "destination": "/the-inner-compass-workshop/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

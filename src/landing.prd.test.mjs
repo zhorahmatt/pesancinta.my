@@ -40,12 +40,17 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const homeHtml = read('../index.html');
   const workshopHtml = read('../the-inner-compass-workshop/index.html');
   const viteConfig = read('../vite.config.ts');
+  const vercelConfig = read('../vercel.json');
 
   assert.match(homeHtml, /<title>Pesan Cinta<\/title>/);
   assert.match(homeHtml, /og:title" content="Pesan Cinta"/);
   assert.match(workshopHtml, /<title>The Inner Compass Workshop Batch 3 Makassar<\/title>/);
   assert.match(workshopHtml, /og:title" content="The Inner Compass Workshop Batch 3 Makassar"/);
+  assert.match(workshopHtml, /og:image" content="https:\/\/pesancinta\.my\/g16\.jpeg"/);
+  assert.match(workshopHtml, /twitter:image" content="https:\/\/pesancinta\.my\/g16\.jpeg"/);
   assert.match(viteConfig, /the-inner-compass-workshop\/index\.html/);
+  assert.match(vercelConfig, /"source": "\/the-inner-compass-workshop"/);
+  assert.match(vercelConfig, /"destination": "\/the-inner-compass-workshop\/index\.html"/);
 
   assert.match(content, /defaultWorkshopLocale = 'ms'/);
   assert.match(content, /workshopLocaleOrder = \['ms', 'id', 'en'\]/);
