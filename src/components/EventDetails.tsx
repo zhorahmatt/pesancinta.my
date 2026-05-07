@@ -1,8 +1,11 @@
-import { event, registrationUrl } from '../content/landing';
+import { event, mainContact, workshopLocales } from '../content/landing';
+import { createWhatsAppUrl } from '../lib/whatsapp';
 import { CtaButton } from './CtaButton';
 import { Section } from './Section';
 
 export function EventDetails() {
+  const registrationUrl = createWhatsAppUrl(mainContact.phone, workshopLocales.ms.registrationMessage);
+
   return (
     <Section className="bg-page-deep/55">
       <div className="relative overflow-hidden border border-accent/45 bg-surface/70 shadow-soft">

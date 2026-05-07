@@ -1,12 +1,16 @@
-import { event, hero, registrationUrl } from '../content/landing';
+import { event, type WorkshopContent } from '../content/landing';
 import { CtaButton } from './CtaButton';
 
-export function Hero() {
-  const headlineLines = ['Hidupmu,', 'Kamu Navigatornya.'];
+type HeroProps = {
+  content: WorkshopContent['hero'];
+  registrationUrl: string;
+};
+
+export function Hero({ content, registrationUrl }: HeroProps) {
   const eventDetails = [
-    ['Tanggal', event.date],
-    ['Tempat', event.venue],
-    ['Kota', event.city],
+    [content.eventLabels.date, event.date],
+    [content.eventLabels.venue, event.venue],
+    [content.eventLabels.city, event.city],
   ];
 
   return (
@@ -22,23 +26,23 @@ export function Hero() {
           <div className="flex items-center" aria-label="Pesan Cinta">
             <img className="-ml-5 w-32 object-left sm:w-64" src="/pesancinta.png" alt="Pesan Cinta" />
           </div>
-          <span className="max-w-56 text-right leading-5 sm:max-w-none">{hero.eyebrow}</span>
+          <span className="max-w-56 text-right leading-5 sm:max-w-none">{content.eyebrow}</span>
         </div>
 
         <div className="max-w-5xl">
           <div className="hero-reveal hero-delay-2 mb-3 flex max-w-xl flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-accent sm:mb-6">
-            <span>Mulai Hari Ini</span>
+            <span>{content.kicker}</span>
             <span className="hidden h-px w-16 bg-accent/55 sm:block" aria-hidden="true" />
           </div>
           <h1 className="max-w-5xl font-serif text-[clamp(2.85rem,15vw,4.5rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-primary drop-shadow-[0_1rem_3rem_rgb(0_0_0_/_0.32)] sm:text-[clamp(3.4rem,8.6vw,7.4rem)]">
-            {headlineLines.map((line, index) => (
+            {content.headlineLines.map((line, index) => (
               <span key={line} className={`hero-line-reveal block ${index === 1 ? 'hero-delay-4 text-accent' : 'hero-delay-3'}`}>
                 {line}
               </span>
             ))}
           </h1>
           <p className="hero-reveal hero-delay-5 mt-4 max-w-2xl text-base leading-7 text-primary/78 sm:mt-8 sm:text-xl">
-            Saat hidup terasa dikendalikan tuntutan, tubuh sering tahu arah pulang sebelum pikiran berani mengakuinya.
+            {content.subheadline}
           </p>
         </div>
 
@@ -50,9 +54,9 @@ export function Hero() {
               targetName="registration-whatsapp"
               className="hero-cta-glow order-2 w-full px-7 py-4 text-base opacity-0 shadow-[0_22px_56px_rgb(243_198_81/0.28)] sm:min-w-56 sm:text-sm lg:order-1 lg:w-auto lg:px-6 lg:py-3"
             >
-              {hero.ctaLabel}
+              {content.ctaLabel}
             </CtaButton>
-            <span className="order-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent lg:order-2">{hero.badge}</span>
+            <span className="order-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent lg:order-2">{content.badge}</span>
           </div>
           <div className="order-1 grid max-w-3xl justify-items-start gap-3 text-xs sm:grid-cols-3 sm:items-start sm:gap-8 lg:order-2 lg:justify-self-end lg:justify-items-center">
             {eventDetails.map(([label, value]) => (

@@ -1,12 +1,55 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ContactFooter } from '../components/ContactFooter';
 import { EmpathySection } from '../components/EmpathySection';
 import { Hero } from '../components/Hero';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { PhotoProof } from '../components/PhotoProof';
 import { TrainerProfiles } from '../components/TrainerProfiles';
 import { WorkshopPillars } from '../components/WorkshopPillars';
+import {
+  contacts,
+  defaultWorkshopLocale,
+  workshopLocaleOrder,
+  workshopLocales,
+  type WorkshopLocale,
+} from '../content/landing';
+import { createWhatsAppUrl } from '../lib/whatsapp';
+
+const localeStorageKey = 'inner-compass-workshop-locale';
+
+function isWorkshopLocale(value: string | null): value is WorkshopLocale {
+  return value !== null && value in workshopLocales;
+}
+
+function getInitialLocale(): WorkshopLocale {
+  if (typeof window === 'undefined') return defaultWorkshopLocale;
+
+  try {
+    const storedLocale = window.localStorage.getItem(localeStorageKey);
+    return isWorkshopLocale(storedLocale) ? storedLocale : defaultWorkshopLocale;
+  } catch {
+    return defaultWorkshopLocale;
+  }
+}
 
 export function InnerCompassWorkshopPage() {
+  const [locale, setLocale] = useState<WorkshopLocale>(getInitialLocale);
+  const content = workshopLocales[locale];
+  const registrationUrl = createWhatsAppUrl(contacts[0].phone, content.registrationMessage);
+  const languageOptions = workshopLocaleOrder.map((locale) => ({
+    locale,
+    label: workshopLocales[locale].label,
+    name: workshopLocales[locale].name,
+  }));
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(localeStorageKey, locale);
+    } catch {
+      // Ignore storage failures; language still updates for this session.
+    }
+  }, [locale]);
+
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
 
@@ -33,12 +76,13 @@ export function InnerCompassWorkshopPage() {
 
   return (
     <main>
-      <Hero />
-      <EmpathySection />
-      <WorkshopPillars />
-      <PhotoProof />
-      <TrainerProfiles />
-      <ContactFooter />
+      <LanguageSwitcher locale={locale} options={languageOptions} onChange={setLocale} />
+      <Hero content={content.hero} registrationUrl={registrationUrl} />
+      <EmpathySection content={content.empathy} />
+      <WorkshopPillars content={content.pillars} />
+      <PhotoProof content={content.photoProof} />
+      <TrainerProfiles content={content.trainers} />
+      <ContactFooter content={content.footer} registrationMessage={content.registrationMessage} />
     </main>
   );
 }

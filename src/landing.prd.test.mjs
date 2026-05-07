@@ -18,11 +18,12 @@ test('routing maps home and workshop pages', () => {
   assert.match(home, /\/zai\.png/);
   assert.match(home, /\/startupglobal\.png/);
   assert.match(home, /We stand for a World where love leads, heals and connect us/);
-  assert.match(home, /Mimi &amp; Zai/);
+  assert.match(home, /Mimi, Pesan Cinta founder/);
+  assert.match(home, /Zai, Pesan Cinta founder/);
   assert.match(home, /The Inner Compass Workshop · 13-14 Juni 2026/);
   assert.match(home, /href="\/the-inner-compass-workshop"/);
 
-  assert.match(workshop, /<Hero \/>[\s\S]*<EmpathySection \/>[\s\S]*<WorkshopPillars \/>[\s\S]*<PhotoProof \/>[\s\S]*<TrainerProfiles \/>[\s\S]*<ContactFooter \/>/);
+  assert.match(workshop, /<LanguageSwitcher[\s\S]*<Hero content=\{content\.hero\}[\s\S]*<EmpathySection content=\{content\.empathy\}[\s\S]*<WorkshopPillars content=\{content\.pillars\}[\s\S]*<PhotoProof content=\{content\.photoProof\}[\s\S]*<TrainerProfiles content=\{content\.trainers\}[\s\S]*<ContactFooter content=\{content\.footer\}/);
 });
 
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
@@ -31,20 +32,34 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const hero = read('./components/Hero.tsx');
   const footer = read('./components/ContactFooter.tsx');
   const workshop = read('./pages/InnerCompassWorkshopPage.tsx');
+  const switcher = read('./components/LanguageSwitcher.tsx');
 
-  assert.match(content, /Berapa lama lagi mau bertahan seperti ini\?/);
-  assert.match(content, /Ruang aman untuk refleksi & penyembuhan diri/);
-  assert.match(content, /13-14 Juni 2026 \| Toraja D, Four Points/);
+  assert.match(content, /defaultWorkshopLocale = 'ms'/);
+  assert.match(content, /workshopLocaleOrder = \['ms', 'id', 'en'\]/);
+  assert.match(content, /Hidupmu,/);
+  assert.match(content, /Kamu Navigatornya\./);
+  assert.match(content, /Your life,/);
+  assert.match(content, /you navigate it\./);
   assert.match(content, /Hanya 40 Kursi/);
-  assert.match(content, /Amankan Kursi Saya/);
-  assert.match(hero, /Hidupmu,/);
-  assert.match(hero, /Kamu Navigatornya\./);
-  assert.match(hero, /hero\.ctaLabel/);
+  assert.match(content, /Hanya 40 Kerusi/);
+  assert.match(content, /Only 40 Seats/);
+  assert.match(hero, /content\.headlineLines/);
+  assert.match(hero, /content\.ctaLabel/);
 
-  assert.equal((content.match(/title: '/g) ?? []).length >= 4, true);
+  assert.equal((content.match(/title: '/g) ?? []).length >= 12, true);
   assert.match(content, /Trainer Berpengalaman & Profesional/);
+  assert.match(content, /Experienced & Professional Trainers/);
   assert.match(content, /Investment diinformasikan via WhatsApp/);
-  assert.match(footer, /investmentText/);
+  assert.match(footer, /content\.investmentText/);
+  assert.match(workshop, /localStorage\.getItem/);
+  assert.match(workshop, /localStorage\.setItem/);
+  assert.match(workshop, /try \{/);
+  assert.match(switcher, /aria-pressed=\{isActive\}/);
+  assert.match(switcher, /Switch language to/);
+
+  assert.equal(content.includes('export const registrationUrl'), false);
+  assert.equal(content.includes('export const whyParagraphs'), false);
+  assert.equal(content.includes('export const investmentText'), false);
 
   assert.equal(app.includes('EventDetails'), false);
   assert.equal(workshop.includes('EventDetails'), false);
