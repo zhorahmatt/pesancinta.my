@@ -43,16 +43,18 @@ export function Hero() {
         </div>
 
         <div className="grid gap-6 border-t border-white/16 pt-6 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
-          <div className="flex flex-wrap items-center gap-4">
-            <CtaButton href={registrationUrl} location="hero" targetName="registration-whatsapp" className="sm:min-w-56">
+          <div className="order-2 flex w-full flex-col items-start gap-4 sm:items-center lg:order-1 lg:w-auto lg:flex-row">
+            <CtaButton
+              href={registrationUrl}
+              location="hero"
+              targetName="registration-whatsapp"
+              className="order-2 w-full px-7 py-4 text-base shadow-[0_22px_56px_rgb(243_198_81/0.28)] sm:min-w-56 sm:text-sm lg:order-1 lg:w-auto lg:px-6 lg:py-3"
+            >
               {hero.ctaLabel}
             </CtaButton>
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">{hero.badge}</span>
+            <span className="order-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent lg:order-2">{hero.badge}</span>
           </div>
-          <div className="grid max-w-3xl justify-items-center gap-5 text-center text-xs sm:grid-cols-3 sm:items-start sm:gap-8 lg:justify-self-end">
-            {/* <div className="font-semibold leading-6 text-primary/78">
-              2 hari untuk berhenti sejenak dan kembali menentukan arah.
-            </div> */}
+          <div className="order-1 grid max-w-3xl justify-items-start gap-5 text-xs sm:grid-cols-3 sm:items-start sm:gap-8 lg:order-2 lg:justify-self-end lg:justify-items-center">
             {eventDetails.map(([label, value]) => (
               <div key={label}>
                 <div className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-accent">{label}</div>

@@ -44,10 +44,10 @@ export function ContactFooter() {
           <div className="grid gap-4 lg:grid-cols-[1fr_1.2fr] lg:items-stretch">
             <section className="border border-white/14 bg-page/[0.025] p-4 sm:p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Organizer</p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <div className="mt-4 grid grid-cols-2 gap-3">
                 {organizerLogos.map((logo) => (
-                  <div key={logo} className="flex h-36 items-center justify-center bg-page px-3 py-4">
-                    <img className="max-h-32 max-w-40 object-contain" src={logo} alt="Organizer logo" loading="lazy" />
+                  <div key={logo} className="flex h-24 items-center justify-center bg-page px-3 py-4 sm:h-36">
+                    <img className="max-h-20 max-w-28 object-contain sm:max-h-32 sm:max-w-40" src={logo} alt="Organizer logo" loading="lazy" />
                   </div>
                 ))}
               </div>
@@ -55,10 +55,10 @@ export function ContactFooter() {
 
             <section className="border border-white/14 bg-page/[0.025] p-4 sm:p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Partners & Sponsors</p>
-              <div className="mt-4 grid max-w-2xl gap-3 sm:grid-cols-3">
+              <div className="mt-4 grid max-w-2xl grid-cols-3 gap-3">
                 {sponsorLogos.map((logo, index) => (
-                  <div key={logo} className="flex h-28 items-center justify-center bg-page px-4 py-4">
-                    <img className="max-h-12 max-w-32 object-contain" src={logo} alt={`Sponsor ${index + 1}`} loading="lazy" />
+                  <div key={logo} className="flex h-20 items-center justify-center bg-page px-2 py-3 sm:h-28 sm:px-4 sm:py-4">
+                    <img className="max-h-10 max-w-20 object-contain sm:max-h-12 sm:max-w-32" src={logo} alt={`Sponsor ${index + 1}`} loading="lazy" />
                   </div>
                 ))}
               </div>
@@ -67,7 +67,6 @@ export function ContactFooter() {
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-white/14 pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>{event.name} · {event.city}</p>
           <p>© 2026 The Inner Compass Workshop. All Rights Reserved.</p>
         </div>
       </div>
