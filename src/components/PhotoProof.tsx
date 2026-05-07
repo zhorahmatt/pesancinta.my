@@ -1,11 +1,11 @@
 import { proofPhotos } from '../content/landing';
 
 const photoLayouts = [
-  'sm:col-span-2 lg:col-span-6 lg:row-span-2 min-h-[30rem] sm:min-h-[36rem] lg:min-h-[44rem]',
-  'lg:col-span-3 min-h-72 sm:min-h-80 lg:min-h-[21.5rem]',
-  'lg:col-span-3 min-h-72 sm:min-h-80 lg:min-h-[21.5rem]',
-  'lg:col-span-3 min-h-72 sm:min-h-80 lg:min-h-[21.5rem]',
-  'lg:col-span-3 min-h-72 sm:min-h-80 lg:min-h-[21.5rem]',
+  'aspect-[4/5] sm:col-span-2 lg:col-span-6 lg:row-span-2',
+  'aspect-[4/5] lg:col-span-3',
+  'aspect-[4/5] lg:col-span-3',
+  'aspect-[4/5] lg:col-span-3',
+  'aspect-[4/5] lg:col-span-3',
 ];
 
 export function PhotoProof() {
@@ -27,7 +27,7 @@ export function PhotoProof() {
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:auto-rows-fr">
           {proofPhotos.map((photo, index) => (
             <figure key={photo.src} className={`group relative overflow-hidden bg-page ${photoLayouts[index]}`} data-reveal>
-              <img className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" src={photo.src} alt="" loading="lazy" />
+              <img className="absolute inset-0 h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]" src={photo.src} alt="" loading="lazy" />
             </figure>
           ))}
         </div>
