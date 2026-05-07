@@ -59,6 +59,8 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
   assert.match(workshop, /try \{/);
   assert.match(switcher, /aria-pressed=\{isActive\}/);
   assert.match(switcher, /Switch language to/);
+  assert.match(switcher, /aria-expanded=\{isOpen\}/);
+  assert.match(switcher, /localeIcons/);
   assert.match(switcher, /isMobileVisible/);
   assert.match(workshop, /addEventListener\('scroll'/);
   assert.match(workshop, /setIsMobileSwitcherVisible\(false\)/);

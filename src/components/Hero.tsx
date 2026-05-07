@@ -47,16 +47,16 @@ export function Hero({ content, registrationUrl }: HeroProps) {
         </div>
 
         <div className="hero-reveal hero-delay-5 grid gap-4 border-t border-white/16 pt-4 sm:gap-6 sm:pt-6 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
-          <div className="order-2 flex w-full flex-col items-start gap-4 sm:items-center lg:order-1 lg:w-auto lg:flex-row">
+          <div className="order-2 flex w-full flex-col items-start gap-4 sm:items-center lg:order-1 lg:w-auto lg:flex-row lg:gap-5">
             <CtaButton
               href={registrationUrl}
               location="hero"
               targetName="registration-whatsapp"
-              className="hero-cta-glow order-2 w-full px-7 py-4 text-base opacity-0 shadow-[0_22px_56px_rgb(243_198_81/0.28)] sm:min-w-56 sm:text-sm lg:order-1 lg:w-auto lg:px-6 lg:py-3"
+              className="hero-cta-glow order-2 w-full px-8 py-5 text-base opacity-0 shadow-[0_22px_56px_rgb(243_198_81/0.28)] sm:min-w-72 sm:px-10 sm:py-5 sm:text-lg lg:order-1 lg:w-auto lg:px-9 lg:py-4 lg:text-base"
             >
               {content.ctaLabel}
             </CtaButton>
-            <span className="order-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent lg:order-2">{content.badge}</span>
+            <span className="order-1 text-xs font-semibold uppercase tracking-[0.2em] text-accent sm:text-sm lg:order-2">{content.badge}</span>
           </div>
           <div className="order-1 grid max-w-3xl justify-items-start gap-3 text-xs sm:grid-cols-3 sm:items-start sm:gap-8 lg:order-2 lg:justify-self-end lg:justify-items-center">
             {eventDetails.map(([label, value]) => (
