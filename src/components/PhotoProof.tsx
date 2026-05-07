@@ -14,7 +14,7 @@ export function PhotoProof() {
       <div className="absolute left-1/2 top-24 -z-10 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" aria-hidden="true" />
 
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl" data-reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">Inside The Room</p>
           <h2 className="mt-5 font-serif text-[clamp(2.7rem,5.4vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-primary sm:whitespace-nowrap">
             Rasakan prosesnya.
@@ -26,7 +26,7 @@ export function PhotoProof() {
 
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:auto-rows-fr">
           {proofPhotos.map((photo, index) => (
-            <figure key={photo.src} className={`group relative overflow-hidden bg-page ${photoLayouts[index]}`}>
+            <figure key={photo.src} className={`group relative overflow-hidden bg-page ${photoLayouts[index]}`} data-reveal>
               <img className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" src={photo.src} alt="" loading="lazy" />
             </figure>
           ))}

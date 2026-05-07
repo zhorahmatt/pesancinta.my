@@ -16,7 +16,7 @@ export function TrainerProfiles() {
   return (
     <section className="relative isolate overflow-hidden bg-page px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl" data-reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">Who's Teaching</p>
           <h2 className="mt-5 font-serif text-[clamp(2.7rem,5.4vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-primary sm:whitespace-nowrap">
             Kenali trainer workshop ini.
@@ -28,7 +28,7 @@ export function TrainerProfiles() {
 
         <div className="mt-14 grid gap-5 lg:grid-cols-2 lg:items-stretch">
           {trainers.map((trainer, index) => (
-            <article key={trainer.name} className="border-t border-white/14 pt-6">
+            <article key={trainer.name} className="border-t border-white/14 pt-6" data-reveal>
               <div className="grid h-full gap-6 sm:grid-cols-[minmax(8rem,11rem)_1fr] sm:items-stretch">
                 <div className="aspect-[4/5] overflow-hidden bg-[linear-gradient(145deg,rgb(243_198_81_/_0.16),rgb(255_255_255_/_0.035))]">
                   <img className="h-full w-full object-cover" src={trainerPhotos[index]} alt={trainer.name} loading="lazy" />

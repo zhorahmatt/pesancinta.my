@@ -6,7 +6,7 @@ export function EmpathySection() {
       <div className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-page to-transparent" aria-hidden="true" />
 
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl" data-reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">Why This Workshop</p>
           <h2 className="mt-5 font-serif text-[clamp(2.7rem,5.4vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-primary">
             Untuk kamu yang terlalu lama kuat sendirian.
@@ -18,7 +18,7 @@ export function EmpathySection() {
 
         <div className="mt-14 grid gap-4 border-t border-white/14 pt-6 sm:grid-cols-2 lg:grid-cols-4">
           {whyParagraphs.map((paragraph) => (
-            <article key={paragraph} className="border-b border-white/14 pb-6 sm:border-b-0 sm:border-r sm:pr-5 sm:last:border-r-0 lg:pr-6">
+            <article key={paragraph} className="border-b border-white/14 pb-6 sm:border-b-0 sm:border-r sm:pr-5 sm:last:border-r-0 lg:pr-6" data-reveal>
               <p className="text-base leading-7 text-muted">{paragraph}</p>
             </article>
           ))}

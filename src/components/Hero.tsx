@@ -14,11 +14,11 @@ export function Hero() {
       <video className="absolute inset-0 -z-40 h-full w-full object-cover opacity-85 saturate-95" autoPlay muted loop playsInline aria-hidden="true">
         <source src="/hero.webm" type="video/webm" />
       </video>
-      <div className="absolute inset-0 -z-30 bg-[linear-gradient(90deg,rgb(8_39_67_/_0.62)_0%,rgb(8_39_67_/_0.24)_46%,rgb(8_39_67_/_0.5)_100%),linear-gradient(0deg,rgb(7_31_54_/_0.78)_0%,transparent_34%,rgb(7_31_54_/_0.34)_100%)]" aria-hidden="true" />
+      <div className="hero-backdrop-drift absolute inset-0 -z-30 bg-[linear-gradient(90deg,rgb(8_39_67_/_0.62)_0%,rgb(8_39_67_/_0.24)_46%,rgb(8_39_67_/_0.5)_100%),linear-gradient(0deg,rgb(7_31_54_/_0.78)_0%,transparent_34%,rgb(7_31_54_/_0.34)_100%)]" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-64 bg-gradient-to-t from-page-deep to-transparent" aria-hidden="true" />
 
       <div className="mx-auto flex min-h-[calc(100svh-1rem)] max-w-7xl flex-col justify-between gap-6 sm:min-h-[calc(100vh-3.5rem)] sm:gap-12">
-        <div className="-mt-3 flex items-center justify-between gap-4 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-primary/72 sm:-mt-6 sm:gap-6 sm:text-[0.68rem]">
+        <div className="hero-reveal hero-delay-1 -mt-3 flex items-center justify-between gap-4 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-primary/72 sm:-mt-6 sm:gap-6 sm:text-[0.68rem]">
           <div className="flex items-center" aria-label="Pesan Cinta">
             <img className="-ml-5 w-32 object-left sm:w-64" src="/pesancinta.png" alt="Pesan Cinta" />
           </div>
@@ -26,29 +26,29 @@ export function Hero() {
         </div>
 
         <div className="max-w-5xl">
-          <div className="mb-3 flex max-w-xl flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-accent sm:mb-6">
+          <div className="hero-reveal hero-delay-2 mb-3 flex max-w-xl flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-accent sm:mb-6">
             <span>Mulai Hari Ini</span>
             <span className="hidden h-px w-16 bg-accent/55 sm:block" aria-hidden="true" />
           </div>
           <h1 className="max-w-5xl font-serif text-[clamp(2.85rem,15vw,4.5rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-primary drop-shadow-[0_1rem_3rem_rgb(0_0_0_/_0.32)] sm:text-[clamp(3.4rem,8.6vw,7.4rem)]">
             {headlineLines.map((line, index) => (
-              <span key={line} className={index === 1 ? 'block text-accent' : 'block'}>
+              <span key={line} className={`hero-line-reveal block ${index === 1 ? 'hero-delay-4 text-accent' : 'hero-delay-3'}`}>
                 {line}
               </span>
             ))}
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-primary/78 sm:mt-8 sm:text-xl">
+          <p className="hero-reveal hero-delay-5 mt-4 max-w-2xl text-base leading-7 text-primary/78 sm:mt-8 sm:text-xl">
             Saat hidup terasa dikendalikan tuntutan, tubuh sering tahu arah pulang sebelum pikiran berani mengakuinya.
           </p>
         </div>
 
-        <div className="grid gap-4 border-t border-white/16 pt-4 sm:gap-6 sm:pt-6 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
+        <div className="hero-reveal hero-delay-5 grid gap-4 border-t border-white/16 pt-4 sm:gap-6 sm:pt-6 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start">
           <div className="order-2 flex w-full flex-col items-start gap-4 sm:items-center lg:order-1 lg:w-auto lg:flex-row">
             <CtaButton
               href={registrationUrl}
               location="hero"
               targetName="registration-whatsapp"
-              className="order-2 w-full px-7 py-4 text-base shadow-[0_22px_56px_rgb(243_198_81/0.28)] sm:min-w-56 sm:text-sm lg:order-1 lg:w-auto lg:px-6 lg:py-3"
+              className="hero-cta-glow order-2 w-full px-7 py-4 text-base opacity-0 shadow-[0_22px_56px_rgb(243_198_81/0.28)] sm:min-w-56 sm:text-sm lg:order-1 lg:w-auto lg:px-6 lg:py-3"
             >
               {hero.ctaLabel}
             </CtaButton>

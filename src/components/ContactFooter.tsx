@@ -9,7 +9,7 @@ export function ContactFooter() {
   return (
     <footer className="relative isolate overflow-hidden border-t border-white/10 bg-page-deep px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl" data-reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent">Investment & Contact</p>
           <h2 className="mt-5 font-serif text-[clamp(2.7rem,5.4vw,5.25rem)] font-semibold leading-[0.94] tracking-[-0.055em] text-primary sm:whitespace-nowrap">
             Tertarik ikut workshop ini?
@@ -26,6 +26,7 @@ export function ContactFooter() {
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {contacts.map((contact) => (
             <CtaButton
+              data-reveal
               key={contact.name}
               href={createWhatsAppUrl(contact.phone, registrationMessage)}
               location={`footer-${contact.name.toLowerCase()}`}
@@ -42,7 +43,7 @@ export function ContactFooter() {
 
         <div className="mt-12 border-t border-white/14 pt-6">
           <div className="grid gap-4 lg:grid-cols-[1fr_1.2fr] lg:items-stretch">
-            <section className="border border-white/14 bg-page/[0.025] p-4 sm:p-5">
+            <section className="border border-white/14 bg-page/[0.025] p-4 sm:p-5" data-reveal>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Organizer</p>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {organizerLogos.map((logo) => (
@@ -53,7 +54,7 @@ export function ContactFooter() {
               </div>
             </section>
 
-            <section className="border border-white/14 bg-page/[0.025] p-4 sm:p-5">
+            <section className="border border-white/14 bg-page/[0.025] p-4 sm:p-5" data-reveal>
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Partners & Sponsors</p>
               <div className="mt-4 grid max-w-2xl grid-cols-3 gap-3">
                 {sponsorLogos.map((logo, index) => (
