@@ -31,6 +31,9 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const content = read('./content/landing.ts');
   const hero = read('./components/Hero.tsx');
   const footer = read('./components/ContactFooter.tsx');
+  const empathy = read('./components/EmpathySection.tsx');
+  const pillars = read('./components/WorkshopPillars.tsx');
+  const trainers = read('./components/TrainerProfiles.tsx');
   const workshop = read('./pages/InnerCompassWorkshopPage.tsx');
   const switcher = read('./components/LanguageSwitcher.tsx');
 
@@ -56,6 +59,12 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
   assert.match(workshop, /try \{/);
   assert.match(switcher, /aria-pressed=\{isActive\}/);
   assert.match(switcher, /Switch language to/);
+  assert.match(switcher, /isMobileVisible/);
+  assert.match(workshop, /addEventListener\('scroll'/);
+  assert.match(workshop, /setIsMobileSwitcherVisible\(false\)/);
+  assert.match(empathy, /key=\{index\}/);
+  assert.match(pillars, /key=\{index\}/);
+  assert.match(trainers, /key=\{index\}/);
 
   assert.equal(content.includes('export const registrationUrl'), false);
   assert.equal(content.includes('export const whyParagraphs'), false);

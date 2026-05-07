@@ -4,12 +4,15 @@ type LanguageSwitcherProps = {
   locale: WorkshopLocale;
   options: readonly { locale: WorkshopLocale; label: string; name: string }[];
   onChange: (locale: WorkshopLocale) => void;
+  isMobileVisible: boolean;
 };
 
-export function LanguageSwitcher({ locale, options, onChange }: LanguageSwitcherProps) {
+export function LanguageSwitcher({ locale, options, onChange, isMobileVisible }: LanguageSwitcherProps) {
   return (
     <nav
-      className="fixed inset-x-0 bottom-4 z-50 mx-auto flex w-fit items-center gap-2 border border-white/14 bg-page-deep/88 px-2 py-2 shadow-soft backdrop-blur-md sm:inset-x-auto sm:bottom-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 sm:flex-col sm:px-2 sm:py-3"
+      className={`fixed bottom-24 right-4 z-50 flex w-fit items-center gap-2 border border-white/14 bg-page-deep/88 px-2 py-2 shadow-soft backdrop-blur-md transition duration-300 sm:bottom-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 sm:flex-col sm:px-2 sm:py-3 ${
+        isMobileVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none sm:pointer-events-auto sm:translate-y-0 sm:opacity-100'
+      }`}
       aria-label="Language selector"
     >
       <span className="hidden [writing-mode:vertical-rl] text-[0.6rem] font-bold uppercase tracking-[0.22em] text-accent/80 sm:block">

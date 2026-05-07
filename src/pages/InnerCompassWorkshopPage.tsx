@@ -34,6 +34,7 @@ function getInitialLocale(): WorkshopLocale {
 
 export function InnerCompassWorkshopPage() {
   const [locale, setLocale] = useState<WorkshopLocale>(getInitialLocale);
+  const [isMobileSwitcherVisible, setIsMobileSwitcherVisible] = useState(true);
   const content = workshopLocales[locale];
   const registrationUrl = createWhatsAppUrl(contacts[0].phone, content.registrationMessage);
   const languageOptions = workshopLocaleOrder.map((locale) => ({
@@ -49,6 +50,25 @@ export function InnerCompassWorkshopPage() {
       // Ignore storage failures; language still updates for this session.
     }
   }, [locale]);
+
+  useEffect(() => {
+    let showTimer: ReturnType<typeof window.setTimeout> | undefined;
+
+    const handleScroll = () => {
+      if (!window.matchMedia('(max-width: 639px)').matches) return;
+
+      setIsMobileSwitcherVisible(false);
+      if (showTimer) window.clearTimeout(showTimer);
+      showTimer = window.setTimeout(() => setIsMobileSwitcherVisible(true), 700);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (showTimer) window.clearTimeout(showTimer);
+    };
+  }, []);
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
@@ -76,7 +96,7 @@ export function InnerCompassWorkshopPage() {
 
   return (
     <main>
-      <LanguageSwitcher locale={locale} options={languageOptions} onChange={setLocale} />
+      <LanguageSwitcher locale={locale} options={languageOptions} onChange={setLocale} isMobileVisible={isMobileSwitcherVisible} />
       <Hero content={content.hero} registrationUrl={registrationUrl} />
       <EmpathySection content={content.empathy} />
       <WorkshopPillars content={content.pillars} />

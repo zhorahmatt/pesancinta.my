@@ -30,7 +30,7 @@ export function WorkshopPillars({ content }: WorkshopPillarsProps) {
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {content.items.map((pillar, index) => (
             <article
-              key={pillar.title}
+              key={index}
               className="group overflow-hidden border border-white/14 bg-white/2.5 transition-colors duration-300 hover:border-accent/45 hover:bg-white/4.5"
               data-reveal
             >

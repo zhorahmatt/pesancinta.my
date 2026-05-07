@@ -21,8 +21,8 @@ export function EmpathySection({ content }: EmpathySectionProps) {
         </div>
 
         <div className="mt-14 grid gap-4 border-t border-white/14 pt-6 sm:grid-cols-2 lg:grid-cols-4">
-          {content.paragraphs.map((paragraph) => (
-            <article key={paragraph} className="border-b border-white/14 pb-6 sm:border-b-0 sm:border-r sm:pr-5 sm:last:border-r-0 lg:pr-6" data-reveal>
+          {content.paragraphs.map((paragraph, index) => (
+            <article key={index} className="border-b border-white/14 pb-6 sm:border-b-0 sm:border-r sm:pr-5 sm:last:border-r-0 lg:pr-6" data-reveal>
               <p className="text-base leading-7 text-muted">{paragraph}</p>
             </article>
           ))}

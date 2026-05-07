@@ -32,7 +32,7 @@ export function TrainerProfiles({ content }: TrainerProfilesProps) {
 
         <div className="mt-14 grid gap-5 lg:grid-cols-2 lg:items-stretch">
           {content.items.map((trainer, index) => (
-            <article key={trainer.name} className="border-t border-white/14 pt-6" data-reveal>
+            <article key={index} className="border-t border-white/14 pt-6" data-reveal>
               <div className="grid h-full gap-6 sm:grid-cols-[minmax(8rem,11rem)_1fr] sm:items-stretch">
                 <div className="aspect-[4/5] overflow-hidden bg-[linear-gradient(145deg,rgb(243_198_81_/_0.16),rgb(255_255_255_/_0.035))]">
                   <img className="h-full w-full object-cover" src={trainerPhotos[index]} alt={trainer.name} loading="lazy" />
