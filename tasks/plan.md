@@ -415,17 +415,19 @@ Supabase project + env config
 ## Phase 6: Verification, migration, and launch hardening
 
 ### Task 14: Seed/migrate current The Inner Compass content into CMS shape
+**Status:** Source seed complete; manual static-vs-CMS compare remains pending after seed is applied.
+
 **Description:** Add seed data or migration path for the current Inner Compass workshop so CMS can reproduce the existing page content and payment setup.
 
 **Acceptance criteria:**
-- [ ] Existing workshop details are represented in CMS data shape.
-- [ ] BM and ID content exist; EN optional.
-- [ ] Current route remains usable.
-- [ ] No existing social metadata/analytics regression.
+- [x] Existing workshop details are represented in CMS data shape.
+- [x] BM and ID content exist; EN optional.
+- [x] Current route remains usable.
+- [x] No existing social metadata/analytics regression.
 
 **Verification:**
 - [ ] Manual compare current static page and CMS data output.
-- [ ] `npm run build && npm test && npm run lint` passes.
+- [x] `npm run build && npm test && npm run lint` passes.
 
 **Dependencies:** Tasks 9-12
 

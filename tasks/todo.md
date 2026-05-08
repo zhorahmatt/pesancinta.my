@@ -79,9 +79,9 @@
 
 ## Phase 6: Verification, migration, and launch hardening
 
-- [ ] Seed/migrate current The Inner Compass content into CMS shape
-  - Acceptance: current workshop represented in CMS data; BM/ID exist; EN optional; route remains usable; metadata/analytics no regression.
-  - Verify: manual compare static vs CMS output; `npm run build && npm test && npm run lint`.
+- [x] Seed/migrate current The Inner Compass content into CMS shape
+  - Acceptance: current workshop represented in CMS data; BM/ID exist; EN optional; route remains usable; metadata/analytics no regression. Manual static-vs-CMS compare remains pending after seed is applied.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `supabase/seed.sql` or migration seed file, optional bridge code.
 
 - [ ] End-to-end QA and release checklist

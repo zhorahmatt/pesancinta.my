@@ -272,6 +272,21 @@ test('MVP notifications keep provider secrets out of frontend and support WhatsA
   assert.match(spec, /No provider secret is stored in frontend code/);
 });
 
+test('Inner Compass seed data maps current workshop into CMS shape', () => {
+  const seed = read('../supabase/seed.sql');
+  const app = read('./App.tsx');
+
+  assert.match(seed, /the-inner-compass-workshop/);
+  assert.match(seed, /The Inner Compass Workshop/);
+  assert.match(seed, /'ms'/);
+  assert.match(seed, /'id'/);
+  assert.match(seed, /MYR/);
+  assert.match(seed, /IDR/);
+  assert.match(seed, /bank_transfer/);
+  assert.match(seed, /static_qr/);
+  assert.match(app, /<InnerCompassWorkshopPage \/>/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');
