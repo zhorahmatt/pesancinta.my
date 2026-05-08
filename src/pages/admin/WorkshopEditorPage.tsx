@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { PaymentMethodsForm } from '../../components/admin/PaymentMethodsForm';
 import { WorkshopBasicsForm } from '../../components/admin/WorkshopBasicsForm';
 import { WorkshopContentForm } from '../../components/admin/WorkshopContentForm';
+import { WorkshopPricingForm } from '../../components/admin/WorkshopPricingForm';
 import { createWorkshop, getAdminWorkshopById, updateWorkshop, type WorkshopBasicsInput } from '../../lib/workshops';
 import type { Workshop } from '../../types/workshop';
 
@@ -62,6 +64,8 @@ export function WorkshopEditorPage({ workshopId }: WorkshopEditorPageProps) {
         <>
           <WorkshopBasicsForm errorMessage={errorMessage} isSaving={isSaving} onSubmit={handleSubmit} workshop={workshop} />
           {workshop && <WorkshopContentForm workshop={workshop} />}
+          {workshop && <WorkshopPricingForm workshop={workshop} />}
+          {workshop && <PaymentMethodsForm workshop={workshop} />}
         </>
       )}
     </div>

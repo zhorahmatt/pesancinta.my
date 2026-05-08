@@ -1,5 +1,15 @@
 import { supabase } from './supabase';
-import type { PaymentMethod, Workshop, WorkshopCountry, WorkshopLocale, WorkshopLocaleContent, WorkshopPrice, WorkshopStatus } from '../types/workshop';
+import type {
+  PaymentMethod,
+  PaymentMethodType,
+  Workshop,
+  WorkshopCountry,
+  WorkshopCurrency,
+  WorkshopLocale,
+  WorkshopLocaleContent,
+  WorkshopPrice,
+  WorkshopStatus,
+} from '../types/workshop';
 
 export type WorkshopWithContent = Workshop & {
   workshop_locales: WorkshopLocaleContent[];
@@ -30,6 +40,29 @@ export type WorkshopContentInput = {
   cta_label: string;
   registration_message: string;
   sections_json: Record<string, unknown>;
+};
+
+export type WorkshopPriceInput = {
+  workshop_id: string;
+  currency: WorkshopCurrency;
+  amount: number;
+  early_bird_amount: number | null;
+  early_bird_ends_at: string | null;
+};
+
+export type PaymentMethodInput = {
+  id?: string;
+  workshop_id: string;
+  country: WorkshopCountry;
+  type: PaymentMethodType;
+  label: string;
+  currency: WorkshopCurrency;
+  instructions: string;
+  account_name: string | null;
+  account_number: string | null;
+  bank_name: string | null;
+  qr_image_url: string | null;
+  is_active: boolean;
 };
 
 const workshopSelection = '*, workshop_locales(*), workshop_prices(*), payment_methods(*)';
@@ -94,6 +127,22 @@ export async function upsertWorkshopLocaleContent(input: WorkshopContentInput) {
 export function hasRequiredDefaultLocaleContent(contents: WorkshopContentInput[], defaultLocale: WorkshopLocale) {
   const content = contents.find((item) => item.locale === defaultLocale);
   return Boolean(content?.headline.trim() && content.cta_label.trim() && content.registration_message.trim());
+}
+
+export async function listWorkshopPrices(workshopId: string) {
+  return supabase.from('workshop_prices').select('*').eq('workshop_id', workshopId).order('currency').returns<WorkshopPrice[]>();
+}
+
+export async function upsertWorkshopPrice(input: WorkshopPriceInput) {
+  return supabase.from('workshop_prices').upsert(input, { onConflict: 'workshop_id,currency' }).select('*').single().returns<WorkshopPrice>();
+}
+
+export async function listWorkshopPaymentMethods(workshopId: string) {
+  return supabase.from('payment_methods').select('*').eq('workshop_id', workshopId).order('country').returns<PaymentMethod[]>();
+}
+
+export async function upsertWorkshopPaymentMethod(input: PaymentMethodInput) {
+  return supabase.from('payment_methods').upsert(input).select('*').single().returns<PaymentMethod>();
 }
 
 export function getRemainingSeats(capacity: number, confirmedCount: number) {

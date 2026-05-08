@@ -43,9 +43,9 @@
 
 ## Phase 3: Pricing and manual payment setup
 
-- [ ] Add pricing and manual payment method forms
-  - Acceptance: add MYR/IDR prices; add Malaysia/Indonesia bank transfer; upload/select static QR or enter QR instructions; activate/deactivate methods.
-  - Verify: manual create/edit/deactivate; upload smoke check if implemented; `npm run build`.
+- [x] Add pricing and manual payment method forms
+  - Acceptance: add MYR/IDR prices; add Malaysia/Indonesia bank transfer; QR image URL/instructions; activate/deactivate methods. Manual CRUD/upload smoke remains pending with Supabase admin user/storage.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/components/admin/WorkshopPricingForm.tsx`, `src/components/admin/PaymentMethodsForm.tsx`, `src/lib/workshops.ts`, optional `src/lib/storage.ts`.
 
 ## Phase 4: Public CMS-driven workshop page and registration

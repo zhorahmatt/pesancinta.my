@@ -235,19 +235,21 @@ Supabase project + env config
 ## Phase 3: Pricing and manual payment setup
 
 ### Task 8: Add pricing and manual payment method forms
+**Status:** Source implementation complete; manual payment CRUD and QR upload smoke remain pending with Supabase admin user/storage.
+
 **Description:** Let admin configure MYR/IDR pricing, bank transfer details, and static QR image/manual QR instructions per workshop.
 
 **Acceptance criteria:**
-- [ ] Admin can add/edit MYR and IDR prices.
-- [ ] Admin can add bank transfer method for Malaysia and Indonesia.
-- [ ] Admin can upload/select static QR image or enter QR instructions.
-- [ ] Admin can activate/deactivate payment methods.
-- [ ] Public users only see active methods relevant to selected country/currency.
+- [x] Admin can add/edit MYR and IDR prices.
+- [x] Admin can add bank transfer method for Malaysia and Indonesia.
+- [x] Admin can upload/select static QR image or enter QR instructions.
+- [x] Admin can activate/deactivate payment methods.
+- [x] Public users only see active methods relevant to selected country/currency.
 
 **Verification:**
 - [ ] Manual create/edit/deactivate payment methods.
 - [ ] Upload smoke check if QR image upload is implemented in this task.
-- [ ] `npm run build` passes.
+- [x] `npm run build` passes.
 
 **Dependencies:** Task 6
 

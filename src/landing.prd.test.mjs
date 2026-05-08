@@ -162,6 +162,28 @@ test('admin localized content editor supports BM, ID, and optional EN', () => {
   assert.match(contentForm, /Default-locale content is required before publishing/);
 });
 
+test('admin pricing and manual payment forms support MYR, IDR, bank transfer, and static QR', () => {
+  const workshops = read('./lib/workshops.ts');
+  const editorPage = read('./pages/admin/WorkshopEditorPage.tsx');
+  const pricingForm = read('./components/admin/WorkshopPricingForm.tsx');
+  const paymentForm = read('./components/admin/PaymentMethodsForm.tsx');
+
+  assert.match(workshops, /export type WorkshopPriceInput/);
+  assert.match(workshops, /export type PaymentMethodInput/);
+  assert.match(workshops, /export async function listWorkshopPrices/);
+  assert.match(workshops, /export async function upsertWorkshopPrice/);
+  assert.match(workshops, /export async function listWorkshopPaymentMethods/);
+  assert.match(workshops, /export async function upsertWorkshopPaymentMethod/);
+  assert.match(editorPage, /WorkshopPricingForm/);
+  assert.match(editorPage, /PaymentMethodsForm/);
+  assert.match(pricingForm, /MYR/);
+  assert.match(pricingForm, /IDR/);
+  assert.match(paymentForm, /bank_transfer/);
+  assert.match(paymentForm, /static_qr/);
+  assert.match(paymentForm, /qr_image_url/);
+  assert.match(paymentForm, /is_active/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');
