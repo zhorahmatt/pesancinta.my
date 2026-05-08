@@ -64,16 +64,19 @@ Supabase project + env config
 ## Phase 1: Data foundation
 
 ### Task 2: Add Supabase schema migrations for workshops and payments
+**Status:** Source migration complete; remote Supabase apply remains environment action.
+
 **Description:** Add database schema for workshops, localized content, pricing, payment methods, registrations, and payment proofs.
 
 **Acceptance criteria:**
-- [ ] Tables exist: `workshops`, `workshop_locales`, `workshop_prices`, `payment_methods`, `registrations`, `payment_proofs`.
-- [ ] Enum/check constraints cover statuses, currencies, countries, and payment method types.
-- [ ] Slugs are unique.
-- [ ] Foreign keys cascade or restrict intentionally.
-- [ ] Timestamps exist for auditable rows.
+- [x] Tables exist: `workshops`, `workshop_locales`, `workshop_prices`, `payment_methods`, `registrations`, `payment_proofs`.
+- [x] Enum/check constraints cover statuses, currencies, countries, and payment method types.
+- [x] Slugs are unique.
+- [x] Foreign keys cascade or restrict intentionally.
+- [x] Timestamps exist for auditable rows.
 
 **Verification:**
+- [x] Source migration test passes.
 - [ ] Migration applies cleanly in Supabase local/remote environment.
 - [ ] Basic insert/select smoke check passes.
 

@@ -36,6 +36,24 @@ test('project documents Supabase CMS environment setup', () => {
   assert.match(readme, /Do not commit real `\.env` values/);
 });
 
+test('Supabase CMS schema migration covers workshops and payments', () => {
+  const migration = read('../supabase/migrations/20260508000000_create_workshop_cms.sql');
+
+  for (const table of ['workshops', 'workshop_locales', 'workshop_prices', 'payment_methods', 'registrations', 'payment_proofs']) {
+    assert.match(migration, new RegExp(`create table public\\.${table}`));
+  }
+
+  for (const status of ['draft', 'published', 'archived', 'pending', 'awaiting_payment', 'payment_submitted', 'confirmed', 'cancelled', 'refunded']) {
+    assert.match(migration, new RegExp(`'${status}'`));
+  }
+
+  assert.match(migration, /workshop_currency.*'MYR'.*'IDR'/s);
+  assert.match(migration, /workshop_country.*'MY'.*'ID'/s);
+  assert.match(migration, /payment_method_type.*'bank_transfer'.*'static_qr'/s);
+  assert.match(migration, /slug text not null unique/);
+  assert.match(migration, /references public\.workshops\(id\)/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

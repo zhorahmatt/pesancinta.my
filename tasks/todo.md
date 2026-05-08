@@ -9,10 +9,10 @@
 
 ## Phase 1: Data foundation
 
-- [ ] Add Supabase schema migrations for workshops and payments
+- [x] Add Supabase schema migrations for workshops and payments
   - Acceptance: tables for workshops, locales, prices, payment methods, registrations, payment proofs; constraints for statuses/currencies/countries; unique slugs.
-  - Verify: migration applies cleanly; basic insert/select smoke check.
-  - Files: `supabase/migrations/*.sql`.
+  - Verify: source migration test passes; remote migration apply remains pending until Supabase CLI/project workflow is used.
+  - Files: `supabase/migrations/20260508000000_create_workshop_cms.sql`.
 
 - [ ] Add RLS policies and admin access model
   - Acceptance: RLS enabled; public can read published data and submit registration; owner admin can manage CMS; proofs access-controlled.
