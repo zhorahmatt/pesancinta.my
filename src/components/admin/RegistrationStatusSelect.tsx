@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { notifyPaymentConfirmed } from '../../lib/notifications';
 import { updateRegistrationStatus } from '../../lib/registrations';
 import type { Registration, RegistrationStatus } from '../../types/registration';
 
@@ -24,6 +25,9 @@ export function RegistrationStatusSelect({ registration, onChange }: Registratio
       setErrorMessage(error.message);
       setStatus(registration.status);
       return;
+    }
+    if (nextStatus === 'confirmed') {
+      notifyPaymentConfirmed({ phone: data.phone, fullName: data.full_name, workshopTitle: 'workshop' });
     }
     onChange?.(data);
   };

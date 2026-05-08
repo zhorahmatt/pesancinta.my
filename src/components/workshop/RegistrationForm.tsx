@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { notifyRegistrationSubmitted } from '../../lib/notifications';
 import { canAcceptRegistration, createRegistration } from '../../lib/registrations';
 import type { PaymentMethod, Workshop, WorkshopCountry, WorkshopLocale } from '../../types/workshop';
 import { PaymentInstructions } from './PaymentInstructions';
@@ -69,6 +70,14 @@ export function RegistrationForm({ workshop, paymentMethods, confirmedCount = 0 
       return;
     }
 
+    if (paymentMethod) {
+      notifyRegistrationSubmitted({
+        phone: draft.phone,
+        fullName: draft.full_name,
+        workshopTitle: workshop.title,
+        paymentInstructions: paymentMethod.instructions,
+      });
+    }
     setSelectedMethod(paymentMethod);
   };
 

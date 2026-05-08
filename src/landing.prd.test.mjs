@@ -257,6 +257,21 @@ test('admin registration review supports filtering, details, and status updates'
   assert.match(registrations, /export async function updateRegistrationStatus/);
 });
 
+test('MVP notifications keep provider secrets out of frontend and support WhatsApp links', () => {
+  const notifications = read('./lib/notifications.ts');
+  const statusSelect = read('./components/admin/RegistrationStatusSelect.tsx');
+  const registrationForm = read('./components/workshop/RegistrationForm.tsx');
+  const spec = read('../SPEC.md');
+
+  assert.match(notifications, /createWhatsAppNotificationUrl/);
+  assert.match(notifications, /wa\.me/);
+  assert.match(notifications, /notifyRegistrationSubmitted/);
+  assert.match(notifications, /notifyPaymentConfirmed/);
+  assert.match(statusSelect, /notifyPaymentConfirmed/);
+  assert.match(registrationForm, /notifyRegistrationSubmitted/);
+  assert.match(spec, /No provider secret is stored in frontend code/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

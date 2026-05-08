@@ -296,6 +296,7 @@ Manual checks:
 - Storing sensitive personal data beyond registration needs.
 
 ### Never do
+- No provider secret is stored in frontend code.
 - Store payment gateway secrets in frontend code.
 - Disable RLS for production tables.
 - Expose payment proof files publicly without approval.

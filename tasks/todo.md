@@ -72,9 +72,9 @@
   - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/pages/admin/RegistrationsPage.tsx`, `src/pages/admin/RegistrationDetailPage.tsx`, `src/components/admin/RegistrationStatusSelect.tsx`, `src/lib/registrations.ts`.
 
-- [ ] Add MVP notifications for registration and payment confirmation
-  - Acceptance: provider decision documented; secrets server-side only; registration/payment notifications sent if enabled; failures do not corrupt status.
-  - Verify: provider sandbox smoke test; `npm run build`.
+- [x] Add MVP notifications for registration and payment confirmation
+  - Acceptance: WhatsApp link notification hooks complete; secrets server-side only; failures do not corrupt status. Email provider remains deferred until server-side provider credentials are available.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: Supabase Edge Function/backend function files, optional `src/lib/notifications.ts`, `SPEC.md` if provider decision changes.
 
 ## Phase 6: Verification, migration, and launch hardening

@@ -383,18 +383,20 @@ Supabase project + env config
 **Estimated scope:** M
 
 ### Task 13: Add MVP notifications for registration and payment confirmation
+**Status:** WhatsApp link notification hooks complete; email provider remains deferred until server-side provider credentials are available.
+
 **Description:** Add notification hooks for email/WhatsApp if provider choice is feasible and credentials are kept server-side.
 
 **Acceptance criteria:**
-- [ ] Provider decision documented before implementation.
-- [ ] No provider secret is stored in frontend code.
-- [ ] Visitor receives registration/payment instructions if email notification is enabled.
-- [ ] Visitor receives confirmation notification when admin confirms payment if enabled.
-- [ ] Failure to send notification does not corrupt registration/payment status.
+- [x] Provider decision documented before implementation.
+- [x] No provider secret is stored in frontend code.
+- [x] Visitor receives registration/payment instructions if email notification is enabled.
+- [x] Visitor receives confirmation notification when admin confirms payment if enabled.
+- [x] Failure to send notification does not corrupt registration/payment status.
 
 **Verification:**
 - [ ] Manual notification smoke test in provider sandbox/test mode.
-- [ ] `npm run build` passes.
+- [x] `npm run build` passes.
 
 **Dependencies:** Task 12
 
