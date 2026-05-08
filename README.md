@@ -1,4 +1,4 @@
-# Pesan Cinta Landing Pages
+ # Pesan Cinta Landing Pages
 
 Landing page project for Pesan Cinta and The Inner Compass Workshop. Built as a Vite React app with static route metadata for social sharing.
 
@@ -64,6 +64,25 @@ src/
   pages/        Route-level page components
 public/         Static images and media
 ```
+
+## Supabase CMS Setup
+
+The CMS MVP will use Supabase for admin authentication, workshop data, registrations, payment methods, and private uploads.
+
+Create a Supabase project, then copy `.env.example` to `.env` and fill values from Supabase project settings → API:
+
+```bash
+cp .env.example .env
+```
+
+Required values:
+
+```text
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+```
+
+Do not commit real `.env` values or service-role keys. Service-role keys must only live in server-side functions if needed later.
 
 ## Localization
 

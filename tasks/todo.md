@@ -1,31 +1,90 @@
-# Todo: Inner Compass Workshop Localization
+# Todo: Pesan Cinta Workshop CMS MVP
 
-- [ ] Create localized content contract
-  - Acceptance: BM default, ID second, EN third; matching content shape; contacts/event values unchanged.
-  - Verify: `npm run build`
-  - Files: `src/content/landing.ts`
+## Phase 0: External setup and decisions
 
-- [ ] Add visible language switcher
-  - Acceptance: BM / ID / EN buttons in order; active state accessible; click changes copy; refresh persists via `localStorage`.
-  - Verify: browser click/refresh + `npm run build`
-  - Files: `src/pages/InnerCompassWorkshopPage.tsx`, `src/components/LanguageSwitcher.tsx`
+- [x] Prepare Supabase project and environment contract
+  - Acceptance: `.env.example` documents URL/anon key; real `.env` stays untracked; README explains Supabase setup. Supabase project creation remains external owner action.
+  - Verify: `npm run build`; `git status --short` shows no `.env` tracked.
+  - Files: `.env.example`, `README.md`, `src/landing.prd.test.mjs`.
 
-- [ ] Localize hero and CTA path
-  - Acceptance: hero copy and event labels use selected locale; hero WhatsApp message uses selected locale; tracking unchanged.
-  - Verify: browser CTA href inspection + `npm run build`
-  - Files: `src/pages/InnerCompassWorkshopPage.tsx`, `src/components/Hero.tsx`, `src/content/landing.ts`
+## Phase 1: Data foundation
 
-- [ ] Localize middle content sections
-  - Acceptance: empathy, pillars, photo proof, trainers update with selected locale; image behavior unchanged.
-  - Verify: browser switcher check + `npm run build`
-  - Files: `src/components/EmpathySection.tsx`, `src/components/WorkshopPillars.tsx`, `src/components/PhotoProof.tsx`, `src/components/TrainerProfiles.tsx`, `src/pages/InnerCompassWorkshopPage.tsx`
+- [ ] Add Supabase schema migrations for workshops and payments
+  - Acceptance: tables for workshops, locales, prices, payment methods, registrations, payment proofs; constraints for statuses/currencies/countries; unique slugs.
+  - Verify: migration applies cleanly; basic insert/select smoke check.
+  - Files: `supabase/migrations/*.sql`.
 
-- [ ] Localize footer and contact CTAs
-  - Acceptance: footer copy localizes; contact CTA WhatsApp message uses selected locale; contact data unchanged.
-  - Verify: browser footer/CTA href check + `npm run build`
-  - Files: `src/components/ContactFooter.tsx`, `src/pages/InnerCompassWorkshopPage.tsx`, `src/content/landing.ts`
+- [ ] Add RLS policies and admin access model
+  - Acceptance: RLS enabled; public can read published data and submit registration; owner admin can manage CMS; proofs access-controlled.
+  - Verify: anonymous cannot edit CMS; owner can manage; visitor can register.
+  - Files: `supabase/migrations/*.sql`, optional `supabase/policies/*`.
 
-- [ ] Update tests and run verification
-  - Acceptance: tests assert locale coverage and updated page composition; build/test/lint pass.
-  - Verify: `npm run build && npm test && npm run lint`
-  - Files: `src/landing.prd.test.mjs`
+- [ ] Add TypeScript domain types and Supabase client
+  - Acceptance: Supabase client from env; typed workshop/registration/payment models; helpers isolate queries from UI.
+  - Verify: `npm run build`; unit/source tests for helper logic where possible.
+  - Files: `src/lib/supabase.ts`, `src/lib/workshops.ts`, `src/lib/registrations.ts`, `src/types/*`.
+
+## Phase 2: Admin shell and workshop CRUD
+
+- [ ] Add admin authentication and protected dashboard shell
+  - Acceptance: unauthenticated users blocked; owner admin can sign in/out; admin layout has navigation; no protected-content flash.
+  - Verify: manual sign-in/out and direct `/admin` access; `npm run build`.
+  - Files: `src/App.tsx`, `src/pages/admin/*`, `src/components/admin/AdminLayout.tsx`, `src/lib/auth.ts`.
+
+- [ ] Build workshop list and create/edit basics flow
+  - Acceptance: list/create/edit/archive/publish workshops; slug unique; capacity positive; status managed.
+  - Verify: manual CRUD; tests for validation helpers; `npm run build && npm test`.
+  - Files: `src/pages/admin/WorkshopsPage.tsx`, `src/pages/admin/WorkshopEditorPage.tsx`, `src/components/admin/WorkshopBasicsForm.tsx`, `src/lib/workshops.ts`.
+
+- [ ] Add localized content editor for workshop pages
+  - Acceptance: edit BM and ID content; EN optional; required default-locale content before publish; structured content saved.
+  - Verify: manual save/reload; `npm run build`.
+  - Files: `src/components/admin/WorkshopContentForm.tsx`, `src/lib/workshops.ts`, `src/types/workshop.ts`.
+
+## Phase 3: Pricing and manual payment setup
+
+- [ ] Add pricing and manual payment method forms
+  - Acceptance: add MYR/IDR prices; add Malaysia/Indonesia bank transfer; upload/select static QR or enter QR instructions; activate/deactivate methods.
+  - Verify: manual create/edit/deactivate; upload smoke check if implemented; `npm run build`.
+  - Files: `src/components/admin/WorkshopPricingForm.tsx`, `src/components/admin/PaymentMethodsForm.tsx`, `src/lib/workshops.ts`, optional `src/lib/storage.ts`.
+
+## Phase 4: Public CMS-driven workshop page and registration
+
+- [ ] Render public workshop page from CMS data
+  - Acceptance: load published workshop by slug; draft/archived not public; show localized content, price, seats, active payment methods; current static route preserved.
+  - Verify: manual published/draft slug checks; `npm run build`.
+  - Files: `src/pages/WorkshopPublicPage.tsx`, `src/App.tsx`, `src/lib/workshops.ts`, optional `src/components/workshop/*`.
+
+- [ ] Add registration form with capacity checks
+  - Acceptance: capture name/email/phone/country/notes/workshop/payment method; validate fields; enforce capacity; show payment instructions after submit.
+  - Verify: manual happy path and full-capacity case; tests for capacity/form helpers; `npm run build && npm test`.
+  - Files: `src/components/workshop/RegistrationForm.tsx`, `src/components/workshop/PaymentInstructions.tsx`, `src/lib/registrations.ts`, `src/types/registration.ts`.
+
+- [ ] Add optional payment proof handling
+  - Acceptance: proof upload can be enabled/disabled; upload stored access-controlled; status can move to `payment_submitted`.
+  - Verify: manual upload/admin review; anonymous cannot list other proof files; `npm run build`.
+  - Files: `src/components/workshop/PaymentProofUpload.tsx`, `src/lib/registrations.ts`, `src/lib/storage.ts`, `supabase/migrations/*.sql`.
+
+## Phase 5: Admin registration management
+
+- [ ] Build registration list and detail review
+  - Acceptance: view registrations by workshop; filter status; open detail; update status; confirmed count updates capacity.
+  - Verify: manual status transitions and over-capacity prevention; tests for status transitions; `npm run build && npm test`.
+  - Files: `src/pages/admin/RegistrationsPage.tsx`, `src/pages/admin/RegistrationDetailPage.tsx`, `src/components/admin/RegistrationStatusSelect.tsx`, `src/lib/registrations.ts`.
+
+- [ ] Add MVP notifications for registration and payment confirmation
+  - Acceptance: provider decision documented; secrets server-side only; registration/payment notifications sent if enabled; failures do not corrupt status.
+  - Verify: provider sandbox smoke test; `npm run build`.
+  - Files: Supabase Edge Function/backend function files, optional `src/lib/notifications.ts`, `SPEC.md` if provider decision changes.
+
+## Phase 6: Verification, migration, and launch hardening
+
+- [ ] Seed/migrate current The Inner Compass content into CMS shape
+  - Acceptance: current workshop represented in CMS data; BM/ID exist; EN optional; route remains usable; metadata/analytics no regression.
+  - Verify: manual compare static vs CMS output; `npm run build && npm test && npm run lint`.
+  - Files: `supabase/seed.sql` or migration seed file, optional bridge code.
+
+- [ ] End-to-end QA and release checklist
+  - Acceptance: auth blocks admin; anonymous cannot edit CMS; MY/ID registration works; capacity cannot be bypassed; existing pages work; metadata works.
+  - Verify: `npm run build`; `npm test`; `npm run lint`; mobile/desktop browser checks; Supabase RLS smoke tests.
+  - Files: `src/landing.prd.test.mjs`, release notes if needed.

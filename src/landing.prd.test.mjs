@@ -26,6 +26,16 @@ test('routing maps home and workshop pages', () => {
   assert.match(workshop, /<LanguageSwitcher[\s\S]*<MobileFloatingCta[\s\S]*<Hero content=\{content\.hero\}[\s\S]*<EmpathySection content=\{content\.empathy\}[\s\S]*<WorkshopPillars content=\{content\.pillars\}[\s\S]*<PhotoProof content=\{content\.photoProof\}[\s\S]*<TrainerProfiles content=\{content\.trainers\}[\s\S]*<ContactFooter content=\{content\.footer\}/);
 });
 
+test('project documents Supabase CMS environment setup', () => {
+  const envExample = read('../.env.example');
+  const readme = read('../README.md');
+
+  assert.match(envExample, /VITE_SUPABASE_URL=/);
+  assert.match(envExample, /VITE_SUPABASE_ANON_KEY=/);
+  assert.match(readme, /Supabase CMS Setup/);
+  assert.match(readme, /Do not commit real `\.env` values/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');
