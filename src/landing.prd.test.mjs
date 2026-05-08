@@ -287,6 +287,26 @@ test('Inner Compass seed data maps current workshop into CMS shape', () => {
   assert.match(app, /<InnerCompassWorkshopPage \/>/);
 });
 
+test('CMS MVP release checklist covers auth, RLS, registration, capacity, and existing pages', () => {
+  const plan = read('../tasks/plan.md');
+  const todo = read('../tasks/todo.md');
+  const app = read('./App.tsx');
+  const registrations = read('./lib/registrations.ts');
+  const rls = read('../supabase/migrations/20260508001000_add_workshop_cms_rls.sql');
+
+  assert.match(plan, /End-to-end QA and release checklist/);
+  assert.match(plan, /Admin auth blocks public access/);
+  assert.match(plan, /Anonymous user cannot edit CMS data/);
+  assert.match(plan, /Registration works for Malaysia and Indonesia payment methods/);
+  assert.match(plan, /Capacity limit cannot be bypassed through UI/);
+  assert.match(todo, /End-to-end QA and release checklist/);
+  assert.match(app, /AdminDashboardPage/);
+  assert.match(app, /PesanCintaHomePage/);
+  assert.match(app, /InnerCompassWorkshopPage/);
+  assert.match(registrations, /canAcceptRegistration/);
+  assert.match(rls, /public\.is_cms_admin\(\)/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

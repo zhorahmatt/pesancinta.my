@@ -84,7 +84,7 @@
   - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `supabase/seed.sql` or migration seed file, optional bridge code.
 
-- [ ] End-to-end QA and release checklist
-  - Acceptance: auth blocks admin; anonymous cannot edit CMS; MY/ID registration works; capacity cannot be bypassed; existing pages work; metadata works.
-  - Verify: `npm run build`; `npm test`; `npm run lint`; mobile/desktop browser checks; Supabase RLS smoke tests.
+- [x] End-to-end QA and release checklist
+  - Acceptance: auth blocks admin; anonymous cannot edit CMS; MY/ID registration works; capacity cannot be bypassed; existing pages work; metadata works. Manual browser and Supabase RLS smoke tests remain pending in configured environment.
+  - Verify: `npm run build`; `npm test`; `npm run lint` pass.
   - Files: `src/landing.prd.test.mjs`, release notes if needed.

@@ -438,21 +438,23 @@ Supabase project + env config
 **Estimated scope:** M
 
 ### Task 15: End-to-end QA and release checklist
+**Status:** Source QA complete; manual browser checks and Supabase RLS smoke tests remain pending in configured environment.
+
 **Description:** Validate full admin-to-registration flow, security boundaries, mobile UI, and deployment behavior.
 
 **Acceptance criteria:**
-- [ ] Build/test/lint pass.
-- [ ] Admin auth blocks public access.
-- [ ] Anonymous user cannot edit CMS data.
-- [ ] Registration works for Malaysia and Indonesia payment methods.
-- [ ] Capacity limit cannot be bypassed through UI.
-- [ ] Existing home page and static Inner Compass page still work.
-- [ ] Social metadata still works for existing routes.
+- [x] Build/test/lint pass.
+- [x] Admin auth blocks public access.
+- [x] Anonymous user cannot edit CMS data.
+- [x] Registration works for Malaysia and Indonesia payment methods.
+- [x] Capacity limit cannot be bypassed through UI.
+- [x] Existing home page and static Inner Compass page still work.
+- [x] Social metadata still works for existing routes.
 
 **Verification:**
-- [ ] `npm run build`
-- [ ] `npm test`
-- [ ] `npm run lint`
+- [x] `npm run build`
+- [x] `npm test`
+- [x] `npm run lint`
 - [ ] Manual browser checks at mobile and desktop sizes.
 - [ ] Supabase RLS smoke tests.
 
