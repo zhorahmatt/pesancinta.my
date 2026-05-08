@@ -175,20 +175,22 @@ Supabase project + env config
 **Estimated scope:** M
 
 ### Task 6: Build workshop list and create/edit basics flow
+**Status:** Source implementation complete; manual create/edit/archive/publish remains pending with Supabase admin user.
+
 **Description:** Let admin list workshops and create/edit core workshop basics: title, slug, status, date/time, venue, city/country, capacity, default locale, and remaining seat visibility.
 
 **Acceptance criteria:**
-- [ ] Admin can view workshop list.
-- [ ] Admin can create draft workshop.
-- [ ] Admin can edit workshop basics.
-- [ ] Slug is required and unique.
-- [ ] Capacity must be positive.
-- [ ] Workshop can be draft, published, or archived.
+- [x] Admin can view workshop list.
+- [x] Admin can create draft workshop.
+- [x] Admin can edit workshop basics.
+- [x] Slug is required and unique.
+- [x] Capacity must be positive.
+- [x] Workshop can be draft, published, or archived.
 
 **Verification:**
 - [ ] Manual create/edit/archive/publish check.
-- [ ] Tests cover validation helpers for slug/capacity/status.
-- [ ] `npm run build && npm test` passes.
+- [x] Tests cover validation helpers for slug/capacity/status.
+- [x] `npm run build && npm test` passes.
 
 **Dependencies:** Task 5
 

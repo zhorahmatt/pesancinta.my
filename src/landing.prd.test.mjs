@@ -98,7 +98,7 @@ test('admin route has protected dashboard shell and auth helpers', () => {
   const layout = read('./components/admin/AdminLayout.tsx');
 
   assert.match(app, /\/admin/);
-  assert.match(app, /<AdminDashboardPage \/>/);
+  assert.match(app, /<AdminDashboardPage/);
   assert.match(auth, /getSession/);
   assert.match(auth, /signInWithPassword/);
   assert.match(auth, /signOut/);
@@ -110,6 +110,34 @@ test('admin route has protected dashboard shell and auth helpers', () => {
   assert.match(layout, /Workshops/);
   assert.match(layout, /Registrations/);
   assert.match(layout, /Payments/);
+});
+
+test('admin workshop basics flow has list, editor, and validation helpers', () => {
+  const app = read('./App.tsx');
+  const workshops = read('./lib/workshops.ts');
+  const listPage = read('./pages/admin/WorkshopsPage.tsx');
+  const editorPage = read('./pages/admin/WorkshopEditorPage.tsx');
+  const basicsForm = read('./components/admin/WorkshopBasicsForm.tsx');
+
+  assert.match(app, /\/admin\/workshops\/new/);
+  assert.match(app, /<WorkshopEditorPage/);
+  assert.match(app, /<WorkshopsPage \/>/);
+  assert.match(workshops, /export function isValidWorkshopSlug/);
+  assert.match(workshops, /export function isValidWorkshopCapacity/);
+  assert.match(workshops, /export async function listAdminWorkshops/);
+  assert.match(workshops, /export async function getAdminWorkshopById/);
+  assert.match(workshops, /export async function createWorkshop/);
+  assert.match(workshops, /export async function updateWorkshop/);
+  assert.match(listPage, /listAdminWorkshops/);
+  assert.match(listPage, /New workshop/);
+  assert.match(editorPage, /WorkshopBasicsForm/);
+  assert.match(editorPage, /createWorkshop/);
+  assert.match(editorPage, /updateWorkshop/);
+  assert.match(basicsForm, /Slug is required/);
+  assert.match(basicsForm, /Capacity must be positive/);
+  assert.match(basicsForm, /draft/);
+  assert.match(basicsForm, /published/);
+  assert.match(basicsForm, /archived/);
 });
 
 test('workshop landing page content matches simplified Batch 3 PRD', () => {

@@ -31,9 +31,9 @@
   - Verify: source tests and `npm run build` pass; manual sign-in/out remains pending with Supabase admin user.
   - Files: `src/App.tsx`, `src/pages/admin/*`, `src/components/admin/AdminLayout.tsx`, `src/lib/auth.ts`.
 
-- [ ] Build workshop list and create/edit basics flow
-  - Acceptance: list/create/edit/archive/publish workshops; slug unique; capacity positive; status managed.
-  - Verify: manual CRUD; tests for validation helpers; `npm run build && npm test`.
+- [x] Build workshop list and create/edit basics flow
+  - Acceptance: list/create/edit/archive/publish workshops; slug unique; capacity positive; status managed. Manual CRUD remains pending with Supabase admin user.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/pages/admin/WorkshopsPage.tsx`, `src/pages/admin/WorkshopEditorPage.tsx`, `src/components/admin/WorkshopBasicsForm.tsx`, `src/lib/workshops.ts`.
 
 - [ ] Add localized content editor for workshop pages
