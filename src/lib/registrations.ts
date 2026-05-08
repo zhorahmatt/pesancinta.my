@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { CreateRegistrationInput, Registration } from '../types/registration';
+import type { CreateRegistrationInput, PaymentProof, Registration } from '../types/registration';
 
 export async function createRegistration(input: CreateRegistrationInput) {
   return supabase
@@ -21,6 +21,19 @@ export async function listRegistrationsByWorkshop(workshopId: string) {
     .eq('workshop_id', workshopId)
     .order('created_at', { ascending: false })
     .returns<Registration[]>();
+}
+
+export async function createPaymentProof(registrationId: string, fileUrl: string) {
+  return supabase
+    .from('payment_proofs')
+    .insert({ registration_id: registrationId, file_url: fileUrl, status: 'submitted' })
+    .select('*')
+    .single()
+    .returns<PaymentProof>();
+}
+
+export async function markRegistrationPaymentSubmitted(registrationId: string) {
+  return supabase.from('registrations').update({ status: 'payment_submitted' }).eq('id', registrationId).select('*').single().returns<Registration>();
 }
 
 export function isConfirmedRegistration(registration: Pick<Registration, 'status'>) {

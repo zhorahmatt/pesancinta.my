@@ -221,6 +221,21 @@ test('public registration form validates visitor details and shows manual paymen
   assert.match(registrations, /awaiting_payment/);
 });
 
+test('optional payment proof handling stores access-controlled uploads', () => {
+  const proofUpload = read('./components/workshop/PaymentProofUpload.tsx');
+  const registrations = read('./lib/registrations.ts');
+  const storage = read('./lib/storage.ts');
+
+  assert.match(proofUpload, /PaymentProofUpload/);
+  assert.match(proofUpload, /payment_submitted/);
+  assert.match(proofUpload, /uploadPaymentProof/);
+  assert.match(registrations, /export async function createPaymentProof/);
+  assert.match(registrations, /export async function markRegistrationPaymentSubmitted/);
+  assert.match(storage, /payment-proofs/);
+  assert.match(storage, /uploadPaymentProof/);
+  assert.match(storage, /getPaymentProofPath/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

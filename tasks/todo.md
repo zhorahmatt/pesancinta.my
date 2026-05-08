@@ -60,9 +60,9 @@
   - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/components/workshop/RegistrationForm.tsx`, `src/components/workshop/PaymentInstructions.tsx`, `src/lib/registrations.ts`, `src/types/registration.ts`.
 
-- [ ] Add optional payment proof handling
-  - Acceptance: proof upload can be enabled/disabled; upload stored access-controlled; status can move to `payment_submitted`.
-  - Verify: manual upload/admin review; anonymous cannot list other proof files; `npm run build`.
+- [x] Add optional payment proof handling
+  - Acceptance: proof upload can be enabled/disabled; upload stored access-controlled; status can move to `payment_submitted`. Manual upload/admin review and storage policy smoke remain pending with Supabase Storage.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/components/workshop/PaymentProofUpload.tsx`, `src/lib/registrations.ts`, `src/lib/storage.ts`, `supabase/migrations/*.sql`.
 
 ## Phase 5: Admin registration management

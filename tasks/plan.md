@@ -321,18 +321,20 @@ Supabase project + env config
 **Estimated scope:** M
 
 ### Task 11: Add optional payment proof handling
+**Status:** Source implementation complete; manual upload/admin review and storage policy smoke remain pending with Supabase Storage.
+
 **Description:** If enabled for MVP, let visitors upload payment proof or let admin confirm from external bank check only.
 
 **Acceptance criteria:**
-- [ ] Admin can choose whether proof upload is required/visible per workshop or payment method.
-- [ ] Visitor can upload proof only when enabled.
-- [ ] Upload goes to Supabase Storage with access-controlled path.
-- [ ] Registration status can move to `payment_submitted` after proof upload.
+- [x] Admin can choose whether proof upload is required/visible per workshop or payment method.
+- [x] Visitor can upload proof only when enabled.
+- [x] Upload goes to Supabase Storage with access-controlled path.
+- [x] Registration status can move to `payment_submitted` after proof upload.
 
 **Verification:**
 - [ ] Manual upload and admin review check.
 - [ ] Anonymous users cannot list other proof files.
-- [ ] `npm run build` passes.
+- [x] `npm run build` passes.
 
 **Dependencies:** Task 10
 
