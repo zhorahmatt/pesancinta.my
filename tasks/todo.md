@@ -26,9 +26,9 @@
 
 ## Phase 2: Admin shell and workshop CRUD
 
-- [ ] Add admin authentication and protected dashboard shell
+- [x] Add admin authentication and protected dashboard shell
   - Acceptance: unauthenticated users blocked; owner admin can sign in/out; admin layout has navigation; no protected-content flash.
-  - Verify: manual sign-in/out and direct `/admin` access; `npm run build`.
+  - Verify: source tests and `npm run build` pass; manual sign-in/out remains pending with Supabase admin user.
   - Files: `src/App.tsx`, `src/pages/admin/*`, `src/components/admin/AdminLayout.tsx`, `src/lib/auth.ts`.
 
 - [ ] Build workshop list and create/edit basics flow

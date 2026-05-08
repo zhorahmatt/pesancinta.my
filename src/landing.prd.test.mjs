@@ -90,6 +90,28 @@ test('Supabase CMS client and domain helpers are typed', () => {
   assert.match(registrations, /export async function createRegistration/);
 });
 
+test('admin route has protected dashboard shell and auth helpers', () => {
+  const app = read('./App.tsx');
+  const auth = read('./lib/auth.ts');
+  const login = read('./pages/admin/AdminLoginPage.tsx');
+  const dashboard = read('./pages/admin/AdminDashboardPage.tsx');
+  const layout = read('./components/admin/AdminLayout.tsx');
+
+  assert.match(app, /\/admin/);
+  assert.match(app, /<AdminDashboardPage \/>/);
+  assert.match(auth, /getSession/);
+  assert.match(auth, /signInWithPassword/);
+  assert.match(auth, /signOut/);
+  assert.match(login, /Admin Login/);
+  assert.match(login, /type="email"/);
+  assert.match(login, /type="password"/);
+  assert.match(dashboard, /ProtectedAdminRoute/);
+  assert.match(dashboard, /AdminLayout/);
+  assert.match(layout, /Workshops/);
+  assert.match(layout, /Registrations/);
+  assert.match(layout, /Payments/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

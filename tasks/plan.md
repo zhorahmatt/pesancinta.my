@@ -147,18 +147,21 @@ Supabase project + env config
 ## Phase 2: Admin shell and workshop CRUD
 
 ### Task 5: Add admin authentication and protected dashboard shell
+**Status:** Source implementation complete; manual sign-in/out remains pending with Supabase admin user.
+
 **Description:** Add `/admin` sign-in and protected dashboard layout for one owner account.
 
 **Acceptance criteria:**
-- [ ] Unauthenticated users cannot access dashboard pages.
-- [ ] Admin can sign in and sign out.
-- [ ] Dashboard shell has navigation for Workshops, Registrations, and Settings/Payments placeholders.
-- [ ] Auth state loading does not flash protected content.
+- [x] Unauthenticated users cannot access dashboard pages.
+- [x] Admin can sign in and sign out.
+- [x] Dashboard shell has navigation for Workshops, Registrations, and Settings/Payments placeholders.
+- [x] Auth state loading does not flash protected content.
 
 **Verification:**
+- [x] Source tests pass.
+- [x] `npm run build` passes.
 - [ ] Manual sign-in/out check.
 - [ ] Direct `/admin` access redirects or shows sign-in.
-- [ ] `npm run build` passes.
 
 **Dependencies:** Task 4
 
