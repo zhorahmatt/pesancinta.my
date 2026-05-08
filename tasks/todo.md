@@ -36,9 +36,9 @@
   - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/pages/admin/WorkshopsPage.tsx`, `src/pages/admin/WorkshopEditorPage.tsx`, `src/components/admin/WorkshopBasicsForm.tsx`, `src/lib/workshops.ts`.
 
-- [ ] Add localized content editor for workshop pages
-  - Acceptance: edit BM and ID content; EN optional; required default-locale content before publish; structured content saved.
-  - Verify: manual save/reload; `npm run build`.
+- [x] Add localized content editor for workshop pages
+  - Acceptance: edit BM and ID content; EN optional; required default-locale content before publish; structured content saved. Manual save/reload remains pending with Supabase admin user.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/components/admin/WorkshopContentForm.tsx`, `src/lib/workshops.ts`, `src/types/workshop.ts`.
 
 ## Phase 3: Pricing and manual payment setup

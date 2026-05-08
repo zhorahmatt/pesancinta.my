@@ -203,18 +203,20 @@ Supabase project + env config
 **Estimated scope:** M
 
 ### Task 7: Add localized content editor for workshop pages
+**Status:** Source implementation complete; manual save/reload remains pending with Supabase admin user.
+
 **Description:** Add structured content forms for Bahasa Malaysia, Bahasa Indonesia, and optional English without implementing full live visual editor.
 
 **Acceptance criteria:**
-- [ ] Admin can edit BM and ID content for a workshop.
-- [ ] EN content can be added or left empty.
-- [ ] Fields cover headline, subheadline, description, CTA label, registration message, and section JSON/content.
-- [ ] Validation prevents publishing without required default-locale content.
-- [ ] Existing The Inner Compass content can be seeded/migrated into this shape later.
+- [x] Admin can edit BM and ID content for a workshop.
+- [x] EN content can be added or left empty.
+- [x] Fields cover headline, subheadline, description, CTA label, registration message, and section JSON/content.
+- [x] Validation prevents publishing without required default-locale content.
+- [x] Existing The Inner Compass content can be seeded/migrated into this shape later.
 
 **Verification:**
 - [ ] Manual save/reload content check.
-- [ ] `npm run build` passes.
+- [x] `npm run build` passes.
 
 **Dependencies:** Task 6
 

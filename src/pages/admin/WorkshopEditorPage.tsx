@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { WorkshopBasicsForm } from '../../components/admin/WorkshopBasicsForm';
+import { WorkshopContentForm } from '../../components/admin/WorkshopContentForm';
 import { createWorkshop, getAdminWorkshopById, updateWorkshop, type WorkshopBasicsInput } from '../../lib/workshops';
 import type { Workshop } from '../../types/workshop';
 
@@ -58,7 +59,10 @@ export function WorkshopEditorPage({ workshopId }: WorkshopEditorPageProps) {
       {isLoading ? (
         <div className="mt-8 rounded-xl border border-white/10 p-6 text-sm text-primary/68">Loading workshop...</div>
       ) : (
-        <WorkshopBasicsForm errorMessage={errorMessage} isSaving={isSaving} onSubmit={handleSubmit} workshop={workshop} />
+        <>
+          <WorkshopBasicsForm errorMessage={errorMessage} isSaving={isSaving} onSubmit={handleSubmit} workshop={workshop} />
+          {workshop && <WorkshopContentForm workshop={workshop} />}
+        </>
       )}
     </div>
   );

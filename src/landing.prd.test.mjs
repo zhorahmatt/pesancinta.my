@@ -140,6 +140,28 @@ test('admin workshop basics flow has list, editor, and validation helpers', () =
   assert.match(basicsForm, /archived/);
 });
 
+test('admin localized content editor supports BM, ID, and optional EN', () => {
+  const workshops = read('./lib/workshops.ts');
+  const editorPage = read('./pages/admin/WorkshopEditorPage.tsx');
+  const contentForm = read('./components/admin/WorkshopContentForm.tsx');
+
+  assert.match(workshops, /export type WorkshopContentInput/);
+  assert.match(workshops, /export async function listWorkshopLocaleContent/);
+  assert.match(workshops, /export async function upsertWorkshopLocaleContent/);
+  assert.match(workshops, /export function hasRequiredDefaultLocaleContent/);
+  assert.match(editorPage, /WorkshopContentForm/);
+  assert.match(contentForm, /Bahasa Malaysia/);
+  assert.match(contentForm, /Bahasa Indonesia/);
+  assert.match(contentForm, /English optional/);
+  assert.match(contentForm, /headline/);
+  assert.match(contentForm, /subheadline/);
+  assert.match(contentForm, /description/);
+  assert.match(contentForm, /cta_label/);
+  assert.match(contentForm, /registration_message/);
+  assert.match(contentForm, /sections_json/);
+  assert.match(contentForm, /Default-locale content is required before publishing/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

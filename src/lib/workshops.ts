@@ -21,6 +21,17 @@ export type WorkshopBasicsInput = {
   show_remaining_seats: boolean;
 };
 
+export type WorkshopContentInput = {
+  workshop_id: string;
+  locale: WorkshopLocale;
+  headline: string;
+  subheadline: string | null;
+  description: string | null;
+  cta_label: string;
+  registration_message: string;
+  sections_json: Record<string, unknown>;
+};
+
 const workshopSelection = '*, workshop_locales(*), workshop_prices(*), payment_methods(*)';
 const workshopSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -65,6 +76,24 @@ export async function createWorkshop(input: WorkshopBasicsInput) {
 
 export async function updateWorkshop(id: string, input: WorkshopBasicsInput) {
   return supabase.from('workshops').update(toWorkshopMutation(input)).eq('id', id).select('*').single().returns<Workshop>();
+}
+
+export async function listWorkshopLocaleContent(workshopId: string) {
+  return supabase.from('workshop_locales').select('*').eq('workshop_id', workshopId).order('locale').returns<WorkshopLocaleContent[]>();
+}
+
+export async function upsertWorkshopLocaleContent(input: WorkshopContentInput) {
+  return supabase
+    .from('workshop_locales')
+    .upsert(input, { onConflict: 'workshop_id,locale' })
+    .select('*')
+    .single()
+    .returns<WorkshopLocaleContent>();
+}
+
+export function hasRequiredDefaultLocaleContent(contents: WorkshopContentInput[], defaultLocale: WorkshopLocale) {
+  const content = contents.find((item) => item.locale === defaultLocale);
+  return Boolean(content?.headline.trim() && content.cta_label.trim() && content.registration_message.trim());
 }
 
 export function getRemainingSeats(capacity: number, confirmedCount: number) {
