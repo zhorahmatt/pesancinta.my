@@ -12,5 +12,5 @@ export async function uploadPaymentProof(registrationId: string, file: File) {
   const { data, error } = await supabase.storage.from(paymentProofBucket).upload(path, file, { upsert: false });
 
   if (error) return { data: null, error };
-  return { data: { path: data.path, file_url: data.path }, error: null };
+  return { data: { file_path: data.path }, error: null };
 }

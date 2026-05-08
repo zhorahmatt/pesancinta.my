@@ -5,15 +5,17 @@ import type { Registration, RegistrationStatus } from '../../types/registration'
 
 type RegistrationStatusSelectProps = {
   registration: Registration;
+  workshopTitle: string;
   onChange?: (registration: Registration) => void;
 };
 
 const statuses: RegistrationStatus[] = ['pending', 'awaiting_payment', 'payment_submitted', 'confirmed', 'cancelled', 'refunded'];
 
-export function RegistrationStatusSelect({ registration, onChange }: RegistrationStatusSelectProps) {
+export function RegistrationStatusSelect({ registration, workshopTitle, onChange }: RegistrationStatusSelectProps) {
   const [status, setStatus] = useState<RegistrationStatus>(registration.status);
   const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [whatsAppUrl, setWhatsAppUrl] = useState<string | null>(null);
 
   const handleChange = async (nextStatus: RegistrationStatus) => {
     setStatus(nextStatus);
@@ -27,7 +29,7 @@ export function RegistrationStatusSelect({ registration, onChange }: Registratio
       return;
     }
     if (nextStatus === 'confirmed') {
-      notifyPaymentConfirmed({ phone: data.phone, fullName: data.full_name, workshopTitle: 'workshop' });
+      setWhatsAppUrl(notifyPaymentConfirmed({ phone: data.phone, fullName: data.full_name, workshopTitle }));
     }
     onChange?.(data);
   };
@@ -38,6 +40,7 @@ export function RegistrationStatusSelect({ registration, onChange }: Registratio
         {statuses.map((item) => <option key={item} value={item}>{item}</option>)}
       </select>
       {errorMessage && <div className="text-sm text-red-100" role="alert">{errorMessage}</div>}
+      {whatsAppUrl && <a className="text-sm font-bold text-accent" href={whatsAppUrl} rel="noreferrer" target="_blank">Open WhatsApp confirmation</a>}
     </div>
   );
 }

@@ -269,7 +269,7 @@ test('MVP notifications keep provider secrets out of frontend and support WhatsA
   assert.match(notifications, /notifyPaymentConfirmed/);
   assert.match(statusSelect, /notifyPaymentConfirmed/);
   assert.match(registrationForm, /notifyRegistrationSubmitted/);
-  assert.match(spec, /No provider secret is stored in frontend code/);
+  assert.match(spec, /Store provider secrets in frontend code/);
 });
 
 test('Inner Compass seed data maps current workshop into CMS shape', () => {

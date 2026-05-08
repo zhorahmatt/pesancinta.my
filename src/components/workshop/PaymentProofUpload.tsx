@@ -33,7 +33,7 @@ export function PaymentProofUpload({ registrationId, isEnabled }: PaymentProofUp
       return;
     }
 
-    const proofResult = await createPaymentProof(registrationId, uploadResult.data.file_url);
+    const proofResult = await createPaymentProof(registrationId, uploadResult.data.file_path);
     if (proofResult.error) {
       setErrorMessage(proofResult.error.message);
       setIsSaving(false);

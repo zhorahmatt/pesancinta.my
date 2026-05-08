@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { RegistrationStatusSelect } from '../../components/admin/RegistrationStatusSelect';
 import { getRegistrationById } from '../../lib/registrations';
+import { getAdminWorkshopById } from '../../lib/workshops';
 import type { Registration } from '../../types/registration';
 
 type RegistrationDetailPageProps = {
@@ -9,16 +10,25 @@ type RegistrationDetailPageProps = {
 
 export function RegistrationDetailPage({ registrationId }: RegistrationDetailPageProps) {
   const [registration, setRegistration] = useState<Registration | null>(null);
+  const [workshopTitle, setWorkshopTitle] = useState('workshop');
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
-    getRegistrationById(registrationId).then(({ data, error }) => {
+    getRegistrationById(registrationId).then(async ({ data, error }) => {
       if (!isMounted) return;
       if (error) setErrorMessage(error.message);
       setRegistration(data ?? null);
+
+      if (data) {
+        const workshopResult = await getAdminWorkshopById(data.workshop_id);
+        if (!isMounted) return;
+        if (workshopResult.error) setErrorMessage(workshopResult.error.message);
+        setWorkshopTitle(workshopResult.data?.title ?? 'workshop');
+      }
+
       setIsLoading(false);
     });
 
@@ -45,7 +55,7 @@ export function RegistrationDetailPage({ registrationId }: RegistrationDetailPag
         <Info label="Notes" value={registration.notes ?? '-'} />
         <label className="grid gap-2 text-sm font-semibold text-primary/82">
           Status
-          <RegistrationStatusSelect registration={registration} onChange={setRegistration} />
+          <RegistrationStatusSelect registration={registration} workshopTitle={workshopTitle} onChange={setRegistration} />
         </label>
       </section>
     </div>

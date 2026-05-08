@@ -26,3 +26,5 @@ pnpm-debug.log*
 
 # local agent/tooling data
 .claude/
+.vercel
+.env*.local

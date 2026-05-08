@@ -3,7 +3,7 @@ import { PaymentMethodsForm } from '../../components/admin/PaymentMethodsForm';
 import { WorkshopBasicsForm } from '../../components/admin/WorkshopBasicsForm';
 import { WorkshopContentForm } from '../../components/admin/WorkshopContentForm';
 import { WorkshopPricingForm } from '../../components/admin/WorkshopPricingForm';
-import { createWorkshop, getAdminWorkshopById, updateWorkshop, type WorkshopBasicsInput } from '../../lib/workshops';
+import { createWorkshop, getAdminWorkshopById, hasRequiredDefaultLocaleContent, listWorkshopLocaleContent, updateWorkshop, type WorkshopBasicsInput } from '../../lib/workshops';
 import type { Workshop } from '../../types/workshop';
 
 type WorkshopEditorPageProps = {
@@ -35,6 +35,21 @@ export function WorkshopEditorPage({ workshopId }: WorkshopEditorPageProps) {
   const handleSubmit = async (input: WorkshopBasicsInput) => {
     setIsSaving(true);
     setErrorMessage(null);
+
+    if (workshopId && input.status === 'published') {
+      const contentResult = await listWorkshopLocaleContent(workshopId);
+      if (contentResult.error) {
+        setErrorMessage(contentResult.error.message);
+        setIsSaving(false);
+        return;
+      }
+
+      if (!hasRequiredDefaultLocaleContent(contentResult.data ?? [], input.default_locale)) {
+        setErrorMessage('Default-locale content is required before publishing');
+        setIsSaving(false);
+        return;
+      }
+    }
 
     const { data, error } = workshopId ? await updateWorkshop(workshopId, input) : await createWorkshop(input);
 

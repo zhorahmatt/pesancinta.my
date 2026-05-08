@@ -21,6 +21,14 @@ export type Database = {
     };
     Views: Record<string, never>;
     Functions: {
+      confirm_registration: {
+        Args: { registration_id: string };
+        Returns: Registration;
+      };
+      get_confirmed_registration_count: {
+        Args: { workshop_id: string };
+        Returns: number;
+      };
       is_cms_admin: {
         Args: Record<string, never>;
         Returns: boolean;

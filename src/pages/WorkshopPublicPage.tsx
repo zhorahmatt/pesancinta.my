@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { RegistrationForm } from '../components/workshop/RegistrationForm';
+import { getConfirmedRegistrationCount } from '../lib/registrations';
 import { getWorkshopBySlug, getRemainingSeats, type WorkshopWithContent } from '../lib/workshops';
 import type { WorkshopLocaleContent } from '../types/workshop';
 
@@ -9,16 +10,25 @@ type WorkshopPublicPageProps = {
 
 export function WorkshopPublicPage({ slug }: WorkshopPublicPageProps) {
   const [workshop, setWorkshop] = useState<WorkshopWithContent | null>(null);
+  const [confirmedCount, setConfirmedCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
-    getWorkshopBySlug(slug).then(({ data, error }) => {
+    getWorkshopBySlug(slug).then(async ({ data, error }) => {
       if (!isMounted) return;
       if (error) setErrorMessage(error.message);
       setWorkshop(data ?? null);
+
+      if (data) {
+        const countResult = await getConfirmedRegistrationCount(data.id);
+        if (!isMounted) return;
+        if (countResult.error) setErrorMessage(countResult.error.message);
+        setConfirmedCount(countResult.data ?? 0);
+      }
+
       setIsLoading(false);
     });
 
@@ -42,7 +52,7 @@ export function WorkshopPublicPage({ slug }: WorkshopPublicPageProps) {
 
   const content = selectContent(workshop.workshop_locales, workshop.default_locale);
   const activePaymentMethods = workshop.payment_methods.filter((method) => method.is_active);
-  const remainingSeats = getRemainingSeats(workshop.capacity, 0);
+  const remainingSeats = getRemainingSeats(workshop.capacity, confirmedCount);
 
   return (
     <main className="min-h-svh bg-page-deep px-5 py-10 text-primary sm:px-8 lg:px-10">
@@ -85,7 +95,7 @@ export function WorkshopPublicPage({ slug }: WorkshopPublicPageProps) {
           </div>
         </section>
 
-        <RegistrationForm paymentMethods={activePaymentMethods} workshop={workshop} />
+        <RegistrationForm confirmedCount={confirmedCount} paymentMethods={activePaymentMethods} workshop={workshop} />
       </section>
     </main>
   );

@@ -16,7 +16,8 @@ export function RegistrationsPage({ workshopId }: RegistrationsPageProps) {
 
   useEffect(() => {
     let isMounted = true;
-    const request = workshopId ? listRegistrationsByWorkshop(workshopId) : listAllRegistrations();
+    const options = { status: filterStatus, limit: 50 };
+    const request = workshopId ? listRegistrationsByWorkshop(workshopId, options) : listAllRegistrations(options);
 
     request.then(({ data, error }) => {
       if (!isMounted) return;
@@ -28,16 +29,16 @@ export function RegistrationsPage({ workshopId }: RegistrationsPageProps) {
     return () => {
       isMounted = false;
     };
-  }, [workshopId]);
+  }, [filterStatus, workshopId]);
 
-  const visibleRegistrations = filterStatus === 'all' ? registrations : registrations.filter((registration) => registration.status === filterStatus);
+  const visibleRegistrations = registrations;
 
   return (
     <div>
       <div>
         <div className="text-xs font-bold uppercase tracking-[0.22em] text-accent">Operations</div>
         <h1 className="mt-3 font-serif text-4xl font-semibold tracking-[-0.05em]">Registrations</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-primary/72">Review registrations, inspect payment state, and filter by status.</p>
+        <p className="mt-3 max-w-2xl text-sm leading-6 text-primary/72">Review latest 50 registrations, inspect payment state, and filter by status.</p>
       </div>
 
       <label className="mt-8 grid max-w-xs gap-2 text-sm font-semibold text-primary/82">

@@ -86,14 +86,19 @@ export async function listPublishedWorkshops() {
 }
 
 export async function getWorkshopBySlug(slug: string) {
-  return supabase
+  const result = await supabase
     .from('workshops')
     .select(workshopSelection)
     .eq('slug', slug)
     .eq('status', 'published')
-    .eq('payment_methods.is_active', true)
     .maybeSingle()
     .returns<WorkshopWithContent | null>();
+
+  if (result.data) {
+    result.data.payment_methods = result.data.payment_methods.filter((method) => method.is_active);
+  }
+
+  return result;
 }
 
 export async function listAdminWorkshops() {

@@ -3,6 +3,7 @@ import { notifyRegistrationSubmitted } from '../../lib/notifications';
 import { canAcceptRegistration, createRegistration } from '../../lib/registrations';
 import type { PaymentMethod, Workshop, WorkshopCountry, WorkshopLocale } from '../../types/workshop';
 import { PaymentInstructions } from './PaymentInstructions';
+import { PaymentProofUpload } from './PaymentProofUpload';
 
 type RegistrationFormProps = {
   workshop: Workshop;
@@ -33,6 +34,8 @@ export function RegistrationForm({ workshop, paymentMethods, confirmedCount = 0 
   const [isSaving, setIsSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
+  const [registrationId, setRegistrationId] = useState<string | null>(null);
+  const [whatsAppUrl, setWhatsAppUrl] = useState<string | null>(null);
 
   const filteredMethods = paymentMethods.filter((method) => method.country === draft.country && method.is_active);
 
@@ -51,9 +54,14 @@ export function RegistrationForm({ workshop, paymentMethods, confirmedCount = 0 
       return;
     }
 
-    const paymentMethod = paymentMethods.find((method) => method.id === draft.payment_method_id) ?? null;
+    const paymentMethod = filteredMethods.find((method) => method.id === draft.payment_method_id) ?? null;
+    if (!paymentMethod) {
+      setErrorMessage('Payment method is invalid for selected country');
+      return;
+    }
+
     setIsSaving(true);
-    const { error } = await createRegistration({
+    const { data, error } = await createRegistration({
       workshop_id: workshop.id,
       full_name: draft.full_name,
       email: draft.email,
@@ -70,18 +78,29 @@ export function RegistrationForm({ workshop, paymentMethods, confirmedCount = 0 
       return;
     }
 
-    if (paymentMethod) {
-      notifyRegistrationSubmitted({
-        phone: draft.phone,
-        fullName: draft.full_name,
-        workshopTitle: workshop.title,
-        paymentInstructions: paymentMethod.instructions,
-      });
-    }
+    setRegistrationId(data.id);
+    setWhatsAppUrl(notifyRegistrationSubmitted({
+      phone: draft.phone,
+      fullName: draft.full_name,
+      workshopTitle: workshop.title,
+      paymentInstructions: paymentMethod.instructions,
+    }));
     setSelectedMethod(paymentMethod);
   };
 
-  if (selectedMethod) return <PaymentInstructions method={selectedMethod} />;
+  if (selectedMethod && registrationId) {
+    return (
+      <div>
+        <PaymentInstructions method={selectedMethod} />
+        {whatsAppUrl && (
+          <a className="mt-4 inline-flex rounded-lg border border-accent/40 px-4 py-3 text-sm font-bold text-accent transition hover:border-accent" href={whatsAppUrl} rel="noreferrer" target="_blank">
+            Open WhatsApp reminder
+          </a>
+        )}
+        <PaymentProofUpload isEnabled registrationId={registrationId} />
+      </div>
+    );
+  }
 
   return (
     <form className="mt-10 grid gap-4 rounded-xl border border-white/10 bg-white/5 p-5" onSubmit={handleSubmit}>
@@ -108,7 +127,11 @@ export function RegistrationForm({ workshop, paymentMethods, confirmedCount = 0 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-2 text-sm font-semibold text-primary/82">
           country
-          <select className="rounded-lg border border-white/12 bg-page-deep px-4 py-3 text-primary outline-none focus:border-accent" value={draft.country} onChange={(event) => setDraft((current) => ({ ...current, country: event.target.value as WorkshopCountry, payment_method_id: '' }))}>
+          <select className="rounded-lg border border-white/12 bg-page-deep px-4 py-3 text-primary outline-none focus:border-accent" value={draft.country} onChange={(event) => {
+            const country = event.target.value as WorkshopCountry;
+            const nextMethod = paymentMethods.find((method) => method.country === country && method.is_active);
+            setDraft((current) => ({ ...current, country, payment_method_id: nextMethod?.id ?? '' }));
+          }}>
             <option value="MY">Malaysia</option>
             <option value="ID">Indonesia</option>
           </select>
