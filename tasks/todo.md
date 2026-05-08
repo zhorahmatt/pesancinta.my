@@ -14,10 +14,10 @@
   - Verify: source migration test passes; remote migration apply remains pending until Supabase CLI/project workflow is used.
   - Files: `supabase/migrations/20260508000000_create_workshop_cms.sql`.
 
-- [ ] Add RLS policies and admin access model
+- [x] Add RLS policies and admin access model
   - Acceptance: RLS enabled; public can read published data and submit registration; owner admin can manage CMS; proofs access-controlled.
-  - Verify: anonymous cannot edit CMS; owner can manage; visitor can register.
-  - Files: `supabase/migrations/*.sql`, optional `supabase/policies/*`.
+  - Verify: source RLS migration test passes; remote anonymous/admin smoke checks remain pending until migrations are applied.
+  - Files: `supabase/migrations/20260508001000_add_workshop_cms_rls.sql`.
 
 - [ ] Add TypeScript domain types and Supabase client
   - Acceptance: Supabase client from env; typed workshop/registration/payment models; helpers isolate queries from UI.

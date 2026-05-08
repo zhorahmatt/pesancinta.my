@@ -54,6 +54,21 @@ test('Supabase CMS schema migration covers workshops and payments', () => {
   assert.match(migration, /references public\.workshops\(id\)/);
 });
 
+test('Supabase CMS RLS migration protects admin data and public registration', () => {
+  const migration = read('../supabase/migrations/20260508001000_add_workshop_cms_rls.sql');
+
+  for (const table of ['admin_users', 'workshops', 'workshop_locales', 'workshop_prices', 'payment_methods', 'registrations', 'payment_proofs']) {
+    assert.match(migration, new RegExp(`alter table public\\.${table} enable row level security`));
+  }
+
+  assert.match(migration, /create or replace function public\.is_cms_admin\(\)/);
+  assert.match(migration, /auth\.uid\(\)/);
+  assert.match(migration, /for select\s+using \(status = 'published'\)/s);
+  assert.match(migration, /for insert\s+with check \(true\)/s);
+  assert.match(migration, /for all\s+using \(public\.is_cms_admin\(\)\)/s);
+  assert.match(migration, /for select\s+using \(public\.is_cms_admin\(\)\)/s);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

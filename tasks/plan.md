@@ -88,16 +88,19 @@ Supabase project + env config
 **Estimated scope:** M
 
 ### Task 3: Add RLS policies and admin access model
+**Status:** Source RLS migration complete; remote anonymous/admin smoke checks remain environment actions.
+
 **Description:** Enable RLS and define policies so public users can read published workshop data and submit registrations, while only the owner admin can manage CMS data.
 
 **Acceptance criteria:**
-- [ ] RLS enabled on all Supabase tables.
-- [ ] Public read allowed only for published workshop content and active payment methods.
-- [ ] Public insert allowed for registrations with validated fields.
-- [ ] Admin can CRUD workshops, locales, prices, payment methods, registrations, and payment proofs.
-- [ ] Payment proof access is private/access-controlled.
+- [x] RLS enabled on all Supabase tables.
+- [x] Public read allowed only for published workshop content and active payment methods.
+- [x] Public insert allowed for registrations with validated fields.
+- [x] Admin can CRUD workshops, locales, prices, payment methods, registrations, and payment proofs.
+- [x] Payment proof access is private/access-controlled.
 
 **Verification:**
+- [x] Source RLS migration test passes.
 - [ ] Anonymous client cannot edit workshop/admin data.
 - [ ] Authenticated owner can manage data.
 - [ ] Anonymous visitor can register only through allowed insert policy.
