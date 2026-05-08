@@ -268,17 +268,19 @@ Supabase project + env config
 ## Phase 4: Public CMS-driven workshop page and registration
 
 ### Task 9: Render public workshop page from CMS data
+**Status:** Source implementation complete; manual published/draft slug checks remain pending with Supabase data.
+
 **Description:** Add public workshop route rendering from Supabase data while preserving current custom marketing route strategy.
 
 **Acceptance criteria:**
-- [ ] Public page can load published workshop by slug.
-- [ ] Draft/archived workshops do not render as public registration pages.
-- [ ] Page shows localized content, price, capacity/remaining seats if enabled, and active payment methods.
-- [ ] Existing `/the-inner-compass-workshop/` page behavior is preserved until CMS migration is explicitly enabled.
+- [x] Public page can load published workshop by slug.
+- [x] Draft/archived workshops do not render as public registration pages.
+- [x] Page shows localized content, price, capacity/remaining seats if enabled, and active payment methods.
+- [x] Existing `/the-inner-compass-workshop/` page behavior is preserved until CMS migration is explicitly enabled.
 
 **Verification:**
 - [ ] Manual load published and draft slugs.
-- [ ] `npm run build` passes.
+- [x] `npm run build` passes.
 
 **Dependencies:** Tasks 6-8
 

@@ -184,6 +184,23 @@ test('admin pricing and manual payment forms support MYR, IDR, bank transfer, an
   assert.match(paymentForm, /is_active/);
 });
 
+test('public CMS workshop page renders published workshop data by slug', () => {
+  const app = read('./App.tsx');
+  const publicPage = read('./pages/WorkshopPublicPage.tsx');
+  const workshops = read('./lib/workshops.ts');
+
+  assert.match(app, /<WorkshopPublicPage/);
+  assert.match(app, /the-inner-compass-workshop/);
+  assert.match(publicPage, /getWorkshopBySlug/);
+  assert.match(publicPage, /workshop_locales/);
+  assert.match(publicPage, /workshop_prices/);
+  assert.match(publicPage, /payment_methods/);
+  assert.match(publicPage, /show_remaining_seats/);
+  assert.match(publicPage, /active payment methods/);
+  assert.match(workshops, /eq\('status', 'published'\)/);
+  assert.match(workshops, /is_active/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

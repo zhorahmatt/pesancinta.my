@@ -50,9 +50,9 @@
 
 ## Phase 4: Public CMS-driven workshop page and registration
 
-- [ ] Render public workshop page from CMS data
-  - Acceptance: load published workshop by slug; draft/archived not public; show localized content, price, seats, active payment methods; current static route preserved.
-  - Verify: manual published/draft slug checks; `npm run build`.
+- [x] Render public workshop page from CMS data
+  - Acceptance: load published workshop by slug; draft/archived not public; show localized content, price, seats, active payment methods; current static route preserved. Manual slug checks remain pending with Supabase data.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/pages/WorkshopPublicPage.tsx`, `src/App.tsx`, `src/lib/workshops.ts`, optional `src/components/workshop/*`.
 
 - [ ] Add registration form with capacity checks

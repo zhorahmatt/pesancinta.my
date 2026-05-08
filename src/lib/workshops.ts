@@ -91,6 +91,7 @@ export async function getWorkshopBySlug(slug: string) {
     .select(workshopSelection)
     .eq('slug', slug)
     .eq('status', 'published')
+    .eq('payment_methods.is_active', true)
     .maybeSingle()
     .returns<WorkshopWithContent | null>();
 }

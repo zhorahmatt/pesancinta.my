@@ -4,6 +4,7 @@ import { WorkshopEditorPage } from './pages/admin/WorkshopEditorPage';
 import { WorkshopsPage } from './pages/admin/WorkshopsPage';
 import { InnerCompassWorkshopPage } from './pages/InnerCompassWorkshopPage';
 import { PesanCintaHomePage } from './pages/PesanCintaHomePage';
+import { WorkshopPublicPage } from './pages/WorkshopPublicPage';
 
 export default function App() {
   if (window.location.pathname === '/admin/login') {
@@ -25,6 +26,11 @@ export default function App() {
 
   if (window.location.pathname === '/the-inner-compass-workshop') {
     return <InnerCompassWorkshopPage />;
+  }
+
+  if (window.location.pathname.startsWith('/workshops/')) {
+    const slug = window.location.pathname.replace('/workshops/', '').replace(/\/$/, '');
+    return <WorkshopPublicPage slug={slug} />;
   }
 
   return <PesanCintaHomePage />;
