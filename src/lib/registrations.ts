@@ -26,3 +26,7 @@ export async function listRegistrationsByWorkshop(workshopId: string) {
 export function isConfirmedRegistration(registration: Pick<Registration, 'status'>) {
   return registration.status === 'confirmed';
 }
+
+export function canAcceptRegistration(capacity: number, confirmedCount: number) {
+  return confirmedCount < capacity;
+}

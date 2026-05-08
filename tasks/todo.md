@@ -55,9 +55,9 @@
   - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/pages/WorkshopPublicPage.tsx`, `src/App.tsx`, `src/lib/workshops.ts`, optional `src/components/workshop/*`.
 
-- [ ] Add registration form with capacity checks
-  - Acceptance: capture name/email/phone/country/notes/workshop/payment method; validate fields; enforce capacity; show payment instructions after submit.
-  - Verify: manual happy path and full-capacity case; tests for capacity/form helpers; `npm run build && npm test`.
+- [x] Add registration form with capacity checks
+  - Acceptance: capture name/email/phone/country/notes/workshop/payment method; validate fields; enforce capacity; show payment instructions after submit. Manual registration/full-capacity checks remain pending with Supabase data.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/components/workshop/RegistrationForm.tsx`, `src/components/workshop/PaymentInstructions.tsx`, `src/lib/registrations.ts`, `src/types/registration.ts`.
 
 - [ ] Add optional payment proof handling

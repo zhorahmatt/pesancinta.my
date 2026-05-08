@@ -201,6 +201,26 @@ test('public CMS workshop page renders published workshop data by slug', () => {
   assert.match(workshops, /is_active/);
 });
 
+test('public registration form validates visitor details and shows manual payment instructions', () => {
+  const publicPage = read('./pages/WorkshopPublicPage.tsx');
+  const registrationForm = read('./components/workshop/RegistrationForm.tsx');
+  const instructions = read('./components/workshop/PaymentInstructions.tsx');
+  const registrations = read('./lib/registrations.ts');
+
+  assert.match(publicPage, /RegistrationForm/);
+  assert.match(registrationForm, /full_name/);
+  assert.match(registrationForm, /email/);
+  assert.match(registrationForm, /phone/);
+  assert.match(registrationForm, /country/);
+  assert.match(registrationForm, /notes/);
+  assert.match(registrationForm, /payment_method_id/);
+  assert.match(registrationForm, /validateRegistrationForm/);
+  assert.match(registrationForm, /PaymentInstructions/);
+  assert.match(instructions, /instructions/);
+  assert.match(registrations, /export function canAcceptRegistration/);
+  assert.match(registrations, /awaiting_payment/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

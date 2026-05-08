@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { RegistrationForm } from '../components/workshop/RegistrationForm';
 import { getWorkshopBySlug, getRemainingSeats, type WorkshopWithContent } from '../lib/workshops';
 import type { WorkshopLocaleContent } from '../types/workshop';
 
@@ -83,6 +84,8 @@ export function WorkshopPublicPage({ slug }: WorkshopPublicPageProps) {
             ))}
           </div>
         </section>
+
+        <RegistrationForm paymentMethods={activePaymentMethods} workshop={workshop} />
       </section>
     </main>
   );

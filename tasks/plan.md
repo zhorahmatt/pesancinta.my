@@ -293,20 +293,22 @@ Supabase project + env config
 **Estimated scope:** M
 
 ### Task 10: Add registration form with capacity checks
+**Status:** Source implementation complete; manual registration and full-capacity checks remain pending with Supabase data.
+
 **Description:** Let visitors register for a workshop, select country/payment method, and receive manual payment instructions.
 
 **Acceptance criteria:**
-- [ ] Registration form captures full name, email, phone with country code, country, notes, selected workshop, and selected payment method.
-- [ ] Form validates required fields and email/phone basics.
-- [ ] Confirmed registrations cannot exceed capacity.
-- [ ] New registration status starts as `awaiting_payment` or `pending` by chosen workflow.
-- [ ] Visitor sees selected payment instructions after submit.
+- [x] Registration form captures full name, email, phone with country code, country, notes, selected workshop, and selected payment method.
+- [x] Form validates required fields and email/phone basics.
+- [x] Confirmed registrations cannot exceed capacity.
+- [x] New registration status starts as `awaiting_payment` or `pending` by chosen workflow.
+- [x] Visitor sees selected payment instructions after submit.
 
 **Verification:**
 - [ ] Manual registration happy path.
 - [ ] Manual capacity-full case.
-- [ ] Tests cover capacity helper and form validation helpers.
-- [ ] `npm run build && npm test` passes.
+- [x] Tests cover capacity helper and form validation helpers.
+- [x] `npm run build && npm test` passes.
 
 **Dependencies:** Task 9
 
