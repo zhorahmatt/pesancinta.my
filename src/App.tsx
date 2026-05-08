@@ -1,5 +1,7 @@
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
 import { AdminLoginPage } from './pages/admin/AdminLoginPage';
+import { RegistrationDetailPage } from './pages/admin/RegistrationDetailPage';
+import { RegistrationsPage } from './pages/admin/RegistrationsPage';
 import { WorkshopEditorPage } from './pages/admin/WorkshopEditorPage';
 import { WorkshopsPage } from './pages/admin/WorkshopsPage';
 import { InnerCompassWorkshopPage } from './pages/InnerCompassWorkshopPage';
@@ -9,6 +11,15 @@ import { WorkshopPublicPage } from './pages/WorkshopPublicPage';
 export default function App() {
   if (window.location.pathname === '/admin/login') {
     return <AdminLoginPage />;
+  }
+
+  if (window.location.pathname.startsWith('/admin/registrations/')) {
+    const registrationId = window.location.pathname.replace('/admin/registrations/', '');
+    return <AdminDashboardPage page={<RegistrationDetailPage registrationId={registrationId} />} />;
+  }
+
+  if (window.location.pathname === '/admin/registrations') {
+    return <AdminDashboardPage page={<RegistrationsPage />} />;
   }
 
   if (window.location.pathname === '/admin/workshops/new') {

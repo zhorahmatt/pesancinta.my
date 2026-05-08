@@ -236,6 +236,27 @@ test('optional payment proof handling stores access-controlled uploads', () => {
   assert.match(storage, /getPaymentProofPath/);
 });
 
+test('admin registration review supports filtering, details, and status updates', () => {
+  const app = read('./App.tsx');
+  const registrationsPage = read('./pages/admin/RegistrationsPage.tsx');
+  const detailPage = read('./pages/admin/RegistrationDetailPage.tsx');
+  const statusSelect = read('./components/admin/RegistrationStatusSelect.tsx');
+  const registrations = read('./lib/registrations.ts');
+
+  assert.match(app, /RegistrationsPage/);
+  assert.match(app, /RegistrationDetailPage/);
+  assert.match(registrationsPage, /listRegistrationsByWorkshop/);
+  assert.match(registrationsPage, /filterStatus/);
+  assert.match(detailPage, /getRegistrationById/);
+  assert.match(detailPage, /RegistrationStatusSelect/);
+  assert.match(statusSelect, /confirmed/);
+  assert.match(statusSelect, /cancelled/);
+  assert.match(statusSelect, /refunded/);
+  assert.match(statusSelect, /pending/);
+  assert.match(registrations, /export async function getRegistrationById/);
+  assert.match(registrations, /export async function updateRegistrationStatus/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

@@ -67,9 +67,9 @@
 
 ## Phase 5: Admin registration management
 
-- [ ] Build registration list and detail review
-  - Acceptance: view registrations by workshop; filter status; open detail; update status; confirmed count updates capacity.
-  - Verify: manual status transitions and over-capacity prevention; tests for status transitions; `npm run build && npm test`.
+- [x] Build registration list and detail review
+  - Acceptance: view registrations by workshop; filter status; open detail; update status; confirmed count updates capacity. Manual status/over-capacity checks remain pending with Supabase data.
+  - Verify: source tests; `npm run build`; `npm run lint`.
   - Files: `src/pages/admin/RegistrationsPage.tsx`, `src/pages/admin/RegistrationDetailPage.tsx`, `src/components/admin/RegistrationStatusSelect.tsx`, `src/lib/registrations.ts`.
 
 - [ ] Add MVP notifications for registration and payment confirmation

@@ -23,6 +23,18 @@ export async function listRegistrationsByWorkshop(workshopId: string) {
     .returns<Registration[]>();
 }
 
+export async function listAllRegistrations() {
+  return supabase.from('registrations').select('*').order('created_at', { ascending: false }).returns<Registration[]>();
+}
+
+export async function getRegistrationById(id: string) {
+  return supabase.from('registrations').select('*').eq('id', id).maybeSingle().returns<Registration | null>();
+}
+
+export async function updateRegistrationStatus(id: string, status: Registration['status']) {
+  return supabase.from('registrations').update({ status }).eq('id', id).select('*').single().returns<Registration>();
+}
+
 export async function createPaymentProof(registrationId: string, fileUrl: string) {
   return supabase
     .from('payment_proofs')

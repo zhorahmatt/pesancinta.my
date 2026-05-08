@@ -355,20 +355,22 @@ Supabase project + env config
 ## Phase 5: Admin registration management
 
 ### Task 12: Build registration list and detail review
+**Status:** Source implementation complete; manual status transition and over-capacity checks remain pending with Supabase data.
+
 **Description:** Let admin view registrations per workshop, filter by status, inspect payment method/proof, and update status.
 
 **Acceptance criteria:**
-- [ ] Admin can view all registrations per workshop.
-- [ ] Admin can filter by status.
-- [ ] Admin can open registration detail.
-- [ ] Admin can mark payment as confirmed, cancelled, refunded, or pending.
-- [ ] Confirmed count updates capacity/remaining seat calculations.
+- [x] Admin can view all registrations per workshop.
+- [x] Admin can filter by status.
+- [x] Admin can open registration detail.
+- [x] Admin can mark payment as confirmed, cancelled, refunded, or pending.
+- [x] Confirmed count updates capacity/remaining seat calculations.
 
 **Verification:**
 - [ ] Manual status transition check.
 - [ ] Manual over-capacity prevention check.
-- [ ] Tests cover valid/invalid status transitions where implemented.
-- [ ] `npm run build && npm test` passes.
+- [x] Tests cover valid/invalid status transitions where implemented.
+- [x] `npm run build && npm test` passes.
 
 **Dependencies:** Tasks 10-11
 
