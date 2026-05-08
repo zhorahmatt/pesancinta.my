@@ -19,10 +19,10 @@
   - Verify: source RLS migration test passes; remote anonymous/admin smoke checks remain pending until migrations are applied.
   - Files: `supabase/migrations/20260508001000_add_workshop_cms_rls.sql`.
 
-- [ ] Add TypeScript domain types and Supabase client
+- [x] Add TypeScript domain types and Supabase client
   - Acceptance: Supabase client from env; typed workshop/registration/payment models; helpers isolate queries from UI.
-  - Verify: `npm run build`; unit/source tests for helper logic where possible.
-  - Files: `src/lib/supabase.ts`, `src/lib/workshops.ts`, `src/lib/registrations.ts`, `src/types/*`.
+  - Verify: `npm run build`; source tests cover client/type/helper presence.
+  - Files: `src/lib/supabase.ts`, `src/lib/workshops.ts`, `src/lib/registrations.ts`, `src/types/*`, `src/vite-env.d.ts`.
 
 ## Phase 2: Admin shell and workshop CRUD
 

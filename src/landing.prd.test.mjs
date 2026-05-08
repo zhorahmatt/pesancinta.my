@@ -69,6 +69,27 @@ test('Supabase CMS RLS migration protects admin data and public registration', (
   assert.match(migration, /for select\s+using \(public\.is_cms_admin\(\)\)/s);
 });
 
+test('Supabase CMS client and domain helpers are typed', () => {
+  const packageJson = read('../package.json');
+  const supabaseClient = read('./lib/supabase.ts');
+  const workshopTypes = read('./types/workshop.ts');
+  const registrationTypes = read('./types/registration.ts');
+  const workshops = read('./lib/workshops.ts');
+  const registrations = read('./lib/registrations.ts');
+
+  assert.match(packageJson, /"@supabase\/supabase-js"/);
+  assert.match(supabaseClient, /createClient<Database>/);
+  assert.match(supabaseClient, /import\.meta\.env\.VITE_SUPABASE_URL/);
+  assert.match(supabaseClient, /import\.meta\.env\.VITE_SUPABASE_ANON_KEY/);
+  assert.match(workshopTypes, /export type WorkshopStatus = 'draft' \| 'published' \| 'archived'/);
+  assert.match(workshopTypes, /export type WorkshopCurrency = 'MYR' \| 'IDR'/);
+  assert.match(workshopTypes, /export type PaymentMethodType = 'bank_transfer' \| 'static_qr'/);
+  assert.match(registrationTypes, /export type RegistrationStatus =/);
+  assert.match(workshops, /export async function listPublishedWorkshops/);
+  assert.match(workshops, /export async function getWorkshopBySlug/);
+  assert.match(registrations, /export async function createRegistration/);
+});
+
 test('workshop landing page content matches simplified Batch 3 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');

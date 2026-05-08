@@ -55,7 +55,7 @@ export function InnerCompassWorkshopPage() {
   }, [locale]);
 
   useEffect(() => {
-    let showTimer: ReturnType<typeof window.setTimeout> | undefined;
+    let showTimer: number | undefined;
 
     const handleScroll = () => {
       if (!window.matchMedia('(max-width: 639px)').matches) return;

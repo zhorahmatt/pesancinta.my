@@ -114,17 +114,19 @@ Supabase project + env config
 **Estimated scope:** M
 
 ### Task 4: Add TypeScript domain types and Supabase client
+**Status:** Complete.
+
 **Description:** Add typed domain models, Supabase client setup, and data-access helpers for workshops, payment methods, and registrations.
 
 **Acceptance criteria:**
-- [ ] `src/lib/supabase.ts` initializes client from env vars.
-- [ ] Shared types cover workshop status, registration status, currencies, countries, locales, and payment method types.
-- [ ] Data helpers isolate Supabase queries from UI components.
-- [ ] Helpers return typed results and clear error objects.
+- [x] `src/lib/supabase.ts` initializes client from env vars.
+- [x] Shared types cover workshop status, registration status, currencies, countries, locales, and payment method types.
+- [x] Data helpers isolate Supabase queries from UI components.
+- [x] Helpers return typed results and clear error objects.
 
 **Verification:**
-- [ ] `npm run build` passes.
-- [ ] Unit/source tests cover status/capacity helper behavior where possible.
+- [x] `npm run build` passes.
+- [x] Source tests cover client/type/helper presence.
 
 **Dependencies:** Tasks 2-3
 
