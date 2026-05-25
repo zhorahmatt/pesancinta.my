@@ -5,6 +5,18 @@ type WorkshopPillarsProps = {
 };
 
 const benefitImages = Array.from({ length: 4 }, (_, index) => {
+  if (index === 0) {
+    return ['/benefit/experienced-professional-trainers.jpeg', '/benefit/experienced-professional-trainers-jonelle.jpeg'];
+  }
+
+  if (index === 1) {
+    return ['/benefit/experience-based-training.jpeg', '/benefit/experience-based-training.jpeg'];
+  }
+
+  if (index === 2) {
+    return ['/benefit/interactive-training.jpeg', '/benefit/interactive-training.jpeg'];
+  }
+
   const pillarNumber = index + 1;
 
   return [`/benefit/b${pillarNumber}1.jpeg`, `/benefit/b${pillarNumber}2.jpeg`];
@@ -39,13 +51,13 @@ export function WorkshopPillars({ content }: WorkshopPillarsProps) {
                   <img
                     src={benefitImages[index][0]}
                     alt=""
-                    className="absolute inset-0 h-full w-full animate-[benefit-slide-primary_6s_ease-in-out_infinite] object-contain"
+                    className="absolute inset-0 h-full w-full animate-[benefit-slide-primary_6s_ease-in-out_infinite] object-cover"
                     loading="lazy"
                   />
                   <img
                     src={benefitImages[index][1]}
                     alt=""
-                    className="absolute inset-0 h-full w-full animate-[benefit-slide-secondary_6s_ease-in-out_infinite] object-contain"
+                    className="absolute inset-0 h-full w-full animate-[benefit-slide-secondary_6s_ease-in-out_infinite] object-cover"
                     loading="lazy"
                   />
                 </div>

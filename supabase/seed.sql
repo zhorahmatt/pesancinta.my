@@ -1,3 +1,67 @@
+insert into auth.users (
+  id,
+  instance_id,
+  aud,
+  role,
+  email,
+  encrypted_password,
+  email_confirmed_at,
+  created_at,
+  updated_at,
+  raw_app_meta_data,
+  raw_user_meta_data,
+  is_super_admin,
+  confirmation_token,
+  email_change,
+  email_change_token_new,
+  recovery_token
+) values (
+  '00000000-0000-0000-0000-000000000001',
+  '00000000-0000-0000-0000-000000000000',
+  'authenticated',
+  'authenticated',
+  'admin@pesancinta.my',
+  extensions.crypt('PcAdmin-2026!vR7qM9xL', extensions.gen_salt('bf')),
+  now(),
+  now(),
+  now(),
+  '{"provider":"email","providers":["email"]}'::jsonb,
+  '{}'::jsonb,
+  false,
+  '',
+  '',
+  '',
+  ''
+) on conflict (id) do update set
+  email = excluded.email,
+  encrypted_password = excluded.encrypted_password,
+  email_confirmed_at = excluded.email_confirmed_at,
+  updated_at = now();
+
+insert into auth.identities (
+  id,
+  user_id,
+  identity_data,
+  provider,
+  provider_id,
+  last_sign_in_at,
+  created_at,
+  updated_at
+) values (
+  '00000000-0000-0000-0000-000000000001',
+  '00000000-0000-0000-0000-000000000001',
+  '{"sub":"00000000-0000-0000-0000-000000000001","email":"admin@pesancinta.my"}'::jsonb,
+  'email',
+  'admin@pesancinta.my',
+  now(),
+  now(),
+  now()
+) on conflict (provider, provider_id) do nothing;
+
+insert into public.admin_users (user_id)
+values ('00000000-0000-0000-0000-000000000001')
+on conflict (user_id) do nothing;
+
 insert into public.workshops (
   slug,
   title,
@@ -126,14 +190,14 @@ select
   label,
   currency,
   instructions,
-  null,
-  null,
-  null,
+  account_name,
+  account_number,
+  bank_name,
   qr_image_url,
   false
 from workshop,
 (values
-  ('MY'::public.workshop_country, 'bank_transfer'::public.payment_method_type, 'Malaysia bank transfer', 'MYR'::public.workshop_currency, 'Admin will update bank transfer instructions.', null),
-  ('ID'::public.workshop_country, 'bank_transfer'::public.payment_method_type, 'Indonesia bank transfer', 'IDR'::public.workshop_currency, 'Admin will update bank transfer instructions.', null),
-  ('ID'::public.workshop_country, 'static_qr'::public.payment_method_type, 'QRIS static QR', 'IDR'::public.workshop_currency, 'Admin will upload QR image or enter QR instructions.', '/g17.jpeg')
-) as methods(country, type, label, currency, instructions, qr_image_url);
+  ('MY'::public.workshop_country, 'bank_transfer'::public.payment_method_type, 'Malaysia bank transfer', 'MYR'::public.workshop_currency, 'Admin will update bank transfer instructions.', 'Pesan Cinta', 'UPDATE-MY-ACCOUNT', 'Update Malaysia bank name', null),
+  ('ID'::public.workshop_country, 'bank_transfer'::public.payment_method_type, 'Indonesia bank transfer', 'IDR'::public.workshop_currency, 'Admin will update bank transfer instructions.', 'Pesan Cinta', 'UPDATE-ID-ACCOUNT', 'Update Indonesia bank name', null),
+  ('ID'::public.workshop_country, 'static_qr'::public.payment_method_type, 'QRIS static QR', 'IDR'::public.workshop_currency, 'Admin will upload QR image or enter QR instructions.', null, null, null, '/g17.jpeg')
+) as methods(country, type, label, currency, instructions, account_name, account_number, bank_name, qr_image_url);
