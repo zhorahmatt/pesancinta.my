@@ -1,38 +1,68 @@
-import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
-import { AdminLoginPage } from './pages/admin/AdminLoginPage';
-import { RegistrationDetailPage } from './pages/admin/RegistrationDetailPage';
-import { RegistrationsPage } from './pages/admin/RegistrationsPage';
-import { WorkshopEditorPage } from './pages/admin/WorkshopEditorPage';
-import { WorkshopsPage } from './pages/admin/WorkshopsPage';
+import { lazy, Suspense } from 'react';
 import { InnerCompassWorkshopPage } from './pages/InnerCompassWorkshopPage';
 import { PesanCintaHomePage } from './pages/PesanCintaHomePage';
-import { WorkshopPublicPage } from './pages/WorkshopPublicPage';
+
+const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage').then((module) => ({ default: module.AdminDashboardPage })));
+const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage').then((module) => ({ default: module.AdminLoginPage })));
+const RegistrationDetailPage = lazy(() => import('./pages/admin/RegistrationDetailPage').then((module) => ({ default: module.RegistrationDetailPage })));
+const RegistrationsPage = lazy(() => import('./pages/admin/RegistrationsPage').then((module) => ({ default: module.RegistrationsPage })));
+const WorkshopEditorPage = lazy(() => import('./pages/admin/WorkshopEditorPage').then((module) => ({ default: module.WorkshopEditorPage })));
+const WorkshopsPage = lazy(() => import('./pages/admin/WorkshopsPage').then((module) => ({ default: module.WorkshopsPage })));
+const WorkshopPublicPage = lazy(() => import('./pages/WorkshopPublicPage').then((module) => ({ default: module.WorkshopPublicPage })));
+
+function RouteLoader() {
+  return <main className="grid min-h-svh place-items-center bg-page-deep text-primary">Loading...</main>;
+}
 
 export default function App() {
   if (window.location.pathname === '/admin/login') {
-    return <AdminLoginPage />;
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <AdminLoginPage />
+      </Suspense>
+    );
   }
 
   if (window.location.pathname.startsWith('/admin/registrations/')) {
     const registrationId = window.location.pathname.replace('/admin/registrations/', '');
-    return <AdminDashboardPage page={<RegistrationDetailPage registrationId={registrationId} />} />;
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <AdminDashboardPage page={<RegistrationDetailPage registrationId={registrationId} />} />
+      </Suspense>
+    );
   }
 
   if (window.location.pathname === '/admin/registrations') {
-    return <AdminDashboardPage page={<RegistrationsPage />} />;
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <AdminDashboardPage page={<RegistrationsPage />} />
+      </Suspense>
+    );
   }
 
   if (window.location.pathname === '/admin/workshops/new') {
-    return <AdminDashboardPage page={<WorkshopEditorPage />} />;
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <AdminDashboardPage page={<WorkshopEditorPage />} />
+      </Suspense>
+    );
   }
 
   if (window.location.pathname.startsWith('/admin/workshops/')) {
     const workshopId = window.location.pathname.replace('/admin/workshops/', '');
-    return <AdminDashboardPage page={<WorkshopEditorPage workshopId={workshopId} />} />;
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <AdminDashboardPage page={<WorkshopEditorPage workshopId={workshopId} />} />
+      </Suspense>
+    );
   }
 
   if (window.location.pathname.startsWith('/admin')) {
-    return <AdminDashboardPage page={<WorkshopsPage />} />;
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <AdminDashboardPage page={<WorkshopsPage />} />
+      </Suspense>
+    );
   }
 
   if (window.location.pathname === '/the-inner-compass-workshop') {
@@ -41,7 +71,11 @@ export default function App() {
 
   if (window.location.pathname.startsWith('/workshops/')) {
     const slug = window.location.pathname.replace('/workshops/', '').replace(/\/$/, '');
-    return <WorkshopPublicPage slug={slug} />;
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <WorkshopPublicPage slug={slug} />
+      </Suspense>
+    );
   }
 
   return <PesanCintaHomePage />;
