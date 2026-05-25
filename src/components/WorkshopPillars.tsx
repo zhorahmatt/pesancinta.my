@@ -46,18 +46,18 @@ export function WorkshopPillars({ content }: WorkshopPillarsProps) {
               className="group overflow-hidden border border-white/14 bg-white/2.5 transition-colors duration-300 hover:border-accent/45 hover:bg-white/4.5"
               data-reveal
             >
-              <figure className="relative m-2 flex h-64 items-center justify-center overflow-hidden border border-white/10 bg-black/18 p-3 sm:m-3 sm:h-72 lg:h-76">
-                <div className="absolute inset-3 transition-transform duration-500 group-hover:scale-[1.02]">
+              <figure className="relative m-2 aspect-[4/5] overflow-hidden border border-white/10 bg-black/18 sm:m-3">
+                <div className="absolute inset-1 transition-transform duration-500 group-hover:scale-[1.02]">
                   <img
                     src={benefitImages[index][0]}
                     alt=""
-                    className="absolute inset-0 h-full w-full animate-[benefit-slide-primary_6s_ease-in-out_infinite] object-cover"
+                    className="absolute inset-0 h-full w-full animate-[benefit-slide-primary_6s_ease-in-out_infinite] object-contain"
                     loading="lazy"
                   />
                   <img
                     src={benefitImages[index][1]}
                     alt=""
-                    className="absolute inset-0 h-full w-full animate-[benefit-slide-secondary_6s_ease-in-out_infinite] object-cover"
+                    className="absolute inset-0 h-full w-full animate-[benefit-slide-secondary_6s_ease-in-out_infinite] object-contain"
                     loading="lazy"
                   />
                 </div>
