@@ -23,7 +23,7 @@ export function EventDetails() {
 
           <div className="bg-page-deep/65 p-6 sm:p-8 lg:p-10">
             <div className="mb-8 flex items-center justify-between gap-4">
-              <p className="font-serif text-3xl font-semibold text-accent">Batch 3</p>
+              <p className="font-serif text-3xl font-semibold text-accent">Batch 4</p>
               <p className="border border-accent/45 px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] text-accent">40 Seats</p>
             </div>
             <dl className="divide-y divide-white/12 border-y border-white/12">
@@ -40,7 +40,7 @@ export function EventDetails() {
               ))}
             </dl>
             <CtaButton href={registrationUrl} location="event-details" targetName="registration-whatsapp" className="mt-8 w-full sm:w-auto">
-              Daftar Batch 3 Sekarang
+              Daftar Batch 4 Sekarang
             </CtaButton>
           </div>
         </div>

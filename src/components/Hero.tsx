@@ -18,7 +18,7 @@ export function Hero({ content, registrationUrl }: HeroProps) {
       <video className="absolute inset-0 -z-40 h-full w-full object-cover opacity-85 saturate-95" autoPlay muted loop playsInline aria-hidden="true">
         <source src="/hero.webm" type="video/webm" />
       </video>
-      <div className="hero-backdrop-drift absolute inset-0 -z-30 bg-[linear-gradient(90deg,rgb(8_39_67_/_0.62)_0%,rgb(8_39_67_/_0.24)_46%,rgb(8_39_67_/_0.5)_100%),linear-gradient(0deg,rgb(7_31_54_/_0.78)_0%,transparent_34%,rgb(7_31_54_/_0.34)_100%)]" aria-hidden="true" />
+      <div className="hero-backdrop-drift absolute inset-0 -z-30 bg-[linear-gradient(90deg,rgb(13_60_89_/_0.54)_0%,rgb(13_60_89_/_0.18)_46%,rgb(13_60_89_/_0.42)_100%),linear-gradient(0deg,rgb(13_60_89_/_0.64)_0%,transparent_34%,rgb(13_60_89_/_0.28)_100%)]" aria-hidden="true" />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-64 bg-gradient-to-t from-page-deep to-transparent" aria-hidden="true" />
 
       <div className="mx-auto flex min-h-[calc(100svh-1rem)] max-w-7xl flex-col justify-between gap-6 sm:min-h-[calc(100vh-3.5rem)] sm:gap-12">

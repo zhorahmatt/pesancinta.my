@@ -8,7 +8,6 @@ type ContactFooterProps = {
 };
 
 const organizerLogos = ['/startupglobal.png', '/pesancinta.png'];
-const sponsorLogos = ['/sponsor1.png', '/sponsor2.png', '/sponsor3.png'];
 
 export function ContactFooter({ content, registrationMessage }: ContactFooterProps) {
   return (
@@ -29,7 +28,7 @@ export function ContactFooter({ content, registrationMessage }: ContactFooterPro
         </div>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {contacts.map((contact) => (
+          {contacts.filter((contact) => contact.name === 'Zai').map((contact) => (
             <CtaButton
               data-reveal
               key={contact.name}
@@ -54,17 +53,6 @@ export function ContactFooter({ content, registrationMessage }: ContactFooterPro
                 {organizerLogos.map((logo) => (
                   <div key={logo} className="flex h-24 items-center justify-center bg-page px-3 py-4 sm:h-36">
                     <img className="max-h-20 max-w-28 object-contain sm:max-h-32 sm:max-w-40" src={logo} alt={content.organizerLogoAlt} loading="lazy" />
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="border border-white/14 bg-page/2.5 p-4 sm:p-5" data-reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{content.sponsorLabel}</p>
-              <div className="mt-4 grid max-w-2xl grid-cols-3 gap-3">
-                {sponsorLogos.map((logo, index) => (
-                  <div key={logo} className="flex h-20 items-center justify-center bg-page px-2 py-3 sm:h-28 sm:px-4 sm:py-4">
-                    <img className="max-h-10 max-w-20 object-contain sm:max-h-12 sm:max-w-32" src={logo} alt={`${content.sponsorLogoAlt} ${index + 1}`} loading="lazy" />
                   </div>
                 ))}
               </div>

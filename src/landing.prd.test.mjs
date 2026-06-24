@@ -13,17 +13,47 @@ test('routing maps home and workshop pages', () => {
   assert.match(app, /<InnerCompassWorkshopPage \/>/);
   assert.match(app, /<PesanCintaHomePage \/>/);
 
+  assert.match(home, /homeLocales/);
   assert.match(home, /\/pesancinta\.png/);
-  assert.match(home, /\/mimi\.png/);
-  assert.match(home, /\/zai\.png/);
   assert.match(home, /\/startupglobal\.png/);
-  assert.match(home, /We stand for a World where love leads, heals and connect us/);
-  assert.match(home, /Mimi, Pesan Cinta founder/);
-  assert.match(home, /Zai, Pesan Cinta founder/);
-  assert.match(home, /The Inner Compass Workshop · 13-14 Juni 2026/);
-  assert.match(home, /href="\/the-inner-compass-workshop"/);
+  assert.match(home, /\/g17\.jpeg/);
+  assert.match(home, /#kegiatan/);
+  assert.match(home, /content\.activities\.upcoming\.cta\.href/);
+  assert.match(home, /from 'framer-motion'/);
+  assert.match(home, /heroMarqueePhotos/);
+  assert.match(home, /useReducedMotion/);
+  assert.match(home, /pc-hero-marquee-track/);
 
   assert.match(workshop, /<LanguageSwitcher[\s\S]*<MobileFloatingCta[\s\S]*<Hero content=\{content\.hero\}[\s\S]*<EmpathySection content=\{content\.empathy\}[\s\S]*<WorkshopPillars content=\{content\.pillars\}[\s\S]*<PhotoProof content=\{content\.photoProof\}[\s\S]*<TrainerProfiles content=\{content\.trainers\}[\s\S]*<ContactFooter content=\{content\.footer\}/);
+});
+
+test('Pesan Cinta home content is bilingual and CMS-ready', () => {
+  const home = read('./pages/PesanCintaHomePage.tsx');
+  const homeContent = read('./content/pesanCintaHome.ts');
+
+  assert.match(home, /pesan-cinta-home-locale/);
+  assert.match(home, /localStorage\.getItem/);
+  assert.match(home, /localStorage\.setItem/);
+  assert.match(homeContent, /export type HomeLocale = 'id' \| 'ms'/);
+  assert.match(homeContent, /export type HomeEvent/);
+  assert.match(homeContent, /export type HomePageContent/);
+  assert.match(homeContent, /homeLocales/);
+  assert.match(homeContent, /\/the-inner-compass-workshop/);
+  assert.match(homeContent, /The Inner Compass Workshop Batch 4/);
+});
+
+test('both landing pages use the brighter shared ocean palette and workshop typography', () => {
+  const main = read('./main.tsx');
+  const styles = read('./styles.css');
+
+  assert.match(styles, /--color-page: #1b5878/);
+  assert.match(styles, /--color-page-deep: #0d3c59/);
+  assert.match(styles, /\.pesan-cinta-page \{[\s\S]*font-family: var\(--font-sans\)/);
+  assert.match(styles, /\.pc-hero h1,[\s\S]*font-family: var\(--font-serif\)/);
+  assert.match(styles, /\.pc-logo-pesan \{[\s\S]*width: 4\.5rem/);
+  assert.match(styles, /\.pc-logo-startup \{[\s\S]*width: 3\.5rem/);
+  assert.match(styles, /\.pc-footer-logo \{[\s\S]*width: 6\.5rem/);
+  assert.doesNotMatch(main, /fontsource-variable\/manrope/);
 });
 
 test('project documents Supabase CMS environment setup', () => {
@@ -307,7 +337,7 @@ test('CMS MVP release checklist covers auth, RLS, registration, capacity, and ex
   assert.match(rls, /public\.is_cms_admin\(\)/);
 });
 
-test('workshop landing page content matches simplified Batch 3 PRD', () => {
+test('workshop landing page content matches simplified Batch 4 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');
   const hero = read('./components/Hero.tsx');
@@ -325,8 +355,8 @@ test('workshop landing page content matches simplified Batch 3 PRD', () => {
 
   assert.match(homeHtml, /<title>Pesan Cinta<\/title>/);
   assert.match(homeHtml, /og:title" content="Pesan Cinta"/);
-  assert.match(workshopHtml, /<title>The Inner Compass Workshop Batch 3 Makassar<\/title>/);
-  assert.match(workshopHtml, /og:title" content="The Inner Compass Workshop Batch 3 Makassar"/);
+  assert.match(workshopHtml, /<title>The Inner Compass Workshop Batch 4 Pekanbaru<\/title>/);
+  assert.match(workshopHtml, /og:title" content="The Inner Compass Workshop Batch 4 Pekanbaru"/);
   assert.match(workshopHtml, /og:image" content="https:\/\/pesancinta\.my\/g17\.jpeg"/);
   assert.match(workshopHtml, /twitter:image" content="https:\/\/pesancinta\.my\/g17\.jpeg"/);
   assert.match(viteConfig, /the-inner-compass-workshop\/index\.html/);
