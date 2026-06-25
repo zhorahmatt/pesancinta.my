@@ -34,9 +34,9 @@ export function Hero({ content, registrationUrl }: HeroProps) {
             <span>{content.kicker}</span>
             <span className="hidden h-px w-16 bg-accent/55 sm:block" aria-hidden="true" />
           </div>
-          <h1 className="max-w-5xl font-serif text-[clamp(2.85rem,15vw,4.5rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-primary drop-shadow-[0_1rem_3rem_rgb(0_0_0_/_0.32)] sm:text-[clamp(3.4rem,8.6vw,7.4rem)]">
+          <h1 className="max-w-5xl font-serif text-[clamp(2.55rem,12.6vw,4.5rem)] font-semibold leading-[0.88] tracking-[-0.065em] text-primary drop-shadow-[0_1rem_3rem_rgb(0_0_0_/_0.32)] sm:text-[clamp(3.4rem,8.6vw,7.4rem)]">
             {content.headlineLines.map((line, index) => (
-              <span key={line} className={`hero-line-reveal block ${index === 1 ? 'hero-delay-4 text-accent' : 'hero-delay-3'}`}>
+              <span key={line} className={`hero-line-reveal block ${index === 1 ? `hero-delay-4 text-accent ${line === 'You navigate it.' ? 'whitespace-nowrap' : ''}` : 'hero-delay-3'}`}>
                 {line}
               </span>
             ))}

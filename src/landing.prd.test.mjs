@@ -369,7 +369,7 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
   assert.match(content, /Hidupmu,/);
   assert.match(content, /Kamu Navigatornya\./);
   assert.match(content, /Your life,/);
-  assert.match(content, /you navigate it\./);
+  assert.match(content, /You navigate it\./);
   assert.match(content, /Hanya 40 Kursi/);
   assert.match(content, /Hanya 40 Kerusi/);
   assert.match(content, /Only 40 Seats/);

@@ -340,7 +340,7 @@ export const workshopLocales = {
     hero: {
       eyebrow: 'The Inner Compass Workshop Batch 4 - Pekanbaru',
       kicker: 'Start Today',
-      headlineLines: ['Your life,', 'you navigate it.'],
+      headlineLines: ['Your life,', 'You navigate it.'],
       subheadline: 'When life feels driven by demands, your body often knows the way home before your mind can admit it.',
       badge: 'Only 40 Seats',
       ctaLabel: 'Register Now',
