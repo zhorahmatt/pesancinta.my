@@ -343,6 +343,7 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
   const hero = read('./components/Hero.tsx');
   const footer = read('./components/ContactFooter.tsx');
   const mobileCta = read('./components/MobileFloatingCta.tsx');
+  const desktopCta = read('./components/DesktopFloatingCta.tsx');
   const empathy = read('./components/EmpathySection.tsx');
   const pillars = read('./components/WorkshopPillars.tsx');
   const trainers = read('./components/TrainerProfiles.tsx');
@@ -392,10 +393,17 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
   assert.match(switcher, /localeIcons/);
   assert.match(switcher, /isMobileVisible/);
   assert.match(workshop, /addEventListener\('scroll'/);
+  assert.match(workshop, /isScrollIdle/);
+  assert.match(workshop, /setIsScrollIdle\(false\)/);
+  assert.match(workshop, /<DesktopFloatingCta href=\{registrationUrl\} label=\{content\.hero\.ctaLabel\} isVisible=\{isScrollIdle && !isHeroInView\} \/>/);
   assert.match(workshop, /setIsMobileSwitcherVisible\(false\)/);
   assert.match(mobileCta, /sm:hidden/);
   assert.match(mobileCta, /location="mobile-floating"/);
   assert.match(mobileCta, /isVisible/);
+  assert.match(desktopCta, /hidden sm:flex/);
+  assert.match(desktopCta, /bottom-8 right-8/);
+  assert.match(desktopCta, /location="desktop-floating"/);
+  assert.match(desktopCta, /isVisible/);
   assert.match(empathy, /key=\{index\}/);
   assert.match(pillars, /key=\{index\}/);
   assert.match(trainers, /key=\{index\}/);
@@ -411,6 +419,7 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
 test('Inside The Room gallery groups proof photos into Batch 2 and Batch 3 filters', () => {
   const content = read('./content/landing.ts');
   const photoProof = read('./components/PhotoProof.tsx');
+  const imageSlider = read('./components/ui/image-auto-slider.tsx');
 
   assert.match(content, /export const proofPhotoGroups/);
   assert.match(content, /export const batchThreePhotoGroups/);
@@ -418,39 +427,29 @@ test('Inside The Room gallery groups proof photos into Batch 2 and Batch 3 filte
   assert.match(photoProof, /All/);
   assert.match(photoProof, /Batch 3/);
   assert.match(photoProof, /Batch 2/);
-  assert.match(photoProof, /FlipReveal/);
-  assert.match(photoProof, /flipKey=\{photo\.batch\}/);
+  assert.match(photoProof, /ImageAutoSlider/);
+  assert.match(photoProof, /galleryImages/);
+  assert.match(photoProof, /batchThreeImages/);
+  assert.match(photoProof, /batchTwoImages/);
+  assert.match(imageSlider, /ticw-image-auto-slider/);
+  assert.match(imageSlider, /ticw-image-auto-slider-reverse/);
+  assert.match(imageSlider, /topRowImages/);
+  assert.match(imageSlider, /bottomRowImages/);
+  assert.match(imageSlider, /renderSliderRow/);
+  assert.match(imageSlider, /translateX\(-50%\)/);
+  assert.match(imageSlider, /translateX\(-50%\)[\s\S]*translateX\(0\)/);
 });
 
-test('Inside The Room All filter mirrors the second group with the large card on the right', () => {
+test('Inside The Room gallery no longer uses absolute FLIP layout that can collapse section height', () => {
   const photoProof = read('./components/PhotoProof.tsx');
 
-  assert.match(photoProof, /const allPhotoLayouts = \[/);
-  assert.match(photoProof, /lg:col-start-7 lg:col-span-6 lg:row-span-2/);
-  assert.match(photoProof, /activeBatch === 'all' \? allPhotoLayouts : photoLayouts/);
-  assert.match(photoProof, /grid-flow-dense/);
+  assert.doesNotMatch(photoProof, /FlipReveal/);
+  assert.doesNotMatch(photoProof, /FlipRevealItem/);
+  assert.doesNotMatch(photoProof, /grid-flow-dense/);
+  assert.doesNotMatch(photoProof, /loadedCards/);
 });
 
-test('Inside The Room gallery renders skeleton placeholders while filtered images load', () => {
-  const photoProof = read('./components/PhotoProof.tsx');
-
-  assert.match(photoProof, /loadedCards/);
-  assert.match(photoProof, /setLoadedCards/);
-  assert.match(photoProof, /onLoad=\{\(\) => markCardLoaded\(cardId\)\}/);
-  assert.match(photoProof, /aria-hidden="true"/);
-  assert.match(photoProof, /animate-pulse/);
-  assert.match(photoProof, /opacity-0/);
-});
-
-test('FlipReveal keeps mobile gallery height stable during filter transitions', () => {
-  const flipReveal = read('./components/ui/flip-reveal.tsx');
-
-  assert.match(flipReveal, /matchMedia\('\(min-width: 640px\)'\)/);
-  assert.match(flipReveal, /const useAbsoluteLayout =/);
-  assert.match(flipReveal, /absolute: useAbsoluteLayout/);
-});
-
-test('workshop landing page adds animated testimonials section with dummy content', () => {
+test('workshop landing page adds animated testimonials section with participant content', () => {
   const workshop = read('./pages/InnerCompassWorkshopPage.tsx');
   const content = read('./content/landing.ts');
   const testimonials = read('./components/WorkshopTestimonials.tsx');
@@ -460,6 +459,8 @@ test('workshop landing page adds animated testimonials section with dummy conten
   assert.match(workshop, /<PhotoProof content=\{content\.photoProof\} \/>[\s\S]*<WorkshopTestimonials content=\{content\.testimonials\} \/>[\s\S]*<TrainerProfiles content=\{content\.trainers\} \/>/);
   assert.match(content, /testimonials: \{/);
   assert.match(content, /The space helped me notice what my body had been saying quietly/);
+  assert.match(content, /Participant reflections on safety, clarity/);
+  assert.doesNotMatch(content, /Dummy|dummy|sementara|temporary/i);
   assert.match(testimonials, /TestimonialsColumn/);
   assert.match(testimonials, /firstColumn/);
   assert.match(testimonials, /secondColumn/);

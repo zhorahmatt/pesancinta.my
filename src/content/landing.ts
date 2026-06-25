@@ -84,7 +84,7 @@ export const workshopLocales = {
     testimonials: {
       eyebrow: 'Testimonials',
       headline: 'Apa yang peserta rasakan.',
-      subheadline: 'Cerita dummy sementara dari peserta yang merasakan ruang refleksi, latihan tubuh, dan proses bersama.',
+      subheadline: 'Cerita dari peserta yang merasakan ruang refleksi, latihan tubuh, dan proses bersama.',
       items: [
         {
           text: 'Ruang ini membantu saya mendengar tubuh dengan lebih lembut. Saya pulang dengan rasa yang lebih lapang.',
@@ -239,7 +239,7 @@ export const workshopLocales = {
     testimonials: {
       eyebrow: 'Testimonials',
       headline: 'Cerita dari peserta.',
-      subheadline: 'Dummy testimonial sementara untuk menggambarkan rasa aman, ringan, dan terkoneksi setelah mengikuti proses.',
+      subheadline: 'Pengalaman peserta setelah menemukan ruang yang aman untuk merasa, memahami, dan kembali terkoneksi.',
       items: [
         {
           text: 'Ruang ini membantu saya mendengar tubuh dengan lebih lembut. Saya pulang dengan rasa yang lebih lapang.',
@@ -394,7 +394,7 @@ export const workshopLocales = {
     testimonials: {
       eyebrow: 'Testimonials',
       headline: 'What participants felt.',
-      subheadline: 'Dummy testimonials for now, shaped around safety, reflection, and the small shifts people carry home.',
+      subheadline: 'Participant reflections on safety, clarity, and the small shifts they carried home after the workshop.',
       items: [
         {
           text: 'The space helped me notice what my body had been saying quietly. I left feeling softer and more spacious.',

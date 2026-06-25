@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ContactFooter } from '../components/ContactFooter';
+import { DesktopFloatingCta } from '../components/DesktopFloatingCta';
 import { EmpathySection } from '../components/EmpathySection';
 import { Hero } from '../components/Hero';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
@@ -37,6 +38,7 @@ function getInitialLocale(): WorkshopLocale {
 export function InnerCompassWorkshopPage() {
   const [locale, setLocale] = useState<WorkshopLocale>(getInitialLocale);
   const [isMobileSwitcherVisible, setIsMobileSwitcherVisible] = useState(true);
+  const [isScrollIdle, setIsScrollIdle] = useState(true);
   const [isHeroInView, setIsHeroInView] = useState(true);
   const heroRef = useRef<HTMLDivElement>(null);
   const content = workshopLocales[locale];
@@ -59,11 +61,15 @@ export function InnerCompassWorkshopPage() {
     let showTimer: number | undefined;
 
     const handleScroll = () => {
-      if (!window.matchMedia('(max-width: 639px)').matches) return;
+      const isMobile = window.matchMedia('(max-width: 639px)').matches;
 
-      setIsMobileSwitcherVisible(false);
+      setIsScrollIdle(false);
+      if (isMobile) setIsMobileSwitcherVisible(false);
       if (showTimer) window.clearTimeout(showTimer);
-      showTimer = window.setTimeout(() => setIsMobileSwitcherVisible(true), 700);
+      showTimer = window.setTimeout(() => {
+        setIsScrollIdle(true);
+        if (isMobile) setIsMobileSwitcherVisible(true);
+      }, 700);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -116,6 +122,7 @@ export function InnerCompassWorkshopPage() {
     <main>
       <LanguageSwitcher locale={locale} options={languageOptions} onChange={setLocale} isMobileVisible={isMobileSwitcherVisible} />
       <MobileFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isMobileSwitcherVisible && !isHeroInView} />
+      <DesktopFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isScrollIdle && !isHeroInView} />
       <div ref={heroRef}>
         <Hero content={content.hero} registrationUrl={registrationUrl} />
       </div>
