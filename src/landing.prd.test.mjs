@@ -404,3 +404,45 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
   assert.equal(app.includes('EventDetails'), false);
   assert.equal(workshop.includes('EventDetails'), false);
 });
+
+test('Inside The Room gallery groups proof photos into Batch 2 and Batch 3 filters', () => {
+  const content = read('./content/landing.ts');
+  const photoProof = read('./components/PhotoProof.tsx');
+
+  assert.match(content, /export const proofPhotoGroups/);
+  assert.match(content, /export const batchThreePhotoGroups/);
+  assert.match(content, /\/ticw-makassar\/ticw_makassar_1\.jpeg/);
+  assert.match(photoProof, /All/);
+  assert.match(photoProof, /Batch 3/);
+  assert.match(photoProof, /Batch 2/);
+  assert.match(photoProof, /FlipReveal/);
+  assert.match(photoProof, /flipKey=\{photo\.batch\}/);
+});
+
+test('Inside The Room All filter mirrors the second group with the large card on the right', () => {
+  const photoProof = read('./components/PhotoProof.tsx');
+
+  assert.match(photoProof, /const allPhotoLayouts = \[/);
+  assert.match(photoProof, /lg:col-start-7 lg:col-span-6 lg:row-span-2/);
+  assert.match(photoProof, /activeBatch === 'all' \? allPhotoLayouts : photoLayouts/);
+  assert.match(photoProof, /grid-flow-dense/);
+});
+
+test('Inside The Room gallery renders skeleton placeholders while filtered images load', () => {
+  const photoProof = read('./components/PhotoProof.tsx');
+
+  assert.match(photoProof, /loadedCards/);
+  assert.match(photoProof, /setLoadedCards/);
+  assert.match(photoProof, /onLoad=\{\(\) => markCardLoaded\(cardId\)\}/);
+  assert.match(photoProof, /aria-hidden="true"/);
+  assert.match(photoProof, /animate-pulse/);
+  assert.match(photoProof, /opacity-0/);
+});
+
+test('FlipReveal keeps mobile gallery height stable during filter transitions', () => {
+  const flipReveal = read('./components/ui/flip-reveal.tsx');
+
+  assert.match(flipReveal, /matchMedia\('\(min-width: 640px\)'\)/);
+  assert.match(flipReveal, /const useAbsoluteLayout =/);
+  assert.match(flipReveal, /absolute: useAbsoluteLayout/);
+});

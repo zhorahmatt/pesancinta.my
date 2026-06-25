@@ -316,3 +316,11 @@ export const proofPhotoGroups = [
   ['/g4.jpeg', '/g9.jpeg', '/g14.jpeg'],
   ['/g5.jpeg', '/g10.jpeg', '/g15.jpeg'],
 ] as const;
+
+export const batchThreePhotoGroups = [
+  ['/ticw-makassar/ticw_makassar_1.jpeg', '/ticw-makassar/ticw_makassar_2.jpeg'],
+  ['/ticw-makassar/ticw_makassar_3.jpeg', '/ticw-makassar/ticw_makassar_4.jpeg'],
+  ['/ticw-makassar/ticw_makassar_5.jpeg', '/ticw-makassar/ticw_makassar_6.jpeg'],
+  ['/ticw-makassar/ticw_makassar_7.jpeg', '/ticw-makassar/ticw_makassar_8.jpeg'],
+  ['/ticw-makassar/ticw_makassar_9.jpeg', '/ticw-makassar/ticw_makassar_10.jpeg'],
+] as const;
