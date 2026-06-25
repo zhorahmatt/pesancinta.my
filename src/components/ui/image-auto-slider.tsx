@@ -20,7 +20,7 @@ export function ImageAutoSlider({ images, duration = 34 }: ImageAutoSliderProps)
         {duplicatedImages.map((image, index) => (
           <figure
             key={`${rowLabel}-${image}-${index}`}
-            className="group h-56 w-44 flex-shrink-0 overflow-hidden border border-white/10 bg-page shadow-[0_22px_70px_rgb(0_0_0_/_0.18)] sm:h-72 sm:w-56 lg:h-80 lg:w-64"
+            className="group h-72 w-56 flex-shrink-0 overflow-hidden border border-white/10 bg-page shadow-[0_22px_70px_rgb(0_0_0_/_0.18)] sm:h-80 sm:w-64 lg:h-80 lg:w-64"
           >
             <img
               src={image}
