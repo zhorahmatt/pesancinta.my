@@ -372,6 +372,9 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
   assert.match(content, /Hanya 40 Kursi/);
   assert.match(content, /Hanya 40 Kerusi/);
   assert.match(content, /Only 40 Seats/);
+  assert.match(content, /Daftar Sekarang/);
+  assert.match(content, /Register Now/);
+  assert.doesNotMatch(content, /Amankan Kursi Saya|Amankan Kerusi Saya|Secure My Seat/);
   assert.match(hero, /content\.headlineLines/);
   assert.match(hero, /content\.ctaLabel/);
 
@@ -445,4 +448,23 @@ test('FlipReveal keeps mobile gallery height stable during filter transitions', 
   assert.match(flipReveal, /matchMedia\('\(min-width: 640px\)'\)/);
   assert.match(flipReveal, /const useAbsoluteLayout =/);
   assert.match(flipReveal, /absolute: useAbsoluteLayout/);
+});
+
+test('workshop landing page adds animated testimonials section with dummy content', () => {
+  const workshop = read('./pages/InnerCompassWorkshopPage.tsx');
+  const content = read('./content/landing.ts');
+  const testimonials = read('./components/WorkshopTestimonials.tsx');
+  const column = read('./components/ui/testimonials-columns-1.tsx');
+
+  assert.match(workshop, /import \{ WorkshopTestimonials \}/);
+  assert.match(workshop, /<PhotoProof content=\{content\.photoProof\} \/>[\s\S]*<WorkshopTestimonials content=\{content\.testimonials\} \/>[\s\S]*<TrainerProfiles content=\{content\.trainers\} \/>/);
+  assert.match(content, /testimonials: \{/);
+  assert.match(content, /The space helped me notice what my body had been saying quietly/);
+  assert.match(testimonials, /TestimonialsColumn/);
+  assert.match(testimonials, /firstColumn/);
+  assert.match(testimonials, /secondColumn/);
+  assert.match(testimonials, /thirdColumn/);
+  assert.match(column, /export type Testimonial/);
+  assert.match(column, /repeat: Infinity/);
+  assert.match(column, /from 'framer-motion'/);
 });

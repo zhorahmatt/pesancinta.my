@@ -6,6 +6,7 @@ import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { MobileFloatingCta } from '../components/MobileFloatingCta';
 import { PhotoProof } from '../components/PhotoProof';
 import { TrainerProfiles } from '../components/TrainerProfiles';
+import { WorkshopTestimonials } from '../components/WorkshopTestimonials';
 import { WorkshopPillars } from '../components/WorkshopPillars';
 import {
   contacts,
@@ -121,6 +122,7 @@ export function InnerCompassWorkshopPage() {
       <EmpathySection content={content.empathy} />
       <WorkshopPillars content={content.pillars} />
       <PhotoProof content={content.photoProof} />
+      <WorkshopTestimonials content={content.testimonials} />
       <TrainerProfiles content={content.trainers} />
       <ContactFooter content={content.footer} registrationMessage={content.registrationMessage} />
     </main>
