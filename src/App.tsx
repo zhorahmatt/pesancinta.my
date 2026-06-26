@@ -4,6 +4,8 @@ import { PesanCintaHomePage } from './pages/PesanCintaHomePage';
 
 const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage').then((module) => ({ default: module.AdminDashboardPage })));
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage').then((module) => ({ default: module.AdminLoginPage })));
+const InnerCompassEditorPage = lazy(() => import('./pages/admin/InnerCompassEditorPage').then((module) => ({ default: module.InnerCompassEditorPage })));
+const AdminLayout = lazy(() => import('./components/admin/AdminLayout').then((module) => ({ default: module.AdminLayout })));
 const RegistrationDetailPage = lazy(() => import('./pages/admin/RegistrationDetailPage').then((module) => ({ default: module.RegistrationDetailPage })));
 const RegistrationsPage = lazy(() => import('./pages/admin/RegistrationsPage').then((module) => ({ default: module.RegistrationsPage })));
 const WorkshopEditorPage = lazy(() => import('./pages/admin/WorkshopEditorPage').then((module) => ({ default: module.WorkshopEditorPage })));
@@ -19,6 +21,16 @@ export default function App() {
     return (
       <Suspense fallback={<RouteLoader />}>
         <AdminLoginPage />
+      </Suspense>
+    );
+  }
+
+  if (window.location.pathname === '/admin/inner-compass') {
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <AdminLayout>
+          <InnerCompassEditorPage />
+        </AdminLayout>
       </Suspense>
     );
   }

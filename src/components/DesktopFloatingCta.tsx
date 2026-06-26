@@ -4,9 +4,10 @@ type DesktopFloatingCtaProps = {
   href: string;
   label: string;
   isVisible: boolean;
+  onRegister?: () => void;
 };
 
-export function DesktopFloatingCta({ href, label, isVisible }: DesktopFloatingCtaProps) {
+export function DesktopFloatingCta({ href, label, isVisible, onRegister }: DesktopFloatingCtaProps) {
   return (
     <div
       className={`fixed bottom-8 right-8 z-50 hidden sm:flex transition duration-300 ${
@@ -17,6 +18,7 @@ export function DesktopFloatingCta({ href, label, isVisible }: DesktopFloatingCt
         href={href}
         location="desktop-floating"
         targetName="registration-whatsapp"
+        onClick={onRegister ? (e) => { e.preventDefault(); onRegister(); } : undefined}
         className="min-w-64 border border-accent/40 px-10 py-5 text-base shadow-[0_18px_48px_rgb(243_198_81/0.28)] backdrop-blur-md"
       >
         {label}

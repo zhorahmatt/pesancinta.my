@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { CreateRegistrationInput, PaymentProof, Registration, RegistrationStatus } from '../types/registration';
+import type { CreateEventRegistrationInput, CreateRegistrationInput, PaymentProof, Registration, RegistrationStatus } from '../types/registration';
 
 type RegistrationListOptions = {
   status?: RegistrationStatus | 'all';
@@ -14,6 +14,28 @@ export async function createRegistration(input: CreateRegistrationInput) {
     .from('registrations')
     .insert({
       ...input,
+      notes: input.notes ?? null,
+      status: 'awaiting_payment',
+    })
+    .select()
+    .single()
+    .returns<Registration>();
+}
+
+// Registration for a non-CMS event (e.g. the static inner-compass landing page),
+// keyed by event_key so the backend can group multiple events by name.
+export async function createEventRegistration(input: CreateEventRegistrationInput) {
+  return supabase
+    .from('registrations')
+    .insert({
+      event_key: input.event_key,
+      workshop_id: null,
+      full_name: input.full_name,
+      email: input.email,
+      phone: input.phone,
+      country: input.country,
+      locale: input.locale,
+      payment_method_id: null,
       notes: input.notes ?? null,
       status: 'awaiting_payment',
     })

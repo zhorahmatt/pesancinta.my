@@ -5,7 +5,8 @@ export type PaymentProofStatus = 'submitted' | 'approved' | 'rejected';
 
 export type Registration = {
   id: string;
-  workshop_id: string;
+  workshop_id: string | null;
+  event_key: string | null;
   full_name: string;
   email: string;
   phone: string;
@@ -36,5 +37,15 @@ export type CreateRegistrationInput = {
   country: WorkshopCountry;
   locale: WorkshopLocale;
   payment_method_id: PaymentMethod['id'] | null;
+  notes?: string | null;
+};
+
+export type CreateEventRegistrationInput = {
+  event_key: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  country: WorkshopCountry;
+  locale: WorkshopLocale;
   notes?: string | null;
 };

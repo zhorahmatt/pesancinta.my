@@ -22,11 +22,13 @@ export function RegistrationDetailPage({ registrationId }: RegistrationDetailPag
       if (error) setErrorMessage(error.message);
       setRegistration(data ?? null);
 
-      if (data) {
+      if (data?.workshop_id) {
         const workshopResult = await getAdminWorkshopById(data.workshop_id);
         if (!isMounted) return;
         if (workshopResult.error) setErrorMessage(workshopResult.error.message);
         setWorkshopTitle(workshopResult.data?.title ?? 'workshop');
+      } else if (data?.event_key) {
+        setWorkshopTitle(data.event_key);
       }
 
       setIsLoading(false);

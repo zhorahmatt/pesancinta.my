@@ -1,509 +1,158 @@
-export const contacts = [
-  { name: 'Zai', phone: '+60 13 309 7710' },
-  { name: 'Vanny', phone: '+62 813 5667 6933' },
-  { name: 'Jack', phone: '+62 853 4200 7345' },
-  { name: 'Jumran', phone: '+62 852 4179 4978' },
-] as const;
+import data from './innerCompass.json';
 
-export const mainContact = contacts[0];
+// The editable content for the Inner Compass workshop page lives in
+// innerCompass.json so the local admin editor (/admin/inner-compass) can read
+// and rewrite it. This module is a thin, typed adapter that re-exports the same
+// public surface the page components already consume.
 
-export const event = {
-  name: 'The Inner Compass Workshop Batch 4',
-  city: 'Pekanbaru, Indonesia',
-  venue: 'To be confirmed',
-  date: '29-30 Agustus 2026',
-  time: '09.00 - 21.00 WIB',
-  capacity: '40 Kursi',
-  organizers: ['Pesan Cinta'],
-  partners: [],
-} as const;
+export interface Contact {
+  name: string;
+  phone: string;
+}
 
-export const defaultWorkshopLocale = 'ms';
-export const workshopLocaleOrder = ['ms', 'id', 'en'] as const;
+export interface EventInfo {
+  name: string;
+  city: string;
+  venue: string;
+  date: string;
+  time: string;
+  capacity: string;
+  organizers: string[];
+  partners: string[];
+}
 
-export const workshopLocales = {
-  ms: {
-    label: 'BM',
-    name: 'Bahasa Malaysia',
-    registrationMessage:
-      'Halo, saya ingin mendaftar The Inner Compass Workshop Batch 4 Pekanbaru. Mohon info langkah pendaftarannya.',
-    hero: {
-      eyebrow: 'The Inner Compass Workshop Batch 4 - Pekanbaru',
-      kicker: 'Mulai Hari Ini',
-      headlineLines: ['Hidupmu,', 'Kamu Navigatornya.'],
-      subheadline: 'Saat hidup terasa dikawal tuntutan, tubuh sering tahu arah pulang sebelum fikiran berani mengakuinya.',
-      badge: 'Hanya 40 Kerusi',
-      ctaLabel: 'Daftar Sekarang',
-      eventLabels: {
-        date: 'Tarikh',
-        venue: 'Tempat',
-        city: 'Kota',
-      },
-    },
-    empathy: {
-      eyebrow: 'Why This Workshop',
-      headline: 'Untuk kamu yang terlalu lama kuat sendirian.',
-      subheadline: 'Dari luar terlihat mampu. Di dalam, tubuh mungkin sudah lama meminta jeda.',
-      paragraphs: [
-        'Kamu tetap menjawab “baik”, walaupun tubuh sudah lelah terlebih dahulu.',
-        'Kalender penuh, kepala bising, tetapi sukar memberi ruang untuk diri sendiri.',
-        'Ada beban yang tidak hilang kerana terus ditahan sendirian.',
-        'Di sini, kamu belajar berhenti sebentar tanpa perlu menjelaskan semuanya.',
-      ],
-    },
-    pillars: {
-      eyebrow: 'Workshop Benefits',
-      headlinePrefix: 'Saatnya menentukan',
-      headlineAccent: 'kompas',
-      headlineSuffix: 'hidupmu',
-      subheadline: 'Berani melangkah, nikmati prosesnya menuju versi terbaik diri',
-      items: [
-        {
-          title: 'Trainer Berpengalaman & Profesional',
-          text: 'Dipandu trainer yang memahami proses refleksi, emosi, dan dinamika peserta.',
-        },
-        {
-          title: 'Training Berasaskan Pengalaman',
-          text: 'Belajar melalui praktik langsung, bukan sekadar duduk mendengar materi.',
-        },
-        {
-          title: 'Training yang Interaktif',
-          text: 'Sesi berisi latihan, diskusi, dan proses bersama yang membuat peserta terlibat.',
-        },
-        {
-          title: 'Tension & Trauma Releasing Exercise',
-          text: 'Latihan terpandu untuk mengenali ketegangan tubuh dan melepaskannya perlahan-lahan.',
-        },
-      ],
-    },
-    photoProof: {
-      eyebrow: 'Inside The Room',
-      headline: 'Rasakan prosesnya.',
-      subheadline: 'Kamu akan bergerak, refleksi, berdiskusi, lalu pulang dengan rasa lebih ringan.',
-    },
-    testimonials: {
-      eyebrow: 'Testimonials',
-      headline: 'Apa yang peserta rasakan.',
-      subheadline: 'Cerita dari peserta yang merasakan ruang refleksi, latihan tubuh, dan proses bersama.',
-      items: [
-        {
-          text: 'Ruang ini membantu saya mendengar tubuh dengan lebih lembut. Saya pulang dengan rasa yang lebih lapang.',
-          image: '/g1.jpeg',
-          name: 'Alya Rahman',
-          role: 'Participant Batch 2',
-        },
-        {
-          text: 'Saya suka karena prosesnya tidak memaksa. Pelan, jelas, dan terasa aman untuk jujur.',
-          image: '/g2.jpeg',
-          name: 'Nadia Putri',
-          role: 'Participant Batch 2',
-        },
-        {
-          text: 'Latihan refleksinya sederhana, tetapi membuka banyak hal yang selama ini saya simpan sendiri.',
-          image: '/g3.jpeg',
-          name: 'Mira Sofia',
-          role: 'Participant Batch 3',
-        },
-        {
-          text: 'Diskusinya membuat saya sadar bahwa saya tidak perlu menyelesaikan semuanya sendirian.',
-          image: '/g4.jpeg',
-          name: 'Rania Yusuf',
-          role: 'Participant Batch 3',
-        },
-        {
-          text: 'Trainer menjaga ruangan dengan tenang. Saya merasa dipandu, bukan dihakimi.',
-          image: '/g5.jpeg',
-          name: 'Dina Azzahra',
-          role: 'Participant Batch 2',
-        },
-        {
-          text: 'Saya datang dengan kepala penuh. Saya pulang dengan satu langkah kecil yang terasa mungkin.',
-          image: '/ticw-makassar/ticw_makassar_1.jpeg',
-          name: 'Sarah Lim',
-          role: 'Participant Batch 3',
-        },
-        {
-          text: 'Workshop ini membantu saya menamai rasa yang sebelumnya hanya saya tahan di badan.',
-          image: '/ticw-makassar/ticw_makassar_3.jpeg',
-          name: 'Fara Hassan',
-          role: 'Participant Batch 3',
-        },
-        {
-          text: 'Saya paling ingat momen saat kami belajar berhenti sebentar tanpa merasa bersalah.',
-          image: '/ticw-makassar/ticw_makassar_5.jpeg',
-          name: 'Liyana Noor',
-          role: 'Participant Batch 2',
-        },
-        {
-          text: 'Prosesnya hangat dan manusiawi. Rasanya seperti diberi izin untuk pulang ke diri sendiri.',
-          image: '/ticw-makassar/ticw_makassar_7.jpeg',
-          name: 'Aisha Tan',
-          role: 'Participant Batch 3',
-        },
-      ],
-    },
-    trainers: {
-      eyebrow: "Who's Teaching",
-      headline: 'Kenali trainer workshop ini.',
-      subheadline: 'Dua trainer menjaga proses tetap tenang, jelas, dan aman untuk jujur.',
-      roleLabel: 'Trainer',
-      instagramLabel: 'Instagram',
-      items: [
-        {
-          name: 'Tunku Nina Mansur',
-          quote: 'Kita mulai dari yang terasa di tubuh, bukan dari jawaban yang rapi.',
-          initials: 'TN',
-        },
-        {
-          name: 'Jonelle Huang',
-          quote: 'Tidak semua hal perlu dipaksa selesai. Kadang cukup didengar dulu.',
-          initials: 'JH',
-        },
-      ],
-    },
-    footer: {
-      eyebrow: 'Investment & Contact',
-      headline: 'Tertarik ikut workshop ini?',
-      investmentText: 'Investment diinformasikan via WhatsApp',
-      contactPrompt: 'Pilih contact person yang paling mudah dihubungi.',
-      dateLabel: '29-30 Agustus',
-      capacityLabel: '40 Kerusi',
-      cityLabel: 'Pekanbaru',
-      whatsappLabel: 'WhatsApp',
-      organizerLabel: 'Organizer',
-      sponsorLabel: 'Partners & Sponsors',
-      organizerLogoAlt: 'Organizer logo',
-      sponsorLogoAlt: 'Sponsor',
-      copyright: '© 2026 The Inner Compass Workshop. All Rights Reserved.',
-    },
-  },
-  id: {
-    label: 'ID',
-    name: 'Bahasa Indonesia',
-    registrationMessage:
-      'Halo, saya ingin mendaftar The Inner Compass Workshop Batch 4 Pekanbaru. Mohon info langkah pendaftarannya.',
-    hero: {
-      eyebrow: 'The Inner Compass Workshop Batch 4 - Pekanbaru',
-      kicker: 'Mulai Hari Ini',
-      headlineLines: ['Hidupmu,', 'Kamu Navigatornya.'],
-      subheadline: 'Saat hidup terasa dikendalikan tuntutan, tubuh sering tahu arah pulang sebelum pikiran berani mengakuinya.',
-      badge: 'Hanya 40 Kursi',
-      ctaLabel: 'Daftar Sekarang',
-      eventLabels: {
-        date: 'Tanggal',
-        venue: 'Tempat',
-        city: 'Kota',
-      },
-    },
-    empathy: {
-      eyebrow: 'Why This Workshop',
-      headline: 'Untuk kamu yang terlalu lama kuat sendirian.',
-      subheadline: 'Dari luar terlihat sanggup. Di dalam, tubuh mungkin sudah lama meminta jeda.',
-      paragraphs: [
-        'Kamu tetap menjawab “aman”, meski tubuh sudah lelah duluan.',
-        'Kalender penuh, kepala bising, tapi sulit memberi jeda untuk diri sendiri.',
-        'Ada beban yang tidak hilang karena terus ditahan sendirian.',
-        'Di sini, kamu belajar berhenti sebentar tanpa harus menjelaskan semuanya.',
-      ],
-    },
-    pillars: {
-      eyebrow: 'Workshop Benefits',
-      headlinePrefix: 'Saatnya menentukan',
-      headlineAccent: 'kompas',
-      headlineSuffix: 'hidupmu',
-      subheadline: 'Berani melangkah, nikmati prosesnya menuju versi terbaik diri',
-      items: [
-        {
-          title: 'Trainer Berpengalaman & Profesional',
-          text: 'Dipandu trainer yang memahami proses refleksi, emosi, dan dinamika peserta.',
-        },
-        {
-          title: 'Training Berasaskan Pengalaman',
-          text: 'Belajar lewat praktik langsung, bukan hanya duduk mendengar materi.',
-        },
-        {
-          title: 'Training yang Interaktif',
-          text: 'Sesi berisi latihan, diskusi, dan proses bersama yang membuat peserta terlibat.',
-        },
-        {
-          title: 'Tension & Trauma Releasing Exercise',
-          text: 'Latihan terpandu untuk mengenali ketegangan tubuh dan melepasnya perlahan.',
-        },
-      ],
-    },
-    photoProof: {
-      eyebrow: 'Inside The Room',
-      headline: 'Rasakan prosesnya.',
-      subheadline: 'Kamu akan bergerak, refleksi, berdiskusi, lalu pulang dengan rasa lebih ringan.',
-    },
-    testimonials: {
-      eyebrow: 'Testimonials',
-      headline: 'Cerita dari peserta.',
-      subheadline: 'Pengalaman peserta setelah menemukan ruang yang aman untuk merasa, memahami, dan kembali terkoneksi.',
-      items: [
-        {
-          text: 'Ruang ini membantu saya mendengar tubuh dengan lebih lembut. Saya pulang dengan rasa yang lebih lapang.',
-          image: '/g1.jpeg',
-          name: 'Alya Rahman',
-          role: 'Peserta Batch 2',
-        },
-        {
-          text: 'Saya suka karena prosesnya tidak memaksa. Pelan, jelas, dan terasa aman untuk jujur.',
-          image: '/g2.jpeg',
-          name: 'Nadia Putri',
-          role: 'Peserta Batch 2',
-        },
-        {
-          text: 'Latihan refleksinya sederhana, tapi membuka banyak hal yang selama ini saya simpan sendiri.',
-          image: '/g3.jpeg',
-          name: 'Mira Sofia',
-          role: 'Peserta Batch 3',
-        },
-        {
-          text: 'Diskusinya membuat saya sadar bahwa saya tidak perlu menyelesaikan semuanya sendirian.',
-          image: '/g4.jpeg',
-          name: 'Rania Yusuf',
-          role: 'Peserta Batch 3',
-        },
-        {
-          text: 'Trainer menjaga ruangan dengan tenang. Saya merasa dipandu, bukan dihakimi.',
-          image: '/g5.jpeg',
-          name: 'Dina Azzahra',
-          role: 'Peserta Batch 2',
-        },
-        {
-          text: 'Saya datang dengan kepala penuh. Saya pulang dengan satu langkah kecil yang terasa mungkin.',
-          image: '/ticw-makassar/ticw_makassar_1.jpeg',
-          name: 'Sarah Lim',
-          role: 'Peserta Batch 3',
-        },
-        {
-          text: 'Workshop ini membantu saya menamai rasa yang sebelumnya hanya saya tahan di badan.',
-          image: '/ticw-makassar/ticw_makassar_3.jpeg',
-          name: 'Fara Hassan',
-          role: 'Peserta Batch 3',
-        },
-        {
-          text: 'Saya paling ingat momen saat kami belajar berhenti sebentar tanpa merasa bersalah.',
-          image: '/ticw-makassar/ticw_makassar_5.jpeg',
-          name: 'Liyana Noor',
-          role: 'Peserta Batch 2',
-        },
-        {
-          text: 'Prosesnya hangat dan manusiawi. Rasanya seperti diberi izin untuk pulang ke diri sendiri.',
-          image: '/ticw-makassar/ticw_makassar_7.jpeg',
-          name: 'Aisha Tan',
-          role: 'Peserta Batch 3',
-        },
-      ],
-    },
-    trainers: {
-      eyebrow: "Who's Teaching",
-      headline: 'Kenali trainer workshop ini.',
-      subheadline: 'Dua trainer menjaga proses tetap tenang, jelas, dan aman untuk jujur.',
-      roleLabel: 'Trainer',
-      instagramLabel: 'Instagram',
-      items: [
-        {
-          name: 'Tunku Nina Mansur',
-          quote: 'Kita mulai dari yang terasa di tubuh, bukan dari jawaban yang rapi.',
-          initials: 'TN',
-        },
-        {
-          name: 'Jonelle Huang',
-          quote: 'Tidak semua hal perlu dipaksa selesai. Kadang cukup didengar dulu.',
-          initials: 'JH',
-        },
-      ],
-    },
-    footer: {
-      eyebrow: 'Investment & Contact',
-      headline: 'Tertarik ikut workshop ini?',
-      investmentText: 'Investment diinformasikan via WhatsApp',
-      contactPrompt: 'Pilih contact person yang paling mudah dihubungi.',
-      dateLabel: '29-30 Agustus',
-      capacityLabel: '40 Kursi',
-      cityLabel: 'Pekanbaru',
-      whatsappLabel: 'WhatsApp',
-      organizerLabel: 'Organizer',
-      sponsorLabel: 'Partners & Sponsors',
-      organizerLogoAlt: 'Organizer logo',
-      sponsorLogoAlt: 'Sponsor',
-      copyright: '© 2026 The Inner Compass Workshop. All Rights Reserved.',
-    },
-  },
-  en: {
-    label: 'EN',
-    name: 'English',
-    registrationMessage:
-      'Hello, I would like to register for The Inner Compass Workshop Batch 4 Pekanbaru. Please send me the registration steps.',
-    hero: {
-      eyebrow: 'The Inner Compass Workshop Batch 4 - Pekanbaru',
-      kicker: 'Start Today',
-      headlineLines: ['Your life,', 'You navigate it.'],
-      subheadline: 'When life feels driven by demands, your body often knows the way home before your mind can admit it.',
-      badge: 'Only 40 Seats',
-      ctaLabel: 'Register Now',
-      eventLabels: {
-        date: 'Date',
-        venue: 'Venue',
-        city: 'City',
-      },
-    },
-    empathy: {
-      eyebrow: 'Why This Workshop',
-      headline: 'For you who have been strong alone for too long.',
-      subheadline: 'On the outside, you look capable. Inside, your body may have been asking for pause.',
-      paragraphs: [
-        'You keep saying “I’m fine”, even when your body is already tired.',
-        'Your calendar is full and your head is loud, but rest still feels hard to choose.',
-        'Some weight does not disappear when it keeps being held alone.',
-        'Here, you learn to pause without needing to explain everything.',
-      ],
-    },
-    pillars: {
-      eyebrow: 'Workshop Benefits',
-      headlinePrefix: 'It is time to choose',
-      headlineAccent: 'your compass',
-      headlineSuffix: 'in life',
-      subheadline: 'Take the brave step, trust the process, and move toward your best self',
-      items: [
-        {
-          title: 'Experienced & Professional Trainers',
-          text: 'Guided by trainers who understand reflection, emotion, and group dynamics.',
-        },
-        {
-          title: 'Experience-Based Training',
-          text: 'Learn through direct practice, not only by sitting and listening to material.',
-        },
-        {
-          title: 'Interactive Training',
-          text: 'Sessions include exercises, discussion, and shared process that keep participants engaged.',
-        },
-        {
-          title: 'Tension & Trauma Releasing Exercise',
-          text: 'Guided practice to notice body tension and release it gently, step by step.',
-        },
-      ],
-    },
-    photoProof: {
-      eyebrow: 'Inside The Room',
-      headline: 'Feel the process.',
-      subheadline: 'You will move, reflect, discuss, and leave with a lighter sense of self.',
-    },
-    testimonials: {
-      eyebrow: 'Testimonials',
-      headline: 'What participants felt.',
-      subheadline: 'Participant reflections on safety, clarity, and the small shifts they carried home after the workshop.',
-      items: [
-        {
-          text: 'The space helped me notice what my body had been saying quietly. I left feeling softer and more spacious.',
-          image: '/g1.jpeg',
-          name: 'Alya Rahman',
-          role: 'Participant Batch 2',
-        },
-        {
-          text: 'Nothing felt rushed or forced. The process was gentle, clear, and safe enough for honesty.',
-          image: '/g2.jpeg',
-          name: 'Nadia Putri',
-          role: 'Participant Batch 2',
-        },
-        {
-          text: 'The reflection exercises were simple, but they opened things I had been carrying alone.',
-          image: '/g3.jpeg',
-          name: 'Mira Sofia',
-          role: 'Participant Batch 3',
-        },
-        {
-          text: 'The conversations reminded me that I do not have to figure everything out by myself.',
-          image: '/g4.jpeg',
-          name: 'Rania Yusuf',
-          role: 'Participant Batch 3',
-        },
-        {
-          text: 'The trainers held the room with calm presence. I felt guided, not judged.',
-          image: '/g5.jpeg',
-          name: 'Dina Azzahra',
-          role: 'Participant Batch 2',
-        },
-        {
-          text: 'I arrived with a crowded mind and left with one small next step that finally felt possible.',
-          image: '/ticw-makassar/ticw_makassar_1.jpeg',
-          name: 'Sarah Lim',
-          role: 'Participant Batch 3',
-        },
-        {
-          text: 'This workshop helped me name feelings I had only been holding in my body.',
-          image: '/ticw-makassar/ticw_makassar_3.jpeg',
-          name: 'Fara Hassan',
-          role: 'Participant Batch 3',
-        },
-        {
-          text: 'I still remember learning to pause without immediately feeling guilty for needing rest.',
-          image: '/ticw-makassar/ticw_makassar_5.jpeg',
-          name: 'Liyana Noor',
-          role: 'Participant Batch 2',
-        },
-        {
-          text: 'The process felt warm and human. It was like being given permission to come back to myself.',
-          image: '/ticw-makassar/ticw_makassar_7.jpeg',
-          name: 'Aisha Tan',
-          role: 'Participant Batch 3',
-        },
-      ],
-    },
-    trainers: {
-      eyebrow: "Who's Teaching",
-      headline: 'Meet your workshop trainers.',
-      subheadline: 'Two trainers hold the process with calm, clarity, and safety for honesty.',
-      roleLabel: 'Trainer',
-      instagramLabel: 'Instagram',
-      items: [
-        {
-          name: 'Tunku Nina Mansur',
-          quote: 'We begin with what is felt in the body, not with a polished answer.',
-          initials: 'TN',
-        },
-        {
-          name: 'Jonelle Huang',
-          quote: 'Not everything needs to be forced into completion. Sometimes it only needs to be heard first.',
-          initials: 'JH',
-        },
-      ],
-    },
-    footer: {
-      eyebrow: 'Investment & Contact',
-      headline: 'Interested in joining this workshop?',
-      investmentText: 'Investment details are shared via WhatsApp',
-      contactPrompt: 'Choose the contact person easiest for you to reach.',
-      dateLabel: '29-30 August',
-      capacityLabel: '40 Seats',
-      cityLabel: 'Pekanbaru',
-      whatsappLabel: 'WhatsApp',
-      organizerLabel: 'Organizer',
-      sponsorLabel: 'Partners & Sponsors',
-      organizerLogoAlt: 'Organizer logo',
-      sponsorLogoAlt: 'Sponsor',
-      copyright: '© 2026 The Inner Compass Workshop. All Rights Reserved.',
-    },
-  },
-} as const;
+export interface HeroContent {
+  eyebrow: string;
+  kicker: string;
+  headlineLines: string[];
+  subheadline: string;
+  badge: string;
+  ctaLabel: string;
+  eventLabels: {
+    date: string;
+    venue: string;
+    city: string;
+  };
+}
 
-export type WorkshopLocale = (typeof workshopLocaleOrder)[number];
-export type WorkshopContent = (typeof workshopLocales)[WorkshopLocale];
+export interface EmpathyContent {
+  eyebrow: string;
+  headline: string;
+  subheadline: string;
+  paragraphs: string[];
+}
 
-export const proofPhotoGroups = [
-  ['/g1.jpeg', '/g6.jpeg', '/g11.jpeg', '/g16.jpeg'],
-  ['/g2.jpeg', '/g7.jpeg', '/g12.jpeg'],
-  ['/g3.jpeg', '/g8.jpeg', '/g13.jpeg'],
-  ['/g4.jpeg', '/g9.jpeg', '/g14.jpeg'],
-  ['/g5.jpeg', '/g10.jpeg', '/g15.jpeg'],
-] as const;
+export interface PillarItem {
+  title: string;
+  text: string;
+}
 
-export const batchThreePhotoGroups = [
-  ['/ticw-makassar/ticw_makassar_1.jpeg', '/ticw-makassar/ticw_makassar_2.jpeg'],
-  ['/ticw-makassar/ticw_makassar_3.jpeg', '/ticw-makassar/ticw_makassar_4.jpeg'],
-  ['/ticw-makassar/ticw_makassar_5.jpeg', '/ticw-makassar/ticw_makassar_6.jpeg'],
-  ['/ticw-makassar/ticw_makassar_7.jpeg', '/ticw-makassar/ticw_makassar_8.jpeg'],
-  ['/ticw-makassar/ticw_makassar_9.jpeg', '/ticw-makassar/ticw_makassar_10.jpeg'],
-] as const;
+export interface PillarsContent {
+  eyebrow: string;
+  headlinePrefix: string;
+  headlineAccent: string;
+  headlineSuffix: string;
+  subheadline: string;
+  items: PillarItem[];
+}
+
+export interface PhotoProofContent {
+  eyebrow: string;
+  headline: string;
+  subheadline: string;
+}
+
+export interface TestimonialItem {
+  text: string;
+  image: string;
+  name: string;
+  role: string;
+}
+
+export interface TestimonialsContent {
+  eyebrow: string;
+  headline: string;
+  subheadline: string;
+  items: TestimonialItem[];
+}
+
+export interface TrainerItem {
+  name: string;
+  quote: string;
+  initials: string;
+}
+
+export interface TrainersContent {
+  eyebrow: string;
+  headline: string;
+  subheadline: string;
+  roleLabel: string;
+  instagramLabel: string;
+  items: TrainerItem[];
+}
+
+export interface FooterContent {
+  eyebrow: string;
+  headline: string;
+  investmentText: string;
+  contactPrompt: string;
+  dateLabel: string;
+  capacityLabel: string;
+  cityLabel: string;
+  whatsappLabel: string;
+  organizerLabel: string;
+  sponsorLabel: string;
+  organizerLogoAlt: string;
+  sponsorLogoAlt: string;
+  copyright: string;
+}
+
+export interface WorkshopContent {
+  label: string;
+  name: string;
+  registrationMessage: string;
+  hero: HeroContent;
+  empathy: EmpathyContent;
+  pillars: PillarsContent;
+  photoProof: PhotoProofContent;
+  testimonials: TestimonialsContent;
+  trainers: TrainersContent;
+  footer: FooterContent;
+}
+
+export type WorkshopLocale = 'ms' | 'id' | 'en';
+
+export type SectionKey = 'empathy' | 'pillars' | 'photoProof' | 'testimonials' | 'trainers';
+
+export interface SectionLayoutItem {
+  key: SectionKey;
+  visible: boolean;
+}
+
+export interface InnerCompassData {
+  event: EventInfo;
+  contacts: Contact[];
+  photoGroups: {
+    proof: string[][];
+    batchThree: string[][];
+  };
+  layout: SectionLayoutItem[];
+  defaultLocale: WorkshopLocale;
+  localeOrder: WorkshopLocale[];
+  locales: Record<WorkshopLocale, WorkshopContent>;
+}
+
+const content = data as unknown as InnerCompassData;
+
+export const event: EventInfo = content.event;
+export const contacts: Contact[] = content.contacts;
+export const mainContact: Contact = contacts[0];
+
+export const defaultWorkshopLocale: WorkshopLocale = content.defaultLocale;
+export const workshopLocaleOrder: WorkshopLocale[] = content.localeOrder;
+export const workshopLocales: Record<WorkshopLocale, WorkshopContent> = content.locales;
+
+export const sectionLayout: SectionLayoutItem[] = content.layout;
+
+export const proofPhotoGroups: string[][] = content.photoGroups.proof;
+export const batchThreePhotoGroups: string[][] = content.photoGroups.batchThree;

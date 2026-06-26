@@ -24,7 +24,12 @@ test('routing maps home and workshop pages', () => {
   assert.match(home, /useReducedMotion/);
   assert.match(home, /pc-hero-marquee-track/);
 
-  assert.match(workshop, /<LanguageSwitcher[\s\S]*<MobileFloatingCta[\s\S]*<Hero content=\{content\.hero\}[\s\S]*<EmpathySection content=\{content\.empathy\}[\s\S]*<WorkshopPillars content=\{content\.pillars\}[\s\S]*<PhotoProof content=\{content\.photoProof\}[\s\S]*<TrainerProfiles content=\{content\.trainers\}[\s\S]*<ContactFooter content=\{content\.footer\}/);
+  // Hero stays first and ContactFooter last; the middle sections render from a
+  // data-driven registry ordered/filtered by sectionLayout (innerCompass.json).
+  assert.match(workshop, /<LanguageSwitcher[\s\S]*<MobileFloatingCta[\s\S]*<Hero content=\{content\.hero\}[\s\S]*orderedSections\.map[\s\S]*<ContactFooter content=\{content\.footer\}/);
+  assert.match(workshop, /empathy: <EmpathySection content=\{content\.empathy\} \/>/);
+  assert.match(workshop, /pillars: <WorkshopPillars content=\{content\.pillars\} \/>/);
+  assert.match(workshop, /sectionLayout/);
 });
 
 test('Pesan Cinta home content is bilingual and CMS-ready', () => {
@@ -192,6 +197,16 @@ test('admin localized content editor supports BM, ID, and optional EN', () => {
   assert.match(contentForm, /Default-locale content is required before publishing/);
 });
 
+test('inner compass admin editor sections are collapsible', () => {
+  const editorPage = read('./pages/admin/InnerCompassEditorPage.tsx');
+
+  assert.match(editorPage, /collapsedGroups/);
+  assert.match(editorPage, /collapsedGroups\[groupId\] \?\? true/);
+  assert.match(editorPage, /aria-expanded/);
+  assert.match(editorPage, /Collapse/);
+  assert.match(editorPage, /Expand/);
+});
+
 test('admin pricing and manual payment forms support MYR, IDR, bank transfer, and static QR', () => {
   const workshops = read('./lib/workshops.ts');
   const editorPage = read('./pages/admin/WorkshopEditorPage.tsx');
@@ -340,6 +355,7 @@ test('CMS MVP release checklist covers auth, RLS, registration, capacity, and ex
 test('workshop landing page content matches simplified Batch 4 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');
+  const contentJson = read('./content/innerCompass.json');
   const hero = read('./components/Hero.tsx');
   const footer = read('./components/ContactFooter.tsx');
   const mobileCta = read('./components/MobileFloatingCta.tsx');
@@ -364,25 +380,26 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
   assert.match(vercelConfig, /"source": "\/the-inner-compass-workshop"/);
   assert.match(vercelConfig, /"destination": "\/the-inner-compass-workshop\/index\.html"/);
 
-  assert.match(content, /defaultWorkshopLocale = 'ms'/);
-  assert.match(content, /workshopLocaleOrder = \['ms', 'id', 'en'\]/);
-  assert.match(content, /Hidupmu,/);
-  assert.match(content, /Kamu Navigatornya\./);
-  assert.match(content, /Your life,/);
-  assert.match(content, /You navigate it\./);
-  assert.match(content, /Hanya 40 Kursi/);
-  assert.match(content, /Hanya 40 Kerusi/);
-  assert.match(content, /Only 40 Seats/);
-  assert.match(content, /Daftar Sekarang/);
-  assert.match(content, /Register Now/);
-  assert.doesNotMatch(content, /Amankan Kursi Saya|Amankan Kerusi Saya|Secure My Seat/);
+  assert.match(content, /defaultWorkshopLocale/);
+  assert.match(contentJson, /"defaultLocale": "ms"/);
+  assert.match(contentJson, /"localeOrder":\s*\[\s*"ms",\s*"id",\s*"en"\s*\]/);
+  assert.match(contentJson, /Hidupmu,/);
+  assert.match(contentJson, /Kamu Navigatornya\./);
+  assert.match(contentJson, /Your life,/);
+  assert.match(contentJson, /You navigate it\./);
+  assert.match(contentJson, /Hanya 40 Kursi/);
+  assert.match(contentJson, /Hanya 40 Kerusi/);
+  assert.match(contentJson, /Only 40 Seats/);
+  assert.match(contentJson, /Daftar Sekarang/);
+  assert.match(contentJson, /Register Now/);
+  assert.doesNotMatch(contentJson, /Amankan Kursi Saya|Amankan Kerusi Saya|Secure My Seat/);
   assert.match(hero, /content\.headlineLines/);
   assert.match(hero, /content\.ctaLabel/);
 
-  assert.equal((content.match(/title: '/g) ?? []).length >= 12, true);
-  assert.match(content, /Trainer Berpengalaman & Profesional/);
-  assert.match(content, /Experienced & Professional Trainers/);
-  assert.match(content, /Investment diinformasikan via WhatsApp/);
+  assert.equal((contentJson.match(/"title": "/g) ?? []).length >= 12, true);
+  assert.match(contentJson, /Trainer Berpengalaman & Profesional/);
+  assert.match(contentJson, /Experienced & Professional Trainers/);
+  assert.match(contentJson, /Investment diinformasikan via WhatsApp/);
   assert.match(footer, /content\.investmentText/);
   assert.match(workshop, /localStorage\.getItem/);
   assert.match(workshop, /localStorage\.setItem/);
@@ -395,7 +412,7 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
   assert.match(workshop, /addEventListener\('scroll'/);
   assert.match(workshop, /isScrollIdle/);
   assert.match(workshop, /setIsScrollIdle\(false\)/);
-  assert.match(workshop, /<DesktopFloatingCta href=\{registrationUrl\} label=\{content\.hero\.ctaLabel\} isVisible=\{isScrollIdle && !isHeroInView\} \/>/);
+  assert.match(workshop, /<DesktopFloatingCta href=\{registrationUrl\} label=\{content\.hero\.ctaLabel\} isVisible=\{isScrollIdle && !isHeroInView\} onRegister=\{\(\) => setIsRegisterOpen\(true\)\} \/>/);
   assert.match(workshop, /setIsMobileSwitcherVisible\(false\)/);
   assert.match(mobileCta, /sm:hidden/);
   assert.match(mobileCta, /location="mobile-floating"/);
@@ -418,12 +435,13 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
 
 test('Inside The Room gallery groups proof photos into Batch 2 and Batch 3 filters', () => {
   const content = read('./content/landing.ts');
+  const contentJson = read('./content/innerCompass.json');
   const photoProof = read('./components/PhotoProof.tsx');
   const imageSlider = read('./components/ui/image-auto-slider.tsx');
 
   assert.match(content, /export const proofPhotoGroups/);
   assert.match(content, /export const batchThreePhotoGroups/);
-  assert.match(content, /\/ticw-makassar\/ticw_makassar_1\.jpeg/);
+  assert.match(contentJson, /\/ticw-makassar\/ticw_makassar_1\.jpeg/);
   assert.match(photoProof, /All/);
   assert.match(photoProof, /Batch 3/);
   assert.match(photoProof, /Batch 2/);
@@ -452,15 +470,18 @@ test('Inside The Room gallery no longer uses absolute FLIP layout that can colla
 test('workshop landing page adds animated testimonials section with participant content', () => {
   const workshop = read('./pages/InnerCompassWorkshopPage.tsx');
   const content = read('./content/landing.ts');
+  const contentJson = read('./content/innerCompass.json');
   const testimonials = read('./components/WorkshopTestimonials.tsx');
   const column = read('./components/ui/testimonials-columns-1.tsx');
 
   assert.match(workshop, /import \{ WorkshopTestimonials \}/);
-  assert.match(workshop, /<PhotoProof content=\{content\.photoProof\} \/>[\s\S]*<WorkshopTestimonials content=\{content\.testimonials\} \/>[\s\S]*<TrainerProfiles content=\{content\.trainers\} \/>/);
-  assert.match(content, /testimonials: \{/);
-  assert.match(content, /The space helped me notice what my body had been saying quietly/);
-  assert.match(content, /Participant reflections on safety, clarity/);
-  assert.doesNotMatch(content, /Dummy|dummy|sementara|temporary/i);
+  assert.match(workshop, /photoProof: <PhotoProof content=\{content\.photoProof\} \/>/);
+  assert.match(workshop, /testimonials: <WorkshopTestimonials content=\{content\.testimonials\} \/>/);
+  assert.match(workshop, /trainers: <TrainerProfiles content=\{content\.trainers\} \/>/);
+  assert.match(contentJson, /"testimonials": \{/);
+  assert.match(contentJson, /The space helped me notice what my body had been saying quietly/);
+  assert.match(contentJson, /Participant reflections on safety, clarity/);
+  assert.doesNotMatch(contentJson, /Dummy|dummy|sementara|temporary/i);
   assert.match(testimonials, /TestimonialsColumn/);
   assert.match(testimonials, /firstColumn/);
   assert.match(testimonials, /secondColumn/);

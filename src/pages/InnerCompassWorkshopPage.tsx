@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ContactFooter } from '../components/ContactFooter';
 import { DesktopFloatingCta } from '../components/DesktopFloatingCta';
 import { EmpathySection } from '../components/EmpathySection';
@@ -6,14 +6,17 @@ import { Hero } from '../components/Hero';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { MobileFloatingCta } from '../components/MobileFloatingCta';
 import { PhotoProof } from '../components/PhotoProof';
+import { RegistrationModal } from '../components/workshop/RegistrationModal';
 import { TrainerProfiles } from '../components/TrainerProfiles';
 import { WorkshopTestimonials } from '../components/WorkshopTestimonials';
 import { WorkshopPillars } from '../components/WorkshopPillars';
 import {
   contacts,
   defaultWorkshopLocale,
+  sectionLayout,
   workshopLocaleOrder,
   workshopLocales,
+  type SectionKey,
   type WorkshopLocale,
 } from '../content/landing';
 import { createWhatsAppUrl } from '../lib/whatsapp';
@@ -37,6 +40,7 @@ function getInitialLocale(): WorkshopLocale {
 
 export function InnerCompassWorkshopPage() {
   const [locale, setLocale] = useState<WorkshopLocale>(getInitialLocale);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isMobileSwitcherVisible, setIsMobileSwitcherVisible] = useState(true);
   const [isScrollIdle, setIsScrollIdle] = useState(true);
   const [isHeroInView, setIsHeroInView] = useState(true);
@@ -48,6 +52,16 @@ export function InnerCompassWorkshopPage() {
     label: workshopLocales[locale].label,
     name: workshopLocales[locale].name,
   }));
+
+  const sectionRegistry: Record<SectionKey, ReactNode> = {
+    empathy: <EmpathySection content={content.empathy} />,
+    pillars: <WorkshopPillars content={content.pillars} />,
+    photoProof: <PhotoProof content={content.photoProof} />,
+    testimonials: <WorkshopTestimonials content={content.testimonials} />,
+    trainers: <TrainerProfiles content={content.trainers} />,
+  };
+
+  const orderedSections = sectionLayout.filter((section) => section.visible);
 
   useEffect(() => {
     try {
@@ -121,17 +135,23 @@ export function InnerCompassWorkshopPage() {
   return (
     <main>
       <LanguageSwitcher locale={locale} options={languageOptions} onChange={setLocale} isMobileVisible={isMobileSwitcherVisible} />
-      <MobileFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isMobileSwitcherVisible && !isHeroInView} />
-      <DesktopFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isScrollIdle && !isHeroInView} />
+      <MobileFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isMobileSwitcherVisible && !isHeroInView} onRegister={() => setIsRegisterOpen(true)} />
+      <DesktopFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isScrollIdle && !isHeroInView} onRegister={() => setIsRegisterOpen(true)} />
       <div ref={heroRef}>
-        <Hero content={content.hero} registrationUrl={registrationUrl} />
+        <Hero content={content.hero} registrationUrl={registrationUrl} onRegister={() => setIsRegisterOpen(true)} />
       </div>
-      <EmpathySection content={content.empathy} />
-      <WorkshopPillars content={content.pillars} />
-      <PhotoProof content={content.photoProof} />
-      <WorkshopTestimonials content={content.testimonials} />
-      <TrainerProfiles content={content.trainers} />
+      {orderedSections.map((section) => (
+        <Fragment key={section.key}>{sectionRegistry[section.key]}</Fragment>
+      ))}
       <ContactFooter content={content.footer} registrationMessage={content.registrationMessage} />
+      <RegistrationModal
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+        eventKey="inner-compass"
+        locale={locale}
+        whatsappPhone={contacts[0].phone}
+        registrationMessage={content.registrationMessage}
+      />
     </main>
   );
 }

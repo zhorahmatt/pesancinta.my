@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { listAllRegistrations, listRegistrationsByWorkshop } from '../../lib/registrations';
+import { RegistrationStatusSelect } from '../../components/admin/RegistrationStatusSelect';
 import type { Registration, RegistrationStatus } from '../../types/registration';
 
 type RegistrationsPageProps = {
@@ -33,6 +34,10 @@ export function RegistrationsPage({ workshopId }: RegistrationsPageProps) {
 
   const visibleRegistrations = registrations;
 
+  const handleRowChange = (updated: Registration) => {
+    setRegistrations((current) => current.map((row) => (row.id === updated.id ? updated : row)));
+  };
+
   return (
     <div>
       <div>
@@ -54,19 +59,43 @@ export function RegistrationsPage({ workshopId }: RegistrationsPageProps) {
       {!isLoading && visibleRegistrations.length === 0 && <div className="mt-8 rounded-xl border border-dashed border-white/18 p-6 text-sm text-primary/70">No registrations found.</div>}
 
       {visibleRegistrations.length > 0 && (
-        <div className="mt-8 grid gap-3">
-          {visibleRegistrations.map((registration) => (
-            <article className="rounded-xl border border-white/10 p-4" key={registration.id}>
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <h2 className="font-bold text-primary">{registration.full_name}</h2>
-                  <p className="mt-1 text-xs text-primary/52">{registration.email} · {registration.phone}</p>
-                  <p className="mt-1 text-xs text-primary/52">{registration.country} · {registration.status}</p>
-                </div>
-                <a className="rounded-lg border border-white/14 px-4 py-2 text-center text-sm font-bold text-primary/82 transition hover:border-accent/60" href={`/admin/registrations/${registration.id}`}>Open detail</a>
-              </div>
-            </article>
-          ))}
+        <div className="mt-8 overflow-x-auto rounded-xl border border-white/10">
+          <table className="w-full min-w-[60rem] border-collapse text-left text-sm">
+            <thead>
+              <tr className="border-b border-white/10 text-xs font-semibold uppercase tracking-[0.14em] text-primary/55">
+                <th className="px-4 py-3">Payment status</th>
+                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">Email</th>
+                <th className="px-4 py-3">Phone</th>
+                <th className="px-4 py-3">Event key</th>
+                <th className="px-4 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleRegistrations.map((registration) => (
+                <tr className="border-b border-white/8 align-top last:border-0" key={registration.id}>
+                  <td className="px-4 py-3 w-56">
+                    <RegistrationStatusSelect
+                      registration={registration}
+                      workshopTitle={registration.event_key ?? 'workshop'}
+                      onChange={handleRowChange}
+                    />
+                  </td>
+                  <td className="px-4 py-3 font-bold text-primary">{registration.full_name}</td>
+                  <td className="px-4 py-3 text-primary/72">{registration.email}</td>
+                  <td className="px-4 py-3 text-primary/72">{registration.phone}</td>
+                  <td className="px-4 py-3">
+                    {registration.event_key
+                      ? <span className="rounded-md bg-accent/15 px-2 py-1 text-xs font-semibold text-accent">{registration.event_key}</span>
+                      : <span className="text-xs text-primary/40">—</span>}
+                  </td>
+                  <td className="px-4 py-3">
+                    <a className="text-xs font-bold text-accent transition hover:underline" href={`/admin/registrations/${registration.id}`}>Detail</a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

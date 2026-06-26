@@ -4,9 +4,10 @@ import { CtaButton } from './CtaButton';
 type HeroProps = {
   content: WorkshopContent['hero'];
   registrationUrl: string;
+  onRegister?: () => void;
 };
 
-export function Hero({ content, registrationUrl }: HeroProps) {
+export function Hero({ content, registrationUrl, onRegister }: HeroProps) {
   const eventDetails = [
     [content.eventLabels.date, event.date],
     [content.eventLabels.venue, event.venue],
@@ -52,6 +53,7 @@ export function Hero({ content, registrationUrl }: HeroProps) {
               href={registrationUrl}
               location="hero"
               targetName="registration-whatsapp"
+              onClick={onRegister ? (e) => { e.preventDefault(); onRegister(); } : undefined}
               className="hero-cta-glow order-2 w-full px-8 py-5 text-base opacity-0 shadow-[0_22px_56px_rgb(243_198_81/0.28)] sm:min-w-72 sm:px-10 sm:py-5 sm:text-lg lg:order-1 lg:w-auto lg:px-9 lg:py-4 lg:text-base"
             >
               {content.ctaLabel}
