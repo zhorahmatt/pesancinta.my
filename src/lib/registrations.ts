@@ -25,6 +25,9 @@ export async function createRegistration(input: CreateRegistrationInput) {
 // Registration for a non-CMS event (e.g. the static inner-compass landing page),
 // keyed by event_key so the backend can group multiple events by name.
 export async function createEventRegistration(input: CreateEventRegistrationInput) {
+  // No `.select()` here on purpose: returning the inserted row needs a SELECT
+  // policy, which is admin-only. Anonymous visitors can insert but not read
+  // back, so reading would fail RLS (42501). The public form doesn't need the row.
   return supabase
     .from('registrations')
     .insert({
@@ -38,10 +41,7 @@ export async function createEventRegistration(input: CreateEventRegistrationInpu
       payment_method_id: null,
       notes: input.notes ?? null,
       status: 'awaiting_payment',
-    })
-    .select()
-    .single()
-    .returns<Registration>();
+    });
 }
 
 export async function listRegistrationsByWorkshop(workshopId: string, options: RegistrationListOptions = {}) {
