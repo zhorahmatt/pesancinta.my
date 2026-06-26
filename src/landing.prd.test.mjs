@@ -144,7 +144,7 @@ test('admin route has protected dashboard shell and auth helpers', () => {
   assert.match(dashboard, /AdminLayout/);
   assert.match(layout, /Workshops/);
   assert.match(layout, /Registrations/);
-  assert.match(layout, /Payments/);
+  assert.match(layout, /Inner Compass Page/);
 });
 
 test('admin workshop basics flow has list, editor, and validation helpers', () => {
