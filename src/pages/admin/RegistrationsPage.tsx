@@ -59,7 +59,33 @@ export function RegistrationsPage({ workshopId }: RegistrationsPageProps) {
       {!isLoading && visibleRegistrations.length === 0 && <div className="mt-8 rounded-xl border border-dashed border-white/18 p-6 text-sm text-primary/70">No registrations found.</div>}
 
       {visibleRegistrations.length > 0 && (
-        <div className="mt-8 overflow-x-auto rounded-xl border border-white/10">
+        <div className="mt-8 grid gap-3 sm:hidden">
+          {visibleRegistrations.map((registration) => (
+            <article className="rounded-xl border border-white/10 p-4" key={registration.id}>
+              <div className="flex items-start justify-between gap-3">
+                <h2 className="font-bold text-primary">{registration.full_name}</h2>
+                <a className="text-xs font-bold text-accent transition hover:underline" href={`/admin/registrations/${registration.id}`}>Detail</a>
+              </div>
+              <p className="mt-1 break-all text-xs text-primary/60">{registration.email}</p>
+              <p className="mt-1 text-xs text-primary/60">{registration.phone}</p>
+              {registration.event_key && (
+                <span className="mt-2 inline-block rounded-md bg-accent/15 px-2 py-1 text-xs font-semibold text-accent">{registration.event_key}</span>
+              )}
+              <div className="mt-3">
+                <span className="mb-1 block text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-primary/50">Payment status</span>
+                <RegistrationStatusSelect
+                  registration={registration}
+                  workshopTitle={registration.event_key ?? 'workshop'}
+                  onChange={handleRowChange}
+                />
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+
+      {visibleRegistrations.length > 0 && (
+        <div className="mt-8 hidden overflow-x-auto rounded-xl border border-white/10 sm:block">
           <table className="w-full min-w-[60rem] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-white/10 text-xs font-semibold uppercase tracking-[0.14em] text-primary/55">
