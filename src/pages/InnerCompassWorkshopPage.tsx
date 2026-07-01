@@ -47,7 +47,8 @@ export function InnerCompassWorkshopPage() {
   const [isHeroInView, setIsHeroInView] = useState(true);
   const heroRef = useRef<HTMLDivElement>(null);
   const content = workshopLocales[locale];
-  const registrationUrl = createWhatsAppUrl(contacts[0].phone, content.registrationMessage);
+  const registrationContact = contacts.find((contact) => contact.name === 'Amad') ?? contacts[0];
+  const registrationUrl = createWhatsAppUrl(registrationContact.phone, content.registrationMessage);
   const languageOptions = workshopLocaleOrder.map((locale) => ({
     locale,
     label: workshopLocales[locale].label,
@@ -151,7 +152,7 @@ export function InnerCompassWorkshopPage() {
         onClose={() => setIsRegisterOpen(false)}
         eventKey="inner-compass"
         locale={locale}
-        whatsappPhone={contacts[0].phone}
+        whatsappPhone={registrationContact.phone}
         registrationMessage={content.registrationMessage}
       />
     </main>
