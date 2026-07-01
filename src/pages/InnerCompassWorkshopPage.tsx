@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ContactFooter } from '../components/ContactFooter';
 import { DesktopFloatingCta } from '../components/DesktopFloatingCta';
 import { EmpathySection } from '../components/EmpathySection';
+import { Fasilitas } from '../components/Fasilitas';
 import { Hero } from '../components/Hero';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { MobileFloatingCta } from '../components/MobileFloatingCta';
@@ -59,6 +60,7 @@ export function InnerCompassWorkshopPage() {
     photoProof: <PhotoProof content={content.photoProof} />,
     testimonials: <WorkshopTestimonials content={content.testimonials} />,
     trainers: <TrainerProfiles content={content.trainers} />,
+    fasilitas: <Fasilitas content={content.fasilitas} />,
   };
 
   const orderedSections = sectionLayout.filter((section) => section.visible);

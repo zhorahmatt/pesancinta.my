@@ -18,6 +18,7 @@ const sectionLabels: Record<SectionKey, string> = {
   photoProof: 'Photo Proof',
   testimonials: 'Testimonials',
   trainers: 'Trainers',
+  fasilitas: 'Fasilitas',
 };
 
 async function fileToDataUrl(file: File): Promise<string> {

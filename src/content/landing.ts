@@ -91,6 +91,18 @@ export interface TrainersContent {
   items: TrainerItem[];
 }
 
+export interface FasilitasItem {
+  title: string;
+  text: string;
+}
+
+export interface FasilitasContent {
+  eyebrow: string;
+  headline: string;
+  subheadline: string;
+  items: FasilitasItem[];
+}
+
 export interface FooterContent {
   eyebrow: string;
   headline: string;
@@ -117,12 +129,13 @@ export interface WorkshopContent {
   photoProof: PhotoProofContent;
   testimonials: TestimonialsContent;
   trainers: TrainersContent;
+  fasilitas: FasilitasContent;
   footer: FooterContent;
 }
 
 export type WorkshopLocale = 'ms' | 'id' | 'en';
 
-export type SectionKey = 'empathy' | 'pillars' | 'photoProof' | 'testimonials' | 'trainers';
+export type SectionKey = 'empathy' | 'pillars' | 'photoProof' | 'testimonials' | 'trainers' | 'fasilitas';
 
 export interface SectionLayoutItem {
   key: SectionKey;

@@ -23,11 +23,18 @@ export function Hero({ content, registrationUrl, onRegister }: HeroProps) {
       <div className="absolute inset-x-0 bottom-0 -z-10 h-64 bg-gradient-to-t from-page-deep to-transparent" aria-hidden="true" />
 
       <div className="mx-auto flex min-h-[calc(100svh-1rem)] max-w-7xl flex-col justify-between gap-6 sm:min-h-[calc(100vh-3.5rem)] sm:gap-12">
-        <div className="hero-reveal hero-delay-1 -mt-3 flex items-center justify-between gap-4 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-primary/72 sm:-mt-6 sm:gap-6 sm:text-[0.68rem]">
-          <div className="flex items-center" aria-label="Pesan Cinta">
-            <img className="-ml-5 w-32 object-left sm:w-64" src="/pesancinta.png" alt="Pesan Cinta" />
+        <div className="hero-reveal hero-delay-1 -mt-3 text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-primary/72 sm:-mt-6 sm:text-[0.68rem]">
+          <div className="flex items-center justify-between gap-4 sm:gap-6">
+            <div className="flex items-center" aria-label="Pesan Cinta">
+              <img className="-ml-5 w-32 object-left sm:w-64" src="/pesancinta.png" alt="Pesan Cinta" />
+            </div>
+            <div className="flex items-center justify-end pt-2 sm:pt-3" aria-label="Medina">
+              <img className="w-24 object-contain sm:w-48" src="/logo-medina.svg" alt="Medina" />
+            </div>
           </div>
-          <span className="max-w-56 text-right leading-5 sm:max-w-none">{content.eyebrow}</span>
+          <div className="mt-1 hidden justify-end sm:mt-2">
+            <span className="text-right leading-5">{content.eyebrow}</span>
+          </div>
         </div>
 
         <div className="max-w-5xl">

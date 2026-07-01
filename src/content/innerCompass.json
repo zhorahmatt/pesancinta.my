@@ -2,7 +2,7 @@
   "event": {
     "name": "The Inner Compass Workshop Batch 4",
     "city": "Pekanbaru, Indonesia",
-    "venue": "To be confirmed",
+    "venue": "Tjokro Hotel Pekanbaru, Indonesia",
     "date": "29-30 Agustus 2026",
     "time": "09.00 - 21.00 WIB",
     "capacity": "50 Kursi",
@@ -15,6 +15,14 @@
     {
       "name": "Zai",
       "phone": "+60 13 309 7710"
+    },
+    {
+      "name": "Uwie",
+      "phone": "+62811 7680 784"
+    },
+    {
+      "name": "Amad",
+      "phone": "+62895 4105 63816"
     }
   ],
   "photoGroups": {
@@ -89,6 +97,10 @@
     {
       "key": "trainers",
       "visible": true
+    },
+    {
+      "key": "fasilitas",
+      "visible": true
     }
   ],
   "defaultLocale": "ms",
@@ -104,7 +116,7 @@
       "registrationMessage": "Halo, saya ingin mendaftar The Inner Compass Workshop Batch 4 Pekanbaru. Mohon info langkah pendaftarannya.",
       "hero": {
         "eyebrow": "The Inner Compass Workshop Batch 4 - Pekanbaru",
-        "kicker": "Mulai Hari Ini",
+        "kicker": "The Inner Compass Workshop Batch 4 - Pekanbaru",
         "headlineLines": [
           "Hidupmu,",
           "Kamu Navigatornya."
@@ -239,6 +251,19 @@
           }
         ]
       },
+      "fasilitas": {
+        "eyebrow": "What You Get",
+        "headline": "Apa yang anda perolehi.",
+        "subheadline": "Setiap peserta membawa pulang lebih dari sekadar pengalaman.",
+        "items": [
+          { "title": "Sijil", "text": "Sijil penyertaan untuk setiap peserta yang hadir." },
+          { "title": "TICW Pin", "text": "Pin eksklusif sebagai simbol perjalanan kompas dalaman anda." },
+          { "title": "2 Hari Training", "text": "Sesi latihan penuh dua hari bersama trainer berpengalaman." },
+          { "title": "Notebook + Pen", "text": "Notebook dan pen untuk mencatat refleksi peribadi anda." },
+          { "title": "1x Coffee Break / hari", "text": "Rehat kopi setiap hari untuk sambung bicara dengan peserta lain." },
+          { "title": "1x Lunch / hari", "text": "Makan tengah hari disediakan untuk menjaga tenaga sepanjang sesi." }
+        ]
+      },
       "footer": {
         "eyebrow": "Investment & Contact",
         "headline": "Tertarik ikut workshop ini?",
@@ -261,7 +286,7 @@
       "registrationMessage": "Halo, saya ingin mendaftar The Inner Compass Workshop Batch 4 Pekanbaru. Mohon info langkah pendaftarannya.",
       "hero": {
         "eyebrow": "The Inner Compass Workshop Batch 4 - Pekanbaru",
-        "kicker": "Mulai Hari Ini",
+        "kicker": "The Inner Compass Workshop Batch 4 - Pekanbaru",
         "headlineLines": [
           "Hidupmu,",
           "Kamu Navigatornya."
@@ -394,6 +419,19 @@
             "quote": "Tidak semua hal perlu dipaksa selesai. Kadang cukup didengar dulu.",
             "initials": "JH"
           }
+        ]
+      },
+      "fasilitas": {
+        "eyebrow": "What You Get",
+        "headline": "Apa yang kamu dapatkan.",
+        "subheadline": "Setiap peserta pulang dengan lebih dari sekadar pengalaman.",
+        "items": [
+          { "title": "Sertifikat", "text": "Sertifikat partisipasi untuk setiap peserta yang hadir." },
+          { "title": "TICW Pin", "text": "Pin eksklusif sebagai simbol perjalanan kompas dalamanmu." },
+          { "title": "2 Hari Training", "text": "Sesi latihan penuh dua hari bersama trainer berpengalaman." },
+          { "title": "Notebook + Pulpen", "text": "Notebook dan pulpen untuk mencatat refleksi pribadimu." },
+          { "title": "1x Coffee Break / hari", "text": "Rehat kopi setiap hari untuk menyambung obrolan dengan peserta lain." },
+          { "title": "1x Lunch / hari", "text": "Makan siang disediakan untuk menjaga energi sepanjang sesi." }
         ]
       },
       "footer": {
@@ -551,6 +589,19 @@
             "quote": "Not everything needs to be forced into completion. Sometimes it only needs to be heard first.",
             "initials": "JH"
           }
+        ]
+      },
+      "fasilitas": {
+        "eyebrow": "What You Get",
+        "headline": "What you will take home.",
+        "subheadline": "Every participant leaves with more than just the experience itself.",
+        "items": [
+          { "title": "Certificate", "text": "A participation certificate for every attendee." },
+          { "title": "TICW Pin", "text": "An exclusive pin as a symbol of your inner compass journey." },
+          { "title": "2 Days of Training", "text": "Two full days of guided practice with experienced trainers." },
+          { "title": "Notebook + Pen", "text": "A notebook and pen to capture your personal reflections." },
+          { "title": "1x Coffee Break / day", "text": "A daily coffee break to connect with other participants." },
+          { "title": "1x Lunch / day", "text": "Lunch is provided to keep you energised through the session." }
         ]
       },
       "footer": {

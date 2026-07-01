@@ -8,6 +8,7 @@ type ContactFooterProps = {
 };
 
 const organizerLogos = ['/startupglobal.png', '/pesancinta.png'];
+const sponsorLogos = ['/logo-medina.svg'];
 
 export function ContactFooter({ content, registrationMessage }: ContactFooterProps) {
   return (
@@ -28,7 +29,7 @@ export function ContactFooter({ content, registrationMessage }: ContactFooterPro
         </div>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {contacts.filter((contact) => contact.name === 'Zai').map((contact) => (
+          {contacts.filter((contact) => ['Zai', 'Uwie', 'Amad'].includes(contact.name)).map((contact) => (
             <CtaButton
               data-reveal
               key={contact.name}
@@ -53,6 +54,16 @@ export function ContactFooter({ content, registrationMessage }: ContactFooterPro
                 {organizerLogos.map((logo) => (
                   <div key={logo} className="flex h-24 items-center justify-center bg-page px-3 py-4 sm:h-36">
                     <img className="max-h-20 max-w-28 object-contain sm:max-h-32 sm:max-w-40" src={logo} alt={content.organizerLogoAlt} loading="lazy" />
+                  </div>
+                ))}
+              </div>
+            </section>
+            <section className="border border-white/14 bg-page/2.5 p-4 sm:p-5" data-reveal>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Sponsors</p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                {sponsorLogos.map((logo) => (
+                  <div key={logo} className="flex h-24 items-center justify-center bg-page px-3 py-4 sm:h-36">
+                    <img className="max-h-20 max-w-28 object-contain sm:max-h-32 sm:max-w-40" src={logo} alt="Sponsor" loading="lazy" />
                   </div>
                 ))}
               </div>
