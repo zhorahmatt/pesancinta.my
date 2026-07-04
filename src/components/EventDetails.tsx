@@ -1,10 +1,16 @@
-import { event, mainContact, workshopLocales } from '../content/landing';
+import type { Contact, EventInfo } from '../content/landing';
 import { createWhatsAppUrl } from '../lib/whatsapp';
 import { CtaButton } from './CtaButton';
 import { Section } from './Section';
 
-export function EventDetails() {
-  const registrationUrl = createWhatsAppUrl(mainContact.phone, workshopLocales.ms.registrationMessage);
+type EventDetailsProps = {
+  event: EventInfo;
+  mainContact: Contact;
+  registrationMessage: string;
+};
+
+export function EventDetails({ event, mainContact, registrationMessage }: EventDetailsProps) {
+  const registrationUrl = createWhatsAppUrl(mainContact.phone, registrationMessage);
 
   return (
     <Section className="bg-page-deep/55">

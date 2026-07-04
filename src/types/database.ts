@@ -1,4 +1,5 @@
 import type { PaymentProof, Registration } from './registration';
+import type { AdminUser } from './user';
 import type { PaymentMethod, Workshop, WorkshopLocaleContent, WorkshopPrice } from './workshop';
 
 type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
@@ -11,7 +12,7 @@ type Table<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
 export type Database = {
   public: {
     Tables: {
-      admin_users: Table<{ user_id: string; created_at: string }>;
+      admin_users: Table<{ user_id: string; role: string; created_at: string }>;
       workshops: Table<Workshop>;
       workshop_locales: Table<WorkshopLocaleContent>;
       workshop_prices: Table<WorkshopPrice>;
@@ -32,6 +33,26 @@ export type Database = {
       is_cms_admin: {
         Args: Record<string, never>;
         Returns: boolean;
+      };
+      create_cms_admin: {
+        Args: { p_email: string; p_password: string; p_role?: string };
+        Returns: AdminUser[];
+      };
+      list_cms_admins: {
+        Args: Record<string, never>;
+        Returns: AdminUser[];
+      };
+      delete_cms_admin: {
+        Args: { p_user_id: string };
+        Returns: null;
+      };
+      get_inner_compass_content: {
+        Args: Record<string, never>;
+        Returns: unknown;
+      };
+      save_inner_compass_content: {
+        Args: { p_data: unknown };
+        Returns: null;
       };
     };
     Enums: Record<string, string>;

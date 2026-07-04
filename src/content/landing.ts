@@ -1,9 +1,6 @@
-import data from './innerCompass.json';
-
-// The editable content for the Inner Compass workshop page lives in
-// innerCompass.json so the local admin editor (/admin/inner-compass) can read
-// and rewrite it. This module is a thin, typed adapter that re-exports the same
-// public surface the page components already consume.
+// Type definitions for the Inner Compass workshop page content. The runtime
+// data is fetched from Supabase (see ./innerCompassData) — this module only
+// re-exports the shape so the public page components can stay strongly typed.
 
 export interface Contact {
   name: string;
@@ -154,18 +151,3 @@ export interface InnerCompassData {
   localeOrder: WorkshopLocale[];
   locales: Record<WorkshopLocale, WorkshopContent>;
 }
-
-const content = data as unknown as InnerCompassData;
-
-export const event: EventInfo = content.event;
-export const contacts: Contact[] = content.contacts;
-export const mainContact: Contact = contacts[0];
-
-export const defaultWorkshopLocale: WorkshopLocale = content.defaultLocale;
-export const workshopLocaleOrder: WorkshopLocale[] = content.localeOrder;
-export const workshopLocales: Record<WorkshopLocale, WorkshopContent> = content.locales;
-
-export const sectionLayout: SectionLayoutItem[] = content.layout;
-
-export const proofPhotoGroups: string[][] = content.photoGroups.proof;
-export const batchThreePhotoGroups: string[][] = content.photoGroups.batchThree;

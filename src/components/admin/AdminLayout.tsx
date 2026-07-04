@@ -12,11 +12,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <aside className="rounded-2xl border border-white/10 bg-white/6 p-5 shadow-soft backdrop-blur-md">
           <div className="text-xs font-bold uppercase tracking-[0.22em] text-accent">Pesan Cinta CMS</div>
           <nav className="mt-8 grid gap-2 text-sm font-semibold text-primary/78" aria-label="Admin navigation">
-            <a className="rounded-lg px-3 py-2 transition hover:bg-white/10 hover:text-primary" href="/admin">Workshops</a>
-            <div className="ml-3 grid gap-1 border-l border-white/10 pl-3">
-              <a className="rounded-lg px-3 py-1.5 text-[0.82rem] text-primary/68 transition hover:bg-white/10 hover:text-primary" href="/admin/inner-compass">Inner Compass Page</a>
-            </div>
+            <a className="rounded-lg px-3 py-2 transition hover:bg-white/10 hover:text-primary" href="/admin/users">Users</a>
             <a className="rounded-lg px-3 py-2 transition hover:bg-white/10 hover:text-primary" href="/admin/registrations">Registrations</a>
+            <a className="rounded-lg px-3 py-2 transition hover:bg-white/10 hover:text-primary" href="/admin/inner-compass">Inner Compass Page</a>
           </nav>
           <button
             type="button"

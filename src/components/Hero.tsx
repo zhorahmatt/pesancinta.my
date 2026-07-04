@@ -1,13 +1,14 @@
-import { event, type WorkshopContent } from '../content/landing';
+import type { EventInfo, WorkshopContent } from '../content/landing';
 import { CtaButton } from './CtaButton';
 
 type HeroProps = {
   content: WorkshopContent['hero'];
+  event: EventInfo;
   registrationUrl: string;
   onRegister?: () => void;
 };
 
-export function Hero({ content, registrationUrl, onRegister }: HeroProps) {
+export function Hero({ content, event, registrationUrl, onRegister }: HeroProps) {
   const eventDetails = [
     [content.eventLabels.date, event.date],
     [content.eventLabels.venue, event.venue],

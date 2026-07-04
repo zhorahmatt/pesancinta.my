@@ -1,4 +1,9 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import {
+  fetchInnerCompassContent,
+  saveInnerCompassContent,
+  uploadInnerCompassImage,
+} from '../../content/innerCompassData';
 import type {
   InnerCompassData,
   SectionKey,
@@ -20,15 +25,6 @@ const sectionLabels: Record<SectionKey, string> = {
   trainers: 'Trainers',
   fasilitas: 'Fasilitas',
 };
-
-async function fileToDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
 
 function Field({
   label,
@@ -141,13 +137,9 @@ export function InnerCompassEditorPage() {
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    fetch('/__editor/inner-compass')
-      .then(async (res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((json: InnerCompassData) => setData(json))
-      .catch(() => setLoadError('Live editing is only available when running `npm run dev` locally.'));
+    fetchInnerCompassContent()
+      .then((content) => setData(content))
+      .catch((error) => setLoadError(error instanceof Error ? error.message : 'Failed to load Inner Compass content.'));
   }, []);
 
   const update = (mutator: (draft: InnerCompassData) => void) => {
@@ -174,16 +166,9 @@ export function InnerCompassEditorPage() {
 
   async function uploadTo(set: (path: string) => void, file: File) {
     try {
-      const dataBase64 = await fileToDataUrl(file);
-      const res = await fetch('/__editor/upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename: file.name, dataBase64 }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || 'Upload failed');
-      set(json.path);
-      setStatus(`Uploaded ${json.path}`);
+      const { url } = await uploadInnerCompassImage(file);
+      set(url);
+      setStatus(`Uploaded ${url}`);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Upload failed');
     }
@@ -194,14 +179,8 @@ export function InnerCompassEditorPage() {
     setSaving(true);
     setStatus(null);
     try {
-      const res = await fetch('/__editor/inner-compass', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || 'Save failed');
-      setStatus('Saved. The live page will hot-reload.');
+      await saveInnerCompassContent(data);
+      setStatus('Saved. The public page now reflects your changes.');
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Save failed');
     } finally {
@@ -229,7 +208,7 @@ export function InnerCompassEditorPage() {
         <div>
           <h1 className="text-xl font-bold text-primary">Inner Compass Page</h1>
           <p className="mt-1 text-xs text-primary/60">
-            Edits write to <code>src/content/innerCompass.json</code> — commit the file to publish.
+            Edits save to Supabase and are visible on the public page immediately.
           </p>
         </div>
         <div className="flex items-center gap-3">

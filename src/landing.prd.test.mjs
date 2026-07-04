@@ -25,11 +25,13 @@ test('routing maps home and workshop pages', () => {
   assert.match(home, /pc-hero-marquee-track/);
 
   // Hero stays first and ContactFooter last; the middle sections render from a
-  // data-driven registry ordered/filtered by sectionLayout (innerCompass.json).
-  assert.match(workshop, /<LanguageSwitcher[\s\S]*<MobileFloatingCta[\s\S]*<Hero content=\{content\.hero\}[\s\S]*orderedSections\.map[\s\S]*<ContactFooter content=\{content\.footer\}/);
+  // data-driven registry ordered/filtered by data.layout (formerly sectionLayout in innerCompass.json).
+  assert.match(workshop, /<LanguageSwitcher[\s\S]*<MobileFloatingCta[\s\S]*<Hero[\s\S]*orderedSections\.map[\s\S]*<ContactFooter[\s\S]*content=\{content\.footer\}/);
   assert.match(workshop, /empathy: <EmpathySection content=\{content\.empathy\} \/>/);
+  assert.match(workshop, /data\.layout\.filter/);
+  assert.match(workshop, /fetchInnerCompassContent/);
   assert.match(workshop, /pillars: <WorkshopPillars content=\{content\.pillars\} \/>/);
-  assert.match(workshop, /sectionLayout/);
+  assert.match(workshop, /data\.layout/);
 });
 
 test('Pesan Cinta home content is bilingual and CMS-ready', () => {
@@ -104,6 +106,20 @@ test('Supabase CMS RLS migration protects admin data and public registration', (
   assert.match(migration, /for select\s+using \(public\.is_cms_admin\(\)\)/s);
 });
 
+test('admin users RPC migration adds role and create/delete functions', () => {
+  const migration = read('../supabase/migrations/20260703000000_add_admin_users_role_and_rpcs.sql');
+
+  assert.match(migration, /add column if not exists role text not null default 'admin'/);
+  assert.match(migration, /admin_users_role_check/);
+  assert.match(migration, /create or replace function public\.create_cms_admin/);
+  assert.match(migration, /create or replace function public\.list_cms_admins/);
+  assert.match(migration, /create or replace function public\.delete_cms_admin/);
+  assert.match(migration, /security definer/);
+  assert.match(migration, /is_cms_admin\(\)/);
+  assert.match(migration, /p_user_id = auth\.uid\(\)/);
+  assert.match(migration, /extensions\.crypt/);
+});
+
 test('Supabase CMS client and domain helpers are typed', () => {
   const packageJson = read('../package.json');
   const supabaseClient = read('./lib/supabase.ts');
@@ -142,9 +158,12 @@ test('admin route has protected dashboard shell and auth helpers', () => {
   assert.match(login, /type="password"/);
   assert.match(dashboard, /ProtectedAdminRoute/);
   assert.match(dashboard, /AdminLayout/);
-  assert.match(layout, /Workshops/);
+  assert.match(layout, /Users/);
   assert.match(layout, /Registrations/);
   assert.match(layout, /Inner Compass Page/);
+  assert.match(layout, /\/admin\/users/);
+  assert.match(layout, /\/admin\/registrations/);
+  assert.match(layout, /\/admin\/inner-compass/);
 });
 
 test('admin workshop basics flow has list, editor, and validation helpers', () => {
@@ -156,15 +175,14 @@ test('admin workshop basics flow has list, editor, and validation helpers', () =
 
   assert.match(app, /\/admin\/workshops\/new/);
   assert.match(app, /<WorkshopEditorPage/);
-  assert.match(app, /<WorkshopsPage \/>/);
+  assert.match(app, /<DashboardPage \/>/);
   assert.match(workshops, /export function isValidWorkshopSlug/);
   assert.match(workshops, /export function isValidWorkshopCapacity/);
   assert.match(workshops, /export async function listAdminWorkshops/);
   assert.match(workshops, /export async function getAdminWorkshopById/);
   assert.match(workshops, /export async function createWorkshop/);
   assert.match(workshops, /export async function updateWorkshop/);
-  assert.match(listPage, /listAdminWorkshops/);
-  assert.match(listPage, /New workshop/);
+  assert.match(listPage, /no-op stub/);
   assert.match(editorPage, /WorkshopBasicsForm/);
   assert.match(editorPage, /createWorkshop/);
   assert.match(editorPage, /updateWorkshop/);
@@ -173,6 +191,32 @@ test('admin workshop basics flow has list, editor, and validation helpers', () =
   assert.match(basicsForm, /draft/);
   assert.match(basicsForm, /published/);
   assert.match(basicsForm, /archived/);
+});
+
+test('admin users page lists, creates, and removes admins via RPC', () => {
+  const app = read('./App.tsx');
+  const usersLib = read('./lib/users.ts');
+  const usersPage = read('./pages/admin/UsersPage.tsx');
+  const userTypes = read('./types/user.ts');
+  const database = read('./types/database.ts');
+
+  assert.match(app, /<UsersPage \/>/);
+  assert.match(app, /\/admin\/users/);
+  assert.match(usersLib, /export async function listAdminUsers/);
+  assert.match(usersLib, /export async function createAdminUser/);
+  assert.match(usersLib, /export async function deleteAdminUser/);
+  assert.match(usersLib, /create_cms_admin/);
+  assert.match(usersLib, /list_cms_admins/);
+  assert.match(usersLib, /delete_cms_admin/);
+  assert.match(usersPage, /Add admin/);
+  assert.match(usersPage, /Create admin/);
+  assert.match(usersPage, /Remove/);
+  assert.match(usersPage, /isSelf|currentUserId/);
+  assert.match(userTypes, /export type AdminUser/);
+  assert.match(userTypes, /export type AdminRole/);
+  assert.match(database, /create_cms_admin/);
+  assert.match(database, /list_cms_admins/);
+  assert.match(database, /delete_cms_admin/);
 });
 
 test('admin localized content editor supports BM, ID, and optional EN', () => {
@@ -355,7 +399,8 @@ test('CMS MVP release checklist covers auth, RLS, registration, capacity, and ex
 test('workshop landing page content matches simplified Batch 4 PRD', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');
-  const contentJson = read('./content/innerCompass.json');
+  const contentJson = read('../supabase/seed/innerCompassSeed.json');
+  const dataAdapter = read('./content/innerCompassData.ts');
   const hero = read('./components/Hero.tsx');
   const footer = read('./components/ContactFooter.tsx');
   const mobileCta = read('./components/MobileFloatingCta.tsx');
@@ -380,7 +425,9 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
   assert.match(vercelConfig, /"source": "\/the-inner-compass-workshop"/);
   assert.match(vercelConfig, /"destination": "\/the-inner-compass-workshop\/index\.html"/);
 
-  assert.match(content, /defaultWorkshopLocale/);
+  assert.match(content, /defaultLocale: WorkshopLocale/);
+  assert.match(dataAdapter, /supabase\.rpc\('get_inner_compass_content'\)/);
+  assert.match(workshop, /fetchInnerCompassContent/);
   assert.match(contentJson, /"defaultLocale": "ms"/);
   assert.match(contentJson, /"localeOrder":\s*\[\s*"ms",\s*"id",\s*"en"\s*\]/);
   assert.match(contentJson, /Hidupmu,/);
@@ -435,13 +482,17 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
 
 test('Inside The Room gallery groups proof photos into Batch 2 and Batch 3 filters', () => {
   const content = read('./content/landing.ts');
-  const contentJson = read('./content/innerCompass.json');
+  const contentJson = read('../supabase/seed/innerCompassSeed.json');
+  const dataAdapter = read('./content/innerCompassData.ts');
   const photoProof = read('./components/PhotoProof.tsx');
   const imageSlider = read('./components/ui/image-auto-slider.tsx');
+  const workshop = read('./pages/InnerCompassWorkshopPage.tsx');
 
-  assert.match(content, /export const proofPhotoGroups/);
-  assert.match(content, /export const batchThreePhotoGroups/);
+  assert.match(photoProof, /proofPhotoGroups: string\[\]\[\]/);
+  assert.match(photoProof, /batchThreePhotoGroups: string\[\]\[\]/);
   assert.match(contentJson, /\/ticw-makassar\/ticw_makassar_1\.jpeg/);
+  assert.match(dataAdapter, /fetchInnerCompassContent/);
+  assert.match(workshop, /proofPhotoGroups=\{data\.photoGroups\.proof\}/);
   assert.match(photoProof, /All/);
   assert.match(photoProof, /Batch 3/);
   assert.match(photoProof, /Batch 2/);
@@ -470,12 +521,13 @@ test('Inside The Room gallery no longer uses absolute FLIP layout that can colla
 test('workshop landing page adds animated testimonials section with participant content', () => {
   const workshop = read('./pages/InnerCompassWorkshopPage.tsx');
   const content = read('./content/landing.ts');
-  const contentJson = read('./content/innerCompass.json');
+  const contentJson = read('../supabase/seed/innerCompassSeed.json');
+  const dataAdapter = read('./content/innerCompassData.ts');
   const testimonials = read('./components/WorkshopTestimonials.tsx');
   const column = read('./components/ui/testimonials-columns-1.tsx');
 
   assert.match(workshop, /import \{ WorkshopTestimonials \}/);
-  assert.match(workshop, /photoProof: <PhotoProof content=\{content\.photoProof\} \/>/);
+  assert.match(workshop, /photoProof: \(\s*<PhotoProof/);
   assert.match(workshop, /testimonials: <WorkshopTestimonials content=\{content\.testimonials\} \/>/);
   assert.match(workshop, /trainers: <TrainerProfiles content=\{content\.trainers\} \/>/);
   assert.match(contentJson, /"testimonials": \{/);

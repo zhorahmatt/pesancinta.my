@@ -1,16 +1,17 @@
-import { contacts, type WorkshopContent } from '../content/landing';
+import type { Contact, WorkshopContent } from '../content/landing';
 import { createWhatsAppUrl } from '../lib/whatsapp';
 import { CtaButton } from './CtaButton';
 
 type ContactFooterProps = {
   content: WorkshopContent['footer'];
+  contacts: Contact[];
   registrationMessage: string;
 };
 
 const organizerLogos = ['/startupglobal.png', '/pesancinta.png'];
 const sponsorLogos = ['/logo-medina.svg'];
 
-export function ContactFooter({ content, registrationMessage }: ContactFooterProps) {
+export function ContactFooter({ content, contacts, registrationMessage }: ContactFooterProps) {
   return (
     <footer className="relative isolate overflow-hidden border-t border-white/10 bg-page-deep px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
       <div className="mx-auto max-w-7xl">

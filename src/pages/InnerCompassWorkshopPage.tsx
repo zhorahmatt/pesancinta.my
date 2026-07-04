@@ -11,60 +11,55 @@ import { RegistrationModal } from '../components/workshop/RegistrationModal';
 import { TrainerProfiles } from '../components/TrainerProfiles';
 import { WorkshopTestimonials } from '../components/WorkshopTestimonials';
 import { WorkshopPillars } from '../components/WorkshopPillars';
-import {
-  contacts,
-  defaultWorkshopLocale,
-  sectionLayout,
-  workshopLocaleOrder,
-  workshopLocales,
-  type SectionKey,
-  type WorkshopLocale,
+import { fetchInnerCompassContent } from '../content/innerCompassData';
+import type {
+  InnerCompassData,
+  SectionKey,
+  WorkshopLocale,
 } from '../content/landing';
 import { createWhatsAppUrl } from '../lib/whatsapp';
 
 const localeStorageKey = 'inner-compass-workshop-locale';
+const fallbackLocale: WorkshopLocale = 'ms';
 
 function isWorkshopLocale(value: string | null): value is WorkshopLocale {
-  return value !== null && value in workshopLocales;
+  return value === 'ms' || value === 'id' || value === 'en';
 }
 
-function getInitialLocale(): WorkshopLocale {
-  if (typeof window === 'undefined') return defaultWorkshopLocale;
+function getStoredLocale(): WorkshopLocale {
+  if (typeof window === 'undefined') return fallbackLocale;
 
   try {
-    const storedLocale = window.localStorage.getItem(localeStorageKey);
-    return isWorkshopLocale(storedLocale) ? storedLocale : defaultWorkshopLocale;
+    const stored = window.localStorage.getItem(localeStorageKey);
+    return isWorkshopLocale(stored) ? stored : fallbackLocale;
   } catch {
-    return defaultWorkshopLocale;
+    return fallbackLocale;
   }
 }
 
 export function InnerCompassWorkshopPage() {
-  const [locale, setLocale] = useState<WorkshopLocale>(getInitialLocale);
+  const [data, setData] = useState<InnerCompassData | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [locale, setLocale] = useState<WorkshopLocale>(getStoredLocale);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isMobileSwitcherVisible, setIsMobileSwitcherVisible] = useState(true);
   const [isScrollIdle, setIsScrollIdle] = useState(true);
   const [isHeroInView, setIsHeroInView] = useState(true);
   const heroRef = useRef<HTMLDivElement>(null);
-  const content = workshopLocales[locale];
-  const registrationContact = contacts.find((contact) => contact.name === 'Amad') ?? contacts[0];
-  const registrationUrl = createWhatsAppUrl(registrationContact.phone, content.registrationMessage);
-  const languageOptions = workshopLocaleOrder.map((locale) => ({
-    locale,
-    label: workshopLocales[locale].label,
-    name: workshopLocales[locale].name,
-  }));
 
-  const sectionRegistry: Record<SectionKey, ReactNode> = {
-    empathy: <EmpathySection content={content.empathy} />,
-    pillars: <WorkshopPillars content={content.pillars} />,
-    photoProof: <PhotoProof content={content.photoProof} />,
-    testimonials: <WorkshopTestimonials content={content.testimonials} />,
-    trainers: <TrainerProfiles content={content.trainers} />,
-    fasilitas: <Fasilitas content={content.fasilitas} />,
-  };
-
-  const orderedSections = sectionLayout.filter((section) => section.visible);
+  useEffect(() => {
+    let isMounted = true;
+    fetchInnerCompassContent()
+      .then((content) => {
+        if (isMounted) setData(content);
+      })
+      .catch((error) => {
+        if (isMounted) setLoadError(error instanceof Error ? error.message : 'Failed to load content.');
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -133,25 +128,80 @@ export function InnerCompassWorkshopPage() {
     elements.forEach((element) => observer.observe(element));
 
     return () => observer.disconnect();
-  }, []);
+  }, [data]);
+
+  if (loadError) {
+    return (
+      <main className="grid min-h-svh place-items-center bg-page px-6 text-center text-primary">
+        <div>
+          <h1 className="font-serif text-3xl font-semibold">Inner Compass content is unavailable</h1>
+          <p className="mt-3 text-sm text-primary/70">{loadError}</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (!data) {
+    return (
+      <main className="grid min-h-svh place-items-center bg-page text-primary">
+        <div className="text-sm text-primary/70">Loading workshop…</div>
+      </main>
+    );
+  }
+
+  const safeLocale: WorkshopLocale = isWorkshopLocale(locale) && data.locales[locale] ? locale : data.defaultLocale;
+  const content = data.locales[safeLocale];
+  const registrationContact = data.contacts.find((contact) => contact.name === 'Amad') ?? data.contacts[0];
+  const registrationUrl = createWhatsAppUrl(registrationContact.phone, content.registrationMessage);
+  const languageOptions = data.localeOrder.map((code) => ({
+    locale: code,
+    label: data.locales[code].label,
+    name: data.locales[code].name,
+  }));
+
+  const sectionRegistry: Record<SectionKey, ReactNode> = {
+    empathy: <EmpathySection content={content.empathy} />,
+    pillars: <WorkshopPillars content={content.pillars} />,
+    photoProof: (
+      <PhotoProof
+        content={content.photoProof}
+        proofPhotoGroups={data.photoGroups.proof}
+        batchThreePhotoGroups={data.photoGroups.batchThree}
+      />
+    ),
+    testimonials: <WorkshopTestimonials content={content.testimonials} />,
+    trainers: <TrainerProfiles content={content.trainers} />,
+    fasilitas: <Fasilitas content={content.fasilitas} />,
+  };
+
+  const orderedSections = data.layout.filter((section) => section.visible);
 
   return (
     <main>
-      <LanguageSwitcher locale={locale} options={languageOptions} onChange={setLocale} isMobileVisible={isMobileSwitcherVisible} />
+      <LanguageSwitcher locale={safeLocale} options={languageOptions} onChange={setLocale} isMobileVisible={isMobileSwitcherVisible} />
       <MobileFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isMobileSwitcherVisible && !isHeroInView} onRegister={() => setIsRegisterOpen(true)} />
       <DesktopFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isScrollIdle && !isHeroInView} onRegister={() => setIsRegisterOpen(true)} />
       <div ref={heroRef}>
-        <Hero content={content.hero} registrationUrl={registrationUrl} onRegister={() => setIsRegisterOpen(true)} />
+        <Hero
+          content={content.hero}
+          event={data.event}
+          registrationUrl={registrationUrl}
+          onRegister={() => setIsRegisterOpen(true)}
+        />
       </div>
       {orderedSections.map((section) => (
         <Fragment key={section.key}>{sectionRegistry[section.key]}</Fragment>
       ))}
-      <ContactFooter content={content.footer} registrationMessage={content.registrationMessage} />
+      <ContactFooter
+        content={content.footer}
+        contacts={data.contacts}
+        registrationMessage={content.registrationMessage}
+      />
       <RegistrationModal
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
         eventKey="inner-compass"
-        locale={locale}
+        locale={safeLocale}
         whatsappPhone={registrationContact.phone}
         registrationMessage={content.registrationMessage}
       />

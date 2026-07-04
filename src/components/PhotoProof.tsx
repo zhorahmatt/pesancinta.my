@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { batchThreePhotoGroups, proofPhotoGroups, type WorkshopContent } from '../content/landing';
+import type { WorkshopContent } from '../content/landing';
 import { ImageAutoSlider } from './ui/image-auto-slider';
 
 type PhotoProofProps = {
   content: WorkshopContent['photoProof'];
+  proofPhotoGroups: string[][];
+  batchThreePhotoGroups: string[][];
 };
 
-export function PhotoProof({ content }: PhotoProofProps) {
+export function PhotoProof({ content, proofPhotoGroups, batchThreePhotoGroups }: PhotoProofProps) {
   const [activeBatch, setActiveBatch] = useState('all');
   const filters = [
     { label: 'All', value: 'all' },

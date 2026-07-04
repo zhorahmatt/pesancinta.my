@@ -9,7 +9,8 @@ const AdminLayout = lazy(() => import('./components/admin/AdminLayout').then((mo
 const RegistrationDetailPage = lazy(() => import('./pages/admin/RegistrationDetailPage').then((module) => ({ default: module.RegistrationDetailPage })));
 const RegistrationsPage = lazy(() => import('./pages/admin/RegistrationsPage').then((module) => ({ default: module.RegistrationsPage })));
 const WorkshopEditorPage = lazy(() => import('./pages/admin/WorkshopEditorPage').then((module) => ({ default: module.WorkshopEditorPage })));
-const WorkshopsPage = lazy(() => import('./pages/admin/WorkshopsPage').then((module) => ({ default: module.WorkshopsPage })));
+const DashboardPage = lazy(() => import('./pages/admin/DashboardPage').then((module) => ({ default: module.DashboardPage })));
+const UsersPage = lazy(() => import('./pages/admin/UsersPage').then((module) => ({ default: module.UsersPage })));
 const WorkshopPublicPage = lazy(() => import('./pages/WorkshopPublicPage').then((module) => ({ default: module.WorkshopPublicPage })));
 
 function RouteLoader() {
@@ -52,6 +53,14 @@ export default function App() {
     );
   }
 
+  if (window.location.pathname === '/admin/users') {
+    return (
+      <Suspense fallback={<RouteLoader />}>
+        <AdminDashboardPage page={<UsersPage />} />
+      </Suspense>
+    );
+  }
+
   if (window.location.pathname === '/admin/workshops/new') {
     return (
       <Suspense fallback={<RouteLoader />}>
@@ -72,7 +81,7 @@ export default function App() {
   if (window.location.pathname.startsWith('/admin')) {
     return (
       <Suspense fallback={<RouteLoader />}>
-        <AdminDashboardPage page={<WorkshopsPage />} />
+        <AdminDashboardPage page={<DashboardPage />} />
       </Suspense>
     );
   }
