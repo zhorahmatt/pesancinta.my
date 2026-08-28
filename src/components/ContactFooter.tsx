@@ -74,6 +74,15 @@ export function ContactFooter({ content, contacts, registrationMessage }: Contac
 
         <div className="mt-14 flex flex-col gap-3 border-t border-white/14 pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>{content.copyright}</p>
+          <a
+            href="/uploads/ssm.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs text-muted/60 transition-colors hover:text-accent"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            SSM Verified Business
+          </a>
         </div>
       </div>
     </footer>
