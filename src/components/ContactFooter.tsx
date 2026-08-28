@@ -6,12 +6,20 @@ type ContactFooterProps = {
   content: WorkshopContent['footer'];
   contacts: Contact[];
   registrationMessage: string;
+  organizerLogos?: string[];
+  sponsorLogos?: string[];
 };
 
-const organizerLogos = ['/startupglobal.png', '/pesancinta.png'];
-const sponsorLogos = ['/logo-medina.svg'];
+const defaultOrganizerLogos = ['/startupglobal.png', '/pesancinta.png'];
+const defaultSponsorLogos = ['/logo-medina.svg'];
 
-export function ContactFooter({ content, contacts, registrationMessage }: ContactFooterProps) {
+export function ContactFooter({
+  content,
+  contacts,
+  registrationMessage,
+  organizerLogos = defaultOrganizerLogos,
+  sponsorLogos = defaultSponsorLogos,
+}: ContactFooterProps) {
   return (
     <footer className="relative isolate overflow-hidden border-t border-white/10 bg-page-deep px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
       <div className="mx-auto max-w-7xl">
@@ -30,10 +38,10 @@ export function ContactFooter({ content, contacts, registrationMessage }: Contac
         </div>
 
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {contacts.filter((contact) => ['Zai', 'Uwie', 'Amad'].includes(contact.name)).map((contact) => (
+          {contacts.map((contact) => (
             <CtaButton
               data-reveal
-              key={contact.name}
+              key={contact.name + contact.phone}
               href={createWhatsAppUrl(contact.phone, registrationMessage)}
               location={`footer-${contact.name.toLowerCase()}`}
               targetName={`contact-${contact.name.toLowerCase()}`}

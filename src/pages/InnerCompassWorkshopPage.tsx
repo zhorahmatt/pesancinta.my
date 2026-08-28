@@ -12,10 +12,13 @@ import { TrainerProfiles } from '../components/TrainerProfiles';
 import { WorkshopTestimonials } from '../components/WorkshopTestimonials';
 import { WorkshopPillars } from '../components/WorkshopPillars';
 import { fetchInnerCompassContent } from '../content/innerCompassData';
-import type {
-  InnerCompassData,
-  SectionKey,
-  WorkshopLocale,
+import {
+  workshopBatches,
+  type EventInfo,
+  type InnerCompassData,
+  type SectionKey,
+  type WorkshopBatchId,
+  type WorkshopLocale,
 } from '../content/landing';
 import { createWhatsAppUrl } from '../lib/whatsapp';
 
@@ -37,15 +40,43 @@ function getStoredLocale(): WorkshopLocale {
   }
 }
 
+function getInitialBatch(): WorkshopBatchId {
+  if (typeof window === 'undefined') return '4';
+  const params = new URLSearchParams(window.location.search);
+  const b = params.get('batch');
+  if (b === '5' || b === 'batch-5') return '5';
+  if (b === '4' || b === 'batch-4') return '4';
+  if (window.location.hash.includes('batch-5')) return '5';
+  if (window.location.hash.includes('batch-4')) return '4';
+  return '4';
+}
+
 export function InnerCompassWorkshopPage() {
   const [data, setData] = useState<InnerCompassData | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [locale, setLocale] = useState<WorkshopLocale>(getStoredLocale);
+  const [batchId, setBatchId] = useState<WorkshopBatchId>(getInitialBatch);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isMobileSwitcherVisible, setIsMobileSwitcherVisible] = useState(true);
   const [isScrollIdle, setIsScrollIdle] = useState(true);
   const [isHeroInView, setIsHeroInView] = useState(true);
   const heroRef = useRef<HTMLDivElement>(null);
+
+  const currentBatch = workshopBatches[batchId] ?? workshopBatches['4'];
+
+  const handleBatchChange = (newBatch: WorkshopBatchId) => {
+    setBatchId(newBatch);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('batch', newBatch);
+      window.history.replaceState({}, '', url.toString());
+    }
+  };
+
+  const batchOptions = [
+    { id: '4' as const, label: 'Batch 4 · Kota Kinabalu' },
+    { id: '5' as const, label: 'Batch 5 · Makassar' },
+  ];
 
   useEffect(() => {
     let isMounted = true;
@@ -68,6 +99,14 @@ export function InnerCompassWorkshopPage() {
       // Ignore storage failures; language still updates for this session.
     }
   }, [locale]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setBatchId(getInitialBatch());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   useEffect(() => {
     let showTimer: number | undefined;
@@ -128,7 +167,7 @@ export function InnerCompassWorkshopPage() {
     elements.forEach((element) => observer.observe(element));
 
     return () => observer.disconnect();
-  }, [data]);
+  }, [data, batchId]);
 
   if (loadError) {
     return (
@@ -151,8 +190,23 @@ export function InnerCompassWorkshopPage() {
 
   const safeLocale: WorkshopLocale = isWorkshopLocale(locale) && data.locales[locale] ? locale : data.defaultLocale;
   const content = data.locales[safeLocale];
-  const registrationContact = data.contacts.find((contact) => contact.name === 'Amad') ?? data.contacts[0];
-  const registrationUrl = createWhatsAppUrl(registrationContact.phone, content.registrationMessage);
+
+  const effectiveEvent: EventInfo = {
+    ...data.event,
+    ...currentBatch.event,
+  };
+
+  const effectiveContacts = currentBatch.contacts.length > 0 ? currentBatch.contacts : data.contacts;
+  const registrationContact = effectiveContacts[0];
+  const effectiveRegistrationMessage = currentBatch.registrationMessage[safeLocale] ?? content.registrationMessage;
+  const registrationUrl = createWhatsAppUrl(registrationContact.phone, effectiveRegistrationMessage);
+
+  const heroContent = {
+    ...content.hero,
+    kicker: currentBatch.heroKicker[safeLocale] ?? content.hero.kicker,
+    badge: currentBatch.badge,
+  };
+
   const languageOptions = data.localeOrder.map((code) => ({
     locale: code,
     label: data.locales[code].label,
@@ -183,10 +237,13 @@ export function InnerCompassWorkshopPage() {
       <DesktopFloatingCta href={registrationUrl} label={content.hero.ctaLabel} isVisible={isScrollIdle && !isHeroInView} onRegister={() => setIsRegisterOpen(true)} />
       <div ref={heroRef}>
         <Hero
-          content={content.hero}
-          event={data.event}
+          content={heroContent}
+          event={effectiveEvent}
           registrationUrl={registrationUrl}
           onRegister={() => setIsRegisterOpen(true)}
+          batch={batchId}
+          onBatchChange={handleBatchChange}
+          batches={batchOptions}
         />
       </div>
       {orderedSections.map((section) => (
@@ -194,17 +251,20 @@ export function InnerCompassWorkshopPage() {
       ))}
       <ContactFooter
         content={content.footer}
-        contacts={data.contacts}
-        registrationMessage={content.registrationMessage}
+        contacts={effectiveContacts}
+        registrationMessage={effectiveRegistrationMessage}
+        organizerLogos={currentBatch.organizerLogos}
+        sponsorLogos={currentBatch.sponsorLogos}
       />
       <RegistrationModal
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
-        eventKey="inner-compass"
+        eventKey={`inner-compass-batch-${batchId}`}
         locale={safeLocale}
         whatsappPhone={registrationContact.phone}
-        registrationMessage={content.registrationMessage}
+        registrationMessage={effectiveRegistrationMessage}
       />
     </main>
   );
 }
+

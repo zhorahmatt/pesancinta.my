@@ -195,7 +195,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
           ],
           cta: {
             label: 'Lihat workshop',
-            href: '/the-inner-compass-workshop',
+            href: '/the-inner-compass-workshop?batch=4',
             trackingTarget: 'inner-compass-workshop-batch-4',
           },
         },
@@ -218,7 +218,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
           ],
           cta: {
             label: 'Lihat workshop',
-            href: '/the-inner-compass-workshop',
+            href: '/the-inner-compass-workshop?batch=5',
             trackingTarget: 'inner-compass-workshop-batch-5',
           },
         },
@@ -337,7 +337,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
           ],
           cta: {
             label: 'Lihat workshop',
-            href: '/the-inner-compass-workshop',
+            href: '/the-inner-compass-workshop?batch=4',
             trackingTarget: 'inner-compass-workshop-batch-4',
           },
         },
@@ -360,7 +360,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
           ],
           cta: {
             label: 'Lihat workshop',
-            href: '/the-inner-compass-workshop',
+            href: '/the-inner-compass-workshop?batch=5',
             trackingTarget: 'inner-compass-workshop-batch-5',
           },
         },

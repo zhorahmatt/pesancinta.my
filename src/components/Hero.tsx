@@ -6,9 +6,12 @@ type HeroProps = {
   event: EventInfo;
   registrationUrl: string;
   onRegister?: () => void;
+  batch?: '4' | '5';
+  onBatchChange?: (batch: '4' | '5') => void;
+  batches?: readonly { id: '4' | '5'; label: string }[];
 };
 
-export function Hero({ content, event, registrationUrl, onRegister }: HeroProps) {
+export function Hero({ content, event, registrationUrl, onRegister, batch, onBatchChange, batches }: HeroProps) {
   const eventDetails = [
     [content.eventLabels.date, event.date],
     [content.eventLabels.venue, event.venue],
@@ -39,6 +42,27 @@ export function Hero({ content, event, registrationUrl, onRegister }: HeroProps)
         </div>
 
         <div className="max-w-5xl">
+          {batches && batches.length > 1 && (
+            <div className="hero-reveal hero-delay-2 mb-4 flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-page-deep/85 p-1 shadow-xl backdrop-blur-xl">
+                {batches.map((b) => (
+                  <button
+                    key={b.id}
+                    type="button"
+                    onClick={() => onBatchChange?.(b.id)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-bold tracking-wide transition-all ${
+                      batch === b.id
+                        ? 'bg-accent text-ink shadow-sm'
+                        : 'text-primary/70 hover:text-primary hover:bg-white/10'
+                    }`}
+                  >
+                    {b.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="hero-reveal hero-delay-2 mb-3 flex max-w-xl flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-accent sm:mb-6">
             <span>{content.kicker}</span>
             <span className="hidden h-px w-16 bg-accent/55 sm:block" aria-hidden="true" />
