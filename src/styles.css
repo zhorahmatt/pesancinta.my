@@ -831,8 +831,11 @@ img {
 }
 
 .pc-upcoming-event > img {
-  min-height: 100%;
-  aspect-ratio: 4 / 5;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .pc-upcoming-copy {
@@ -1009,8 +1012,11 @@ img {
   }
 
   .pc-upcoming-event > img {
-    aspect-ratio: 16 / 10;
-    min-height: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center top;
   }
 
   .pc-upcoming-copy {
