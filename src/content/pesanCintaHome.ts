@@ -6,15 +6,26 @@ export type HomeCta = {
   trackingTarget: string;
 };
 
+export type HomeContact = {
+  name: string;
+  phone: string;
+};
+
 export type HomeEvent = {
   label: string;
   title: string;
+  tagline?: string;
   summary: string;
   media: string;
   gallery?: readonly string[];
   date?: string;
+  duration?: string;
   venue?: string;
   city?: string;
+  organizer?: string;
+  poweredBy?: string;
+  trainers?: string;
+  contacts?: readonly HomeContact[];
   cta?: HomeCta;
 };
 
@@ -56,9 +67,15 @@ export type HomePageContent = {
       date: string;
       venue: string;
       city: string;
+      duration: string;
+      organizer: string;
+      poweredBy: string;
+      trainers: string;
+      contact: string;
     };
     past: HomeEvent;
     upcoming: HomeEvent;
+    upcomingEvents: HomeEvent[];
   };
   footer: {
     statement: string;
@@ -120,8 +137,13 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
       title: 'Bertemu, bergerak, lalu pulang dengan cerita baru.',
       detailsLabels: {
         date: 'Tanggal',
-        venue: 'Tempat',
+        venue: 'Lokasi',
         city: 'Kota',
+        duration: 'Keterangan',
+        organizer: 'Penyelenggara',
+        poweredBy: 'Didukung oleh',
+        trainers: 'Trainer',
+        contact: 'Kontak (WhatsApp)',
       },
       past: {
         label: 'Ruang yang telah kami buka',
@@ -133,17 +155,74 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
       upcoming: {
         label: 'Kegiatan berikutnya',
         title: 'The Inner Compass Workshop Batch 4',
-        summary: 'Dua hari untuk menepi dari kebisingan, mengenali kembali arahmu, dan bertumbuh lewat refleksi, gerak, serta kebersamaan.',
-        media: '/ticw_pekanbaru.jpeg',
-        date: '29-30 Agustus 2026',
-        venue: 'To be confirmed',
-        city: 'Pekanbaru, Indonesia',
+        tagline: 'Navigasi Hidup Cara Sendiri',
+        summary: 'Dua hari penuh refleksi dan kebersamaan untuk menemukan kembali arah hidupmu.',
+        media: '/uploads/ticw-batch-4.jpeg',
+        date: '24-25 Oktober 2026',
+        duration: 'Workshop 2 Hari',
+        venue: 'Kota Kinabalu',
+        city: 'Malaysia',
+        organizer: 'Start-Up Global',
+        poweredBy: 'Pesan Cinta & Rantau Putra',
+        trainers: 'Tunku Nina Mansur & Jonelle Huang',
+        contacts: [
+          { name: 'Mimi', phone: '+60148632020' },
+          { name: 'Zai', phone: '+60133097710' },
+        ],
         cta: {
           label: 'Lihat workshop',
           href: '/the-inner-compass-workshop',
-          trackingTarget: 'inner-compass-workshop',
+          trackingTarget: 'inner-compass-workshop-batch-4',
         },
       },
+      upcomingEvents: [
+        {
+          label: 'Kegiatan berikutnya',
+          title: 'The Inner Compass Workshop Batch 4',
+          tagline: 'Navigasi Hidup Cara Sendiri',
+          summary: 'Dua hari penuh refleksi dan kebersamaan untuk menemukan kembali arah hidupmu.',
+          media: '/uploads/ticw-batch-4.jpeg',
+          date: '24-25 Oktober 2026',
+          duration: 'Workshop 2 Hari',
+          venue: 'Kota Kinabalu',
+          city: 'Malaysia',
+          organizer: 'Start-Up Global',
+          poweredBy: 'Pesan Cinta & Rantau Putra',
+          trainers: 'Tunku Nina Mansur & Jonelle Huang',
+          contacts: [
+            { name: 'Mimi', phone: '+60148632020' },
+            { name: 'Zai', phone: '+60133097710' },
+          ],
+          cta: {
+            label: 'Lihat workshop',
+            href: '/the-inner-compass-workshop',
+            trackingTarget: 'inner-compass-workshop-batch-4',
+          },
+        },
+        {
+          label: 'Kegiatan berikutnya',
+          title: 'The Inner Compass Workshop Batch 5',
+          tagline: 'Hidupmu, Kamu Navigatornya!',
+          summary: 'Dua hari untuk menepi dari kebisingan dan mengambil kendali penuh atas kompas hidupmu.',
+          media: '/uploads/ticw-batch-5.jpeg',
+          date: '31 Oktober - 1 November 2026',
+          duration: 'Workshop 2 Hari',
+          venue: 'Four Point Hotel Makassar',
+          city: 'Indonesia',
+          organizer: 'Pesan Cinta',
+          poweredBy: 'Kemas Ki, Makanja Factory, dan Qofftea',
+          trainers: 'Tunku Nina Mansur & Jonelle Huang',
+          contacts: [
+            { name: 'Vanny', phone: '+6281356676933' },
+            { name: 'Zai', phone: '+60133097710' },
+          ],
+          cta: {
+            label: 'Lihat workshop',
+            href: '/the-inner-compass-workshop',
+            trackingTarget: 'inner-compass-workshop-batch-5',
+          },
+        },
+      ],
     },
     footer: {
       statement: 'Semoga kita selalu punya ruang untuk pulih, berhubung, dan pulang pada cinta.',
@@ -200,8 +279,13 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
       title: 'Bertemu, bergerak, lalu pulang dengan cerita baharu.',
       detailsLabels: {
         date: 'Tarikh',
-        venue: 'Tempat',
+        venue: 'Lokasi',
         city: 'Kota',
+        duration: 'Keterangan',
+        organizer: 'Penganjur',
+        poweredBy: 'Disokong oleh',
+        trainers: 'Jurulatih',
+        contact: 'Hubungi (WhatsApp)',
       },
       past: {
         label: 'Ruang yang telah kami buka',
@@ -213,17 +297,74 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
       upcoming: {
         label: 'Aktiviti seterusnya',
         title: 'The Inner Compass Workshop Batch 4',
-        summary: 'Dua hari untuk menjauh sejenak daripada kebisingan, mengenali kembali arahmu, dan bertumbuh melalui refleksi, gerak, serta kebersamaan.',
-        media: '/ticw_pekanbaru.jpeg',
-        date: '29-30 Ogos 2026',
-        venue: 'To be confirmed',
-        city: 'Pekanbaru, Indonesia',
+        tagline: 'Navigasi Hidup Cara Sendiri',
+        summary: 'Dua hari penuh refleksi dan kebersamaan untuk mencari semula arah kompas hidupmu.',
+        media: '/uploads/ticw-batch-4.jpeg',
+        date: '24-25 Oktober 2026',
+        duration: 'Bengkel 2 Hari',
+        venue: 'Kota Kinabalu',
+        city: 'Malaysia',
+        organizer: 'Start-Up Global',
+        poweredBy: 'Pesan Cinta & Rantau Putra',
+        trainers: 'Tunku Nina Mansur & Jonelle Huang',
+        contacts: [
+          { name: 'Mimi', phone: '+60148632020' },
+          { name: 'Zai', phone: '+60133097710' },
+        ],
         cta: {
           label: 'Lihat workshop',
           href: '/the-inner-compass-workshop',
-          trackingTarget: 'inner-compass-workshop',
+          trackingTarget: 'inner-compass-workshop-batch-4',
         },
       },
+      upcomingEvents: [
+        {
+          label: 'Aktiviti seterusnya',
+          title: 'The Inner Compass Workshop Batch 4',
+          tagline: 'Navigasi Hidup Cara Sendiri',
+          summary: 'Dua hari penuh refleksi dan kebersamaan untuk mencari semula arah kompas hidupmu.',
+          media: '/uploads/ticw-batch-4.jpeg',
+          date: '24-25 Oktober 2026',
+          duration: 'Bengkel 2 Hari',
+          venue: 'Kota Kinabalu',
+          city: 'Malaysia',
+          organizer: 'Start-Up Global',
+          poweredBy: 'Pesan Cinta & Rantau Putra',
+          trainers: 'Tunku Nina Mansur & Jonelle Huang',
+          contacts: [
+            { name: 'Mimi', phone: '+60148632020' },
+            { name: 'Zai', phone: '+60133097710' },
+          ],
+          cta: {
+            label: 'Lihat workshop',
+            href: '/the-inner-compass-workshop',
+            trackingTarget: 'inner-compass-workshop-batch-4',
+          },
+        },
+        {
+          label: 'Aktiviti seterusnya',
+          title: 'The Inner Compass Workshop Batch 5',
+          tagline: 'Hidupmu, Kamu Navigatornya!',
+          summary: 'Dua hari untuk menjauh sejenak daripada kebisingan dan mengambil kawalan penuh ke atas hala tuju hidupmu.',
+          media: '/uploads/ticw-batch-5.jpeg',
+          date: '31 Oktober - 1 November 2026',
+          duration: 'Bengkel 2 Hari',
+          venue: 'Four Point Hotel Makassar',
+          city: 'Indonesia',
+          organizer: 'Pesan Cinta',
+          poweredBy: 'Kemas Ki, Makanja Factory, dan Qofftea',
+          trainers: 'Tunku Nina Mansur & Jonelle Huang',
+          contacts: [
+            { name: 'Vanny', phone: '+6281356676933' },
+            { name: 'Zai', phone: '+60133097710' },
+          ],
+          cta: {
+            label: 'Lihat workshop',
+            href: '/the-inner-compass-workshop',
+            trackingTarget: 'inner-compass-workshop-batch-5',
+          },
+        },
+      ],
     },
     footer: {
       statement: 'Semoga kita sentiasa mempunyai ruang untuk pulih, berhubung, dan pulang kepada cinta.',
@@ -232,3 +373,4 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
     },
   },
 };
+

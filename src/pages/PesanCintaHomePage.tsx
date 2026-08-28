@@ -7,6 +7,7 @@ import {
   type HomeLocale,
 } from '../content/pesanCintaHome';
 import { trackCtaClick } from '../lib/tracking';
+import { createWhatsAppUrl } from '../lib/whatsapp';
 
 const localeStorageKey = 'pesan-cinta-home-locale';
 
@@ -264,42 +265,96 @@ export function PesanCintaHomePage() {
             </div>
           </div>
 
-          <article className="pc-upcoming-event">
-            <img src={content.activities.upcoming.media} alt="Kegiatan workshop Pesan Cinta" loading="lazy" />
-            <div className="pc-upcoming-copy">
-              <p className="pc-event-label">{content.activities.upcoming.label}</p>
-              <h3>{content.activities.upcoming.title}</h3>
-              <p>{content.activities.upcoming.summary}</p>
-              <dl className="pc-event-details">
-                <div>
-                  <dt>{content.activities.detailsLabels.date}</dt>
-                  <dd>{content.activities.upcoming.date}</dd>
-                </div>
-                <div>
-                  <dt>{content.activities.detailsLabels.venue}</dt>
-                  <dd>{content.activities.upcoming.venue}</dd>
-                </div>
-                <div>
-                  <dt>{content.activities.detailsLabels.city}</dt>
-                  <dd>{content.activities.upcoming.city}</dd>
-                </div>
-              </dl>
-              {content.activities.upcoming.cta && (
-                <a
-                  className="pc-cta"
-                  href={content.activities.upcoming.cta.href}
-                  onClick={() =>
-                    trackCtaClick({
-                      location: 'home-upcoming-event',
-                      target: content.activities.upcoming.cta!.trackingTarget,
-                    })
-                  }
-                >
-                  {content.activities.upcoming.cta.label}
-                </a>
-              )}
-            </div>
-          </article>
+          {(content.activities.upcomingEvents ?? [content.activities.upcoming]).map((upcomingEvent, eventIdx) => (
+            <article key={upcomingEvent.title + eventIdx} className="pc-upcoming-event">
+              <img src={upcomingEvent.media} alt={upcomingEvent.title} loading="lazy" />
+              <div className="pc-upcoming-copy">
+                <p className="pc-event-label">{upcomingEvent.label}</p>
+                <h3>{upcomingEvent.title}</h3>
+                {upcomingEvent.tagline && (
+                  <p className="font-serif italic text-accent text-base sm:text-lg mt-1 mb-2">
+                    "{upcomingEvent.tagline}"
+                  </p>
+                )}
+                <p>{upcomingEvent.summary}</p>
+                <dl className="pc-event-details">
+                  {upcomingEvent.date && (
+                    <div>
+                      <dt>{content.activities.detailsLabels.date}</dt>
+                      <dd>{upcomingEvent.date}</dd>
+                    </div>
+                  )}
+                  {upcomingEvent.duration && (
+                    <div>
+                      <dt>{content.activities.detailsLabels.duration}</dt>
+                      <dd>{upcomingEvent.duration}</dd>
+                    </div>
+                  )}
+                  {upcomingEvent.venue && (
+                    <div>
+                      <dt>{content.activities.detailsLabels.venue}</dt>
+                      <dd>{upcomingEvent.venue}{upcomingEvent.city ? `, ${upcomingEvent.city}` : ''}</dd>
+                    </div>
+                  )}
+                  {upcomingEvent.organizer && (
+                    <div>
+                      <dt>{content.activities.detailsLabels.organizer}</dt>
+                      <dd>{upcomingEvent.organizer}</dd>
+                    </div>
+                  )}
+                  {upcomingEvent.poweredBy && (
+                    <div>
+                      <dt>{content.activities.detailsLabels.poweredBy}</dt>
+                      <dd>{upcomingEvent.poweredBy}</dd>
+                    </div>
+                  )}
+                  {upcomingEvent.trainers && (
+                    <div>
+                      <dt>{content.activities.detailsLabels.trainers}</dt>
+                      <dd>{upcomingEvent.trainers}</dd>
+                    </div>
+                  )}
+                </dl>
+
+                {upcomingEvent.contacts && upcomingEvent.contacts.length > 0 && (
+                  <div className="mt-6 border-t border-white/10 pt-4">
+                    <p className="text-xs uppercase font-bold tracking-wider text-accent mb-2">
+                      {content.activities.detailsLabels.contact}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {upcomingEvent.contacts.map((contact) => (
+                        <a
+                          key={contact.phone}
+                          href={createWhatsAppUrl(contact.phone, `Halo ${contact.name}, saya ingin bertanya mengenai ${upcomingEvent.title}`)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-primary transition-colors hover:border-accent hover:bg-accent/10 hover:text-accent"
+                        >
+                          <span aria-hidden="true">💬</span>
+                          <span>{contact.phone} ({contact.name})</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {upcomingEvent.cta && (
+                  <a
+                    className="pc-cta"
+                    href={upcomingEvent.cta.href || content.activities.upcoming.cta?.href || '/the-inner-compass-workshop'}
+                    onClick={() =>
+                      trackCtaClick({
+                        location: `home-upcoming-event-${eventIdx + 1}`,
+                        target: upcomingEvent.cta!.trackingTarget,
+                      })
+                    }
+                  >
+                    {upcomingEvent.cta.label}
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 

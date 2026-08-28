@@ -826,6 +826,10 @@ img {
   background: rgb(16 62 88 / 0.72);
 }
 
+.pc-upcoming-event + .pc-upcoming-event {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
 .pc-upcoming-event > img {
   min-height: 100%;
   aspect-ratio: 4 / 5;
