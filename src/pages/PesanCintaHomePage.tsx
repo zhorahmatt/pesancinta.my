@@ -291,7 +291,7 @@ export function PesanCintaHomePage() {
                     </div>
                   )}
                   {upcomingEvent.venue && (
-                    <div>
+                    <div className="pc-detail-wide">
                       <dt>{content.activities.detailsLabels.venue}</dt>
                       <dd>{upcomingEvent.venue}{upcomingEvent.city ? `, ${upcomingEvent.city}` : ''}</dd>
                     </div>
@@ -303,13 +303,13 @@ export function PesanCintaHomePage() {
                     </div>
                   )}
                   {upcomingEvent.poweredBy && (
-                    <div>
+                    <div className="pc-detail-wide">
                       <dt>{content.activities.detailsLabels.poweredBy}</dt>
                       <dd>{upcomingEvent.poweredBy}</dd>
                     </div>
                   )}
                   {upcomingEvent.trainers && (
-                    <div>
+                    <div className="pc-detail-wide">
                       <dt>{content.activities.detailsLabels.trainers}</dt>
                       <dd>{upcomingEvent.trainers}</dd>
                     </div>
