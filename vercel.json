@@ -9,6 +9,10 @@
       "destination": "/the-inner-compass-workshop/index.html"
     },
     {
+      "source": "/uploads/:file*",
+      "destination": "/uploads/:file*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
