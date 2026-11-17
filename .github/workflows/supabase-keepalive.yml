@@ -30,17 +30,31 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+          # Pasted secrets often pick up stray spaces, newlines or quotes;
+          # neither a URL nor the anon key can legitimately contain them.
+          url=$(printf '%s' "$SUPABASE_URL" | tr -d "[:space:]\"'")
+          key=$(printf '%s' "$SUPABASE_ANON_KEY" | tr -d "[:space:]\"'")
+          url=${url%/}
+
+          if [ -z "$url" ] || [ -z "$key" ]; then
             echo "::error::Missing SUPABASE_URL or SUPABASE_ANON_KEY repository secret."
             exit 1
           fi
 
+          case "$url" in
+            https://*) ;;
+            *)
+              echo "::error::SUPABASE_URL must look like https://xxxx.supabase.co (got ${#url} characters that do not start with https://)."
+              exit 1
+              ;;
+          esac
+
           # Retries cover the first request waking a slow instance.
           status=$(curl --silent --show-error --output response.json --write-out '%{http_code}' \
             --retry 3 --retry-delay 20 --retry-all-errors --max-time 60 \
-            --request POST "${SUPABASE_URL%/}/rest/v1/rpc/get_inner_compass_content" \
-            --header "apikey: $SUPABASE_ANON_KEY" \
-            --header "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            --request POST "$url/rest/v1/rpc/get_inner_compass_content" \
+            --header "apikey: $key" \
+            --header "Authorization: Bearer $key" \
             --header 'Content-Type: application/json' \
             --data '{}')
 
