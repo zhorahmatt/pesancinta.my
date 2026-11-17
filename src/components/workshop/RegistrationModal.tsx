@@ -3,6 +3,10 @@ import { createEventRegistration } from '../../lib/registrations';
 import { createWhatsAppUrl } from '../../lib/whatsapp';
 import type { WorkshopCountry, WorkshopLocale } from '../../types/workshop';
 
+// After this long without a response from Supabase, send the visitor to
+// WhatsApp anyway so a slow or paused database never blocks registration.
+const registrationSaveTimeoutMs = 6000;
+
 type RegistrationModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -105,20 +109,27 @@ export function RegistrationModal({ isOpen, onClose, eventKey, locale, whatsappP
 
     setIsSaving(true);
     try {
-      const { error: saveError } = await createEventRegistration({
-        event_key: eventKey,
-        full_name: name.trim(),
-        email: email.trim(),
-        phone: whatsapp.trim(),
-        country: countryFromPhone(whatsapp),
-        locale,
+      const saveTimeout = new Promise<never>((_, reject) => {
+        window.setTimeout(() => reject(new Error('Registration save timed out')), registrationSaveTimeoutMs);
       });
+      const { error: saveError } = await Promise.race([
+        createEventRegistration({
+          event_key: eventKey,
+          full_name: name.trim(),
+          email: email.trim(),
+          phone: whatsapp.trim(),
+          country: countryFromPhone(whatsapp),
+          locale,
+        }),
+        saveTimeout,
+      ]);
       if (saveError) throw saveError;
-      redirectToWhatsApp();
-    } catch {
-      setError(labels.error);
-      setIsSaving(false);
+    } catch (saveError) {
+      // Supabase may be paused or slow. Don't lose the lead: the WhatsApp
+      // message already carries the name, email and number, so continue anyway.
+      console.warn('[registration] Could not save to Supabase, continuing to WhatsApp:', saveError);
     }
+    redirectToWhatsApp();
   };
 
   return (

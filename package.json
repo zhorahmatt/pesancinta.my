@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/snapshot-inner-compass.mjs",
     "build": "tsc -b && vite build",
+    "snapshot:inner-compass": "node scripts/snapshot-inner-compass.mjs",
     "lint": "eslint .",
     "test": "node --test src/landing.prd.test.mjs",
     "preview": "vite preview"

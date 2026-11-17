@@ -8,6 +8,16 @@ export async function fetchInnerCompassContent(): Promise<InnerCompassData> {
   return data as unknown as InnerCompassData;
 }
 
+/**
+ * Copy of the published content captured at build time
+ * (scripts/snapshot-inner-compass.mjs). Used when Supabase is slow or down.
+ * Loaded lazily so it only costs a request when it is actually needed.
+ */
+export async function loadInnerCompassSnapshot(): Promise<InnerCompassData> {
+  const snapshot = await import('./innerCompassSnapshot.json');
+  return snapshot.default as unknown as InnerCompassData;
+}
+
 export async function saveInnerCompassContent(data: InnerCompassData): Promise<void> {
   const { error } = await supabase.rpc('save_inner_compass_content', { p_data: data });
   if (error) throw error;

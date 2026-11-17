@@ -1,0 +1,678 @@
+{
+  "event": {
+    "city": "Pekanbaru, Indonesia",
+    "date": "29-30 Agustus 2026",
+    "name": "The Inner Compass Workshop Batch 4",
+    "time": "09.00 - 21.00 WIB",
+    "venue": "Tjokro Hotel Pekanbaru, Indonesia",
+    "capacity": "50 Kursi",
+    "partners": [],
+    "organizers": [
+      "Pesan Cinta"
+    ]
+  },
+  "layout": [
+    {
+      "key": "empathy",
+      "visible": true
+    },
+    {
+      "key": "pillars",
+      "visible": true
+    },
+    {
+      "key": "photoProof",
+      "visible": true
+    },
+    {
+      "key": "testimonials",
+      "visible": true
+    },
+    {
+      "key": "trainers",
+      "visible": true
+    },
+    {
+      "key": "fasilitas",
+      "visible": true
+    }
+  ],
+  "locales": {
+    "en": {
+      "hero": {
+        "badge": "Only 40 Seats",
+        "kicker": "Start Today",
+        "eyebrow": "The Inner Compass Workshop Batch 4 - Pekanbaru",
+        "ctaLabel": "Register Now",
+        "eventLabels": {
+          "city": "City",
+          "date": "Date",
+          "venue": "Venue"
+        },
+        "subheadline": "When life feels driven by demands, your body often knows the way home before your mind can admit it.",
+        "headlineLines": [
+          "Your life,",
+          "You navigate it."
+        ]
+      },
+      "name": "English",
+      "label": "EN",
+      "footer": {
+        "eyebrow": "Investment & Contact",
+        "headline": "Interested in joining this workshop?",
+        "cityLabel": "Pekanbaru",
+        "copyright": "© 2026 The Inner Compass Workshop. All Rights Reserved.",
+        "dateLabel": "29-30 August",
+        "sponsorLabel": "Partners & Sponsors",
+        "capacityLabel": "40 Seats",
+        "contactPrompt": "Choose the contact person easiest for you to reach.",
+        "whatsappLabel": "WhatsApp",
+        "investmentText": "Investment details are shared via WhatsApp",
+        "organizerLabel": "Organizer",
+        "sponsorLogoAlt": "Sponsor",
+        "organizerLogoAlt": "Organizer logo"
+      },
+      "empathy": {
+        "eyebrow": "Why This Workshop",
+        "headline": "For you who have been strong alone for too long.",
+        "paragraphs": [
+          "You keep saying “I’m fine”, even when your body is already tired.",
+          "Your calendar is full and your head is loud, but rest still feels hard to choose.",
+          "Some weight does not disappear when it keeps being held alone.",
+          "Here, you learn to pause without needing to explain everything."
+        ],
+        "subheadline": "On the outside, you look capable. Inside, your body may have been asking for pause."
+      },
+      "pillars": {
+        "items": [
+          {
+            "text": "Guided by trainers who understand reflection, emotion, and group dynamics.",
+            "title": "Experienced & Professional Trainers"
+          },
+          {
+            "text": "Learn through direct practice, not only by sitting and listening to material.",
+            "title": "Experience-Based Training"
+          },
+          {
+            "text": "Sessions include exercises, discussion, and shared process that keep participants engaged.",
+            "title": "Interactive Training"
+          },
+          {
+            "text": "Guided practice to notice body tension and release it gently, step by step.",
+            "title": "Tension & Trauma Releasing Exercise"
+          }
+        ],
+        "eyebrow": "Workshop Benefits",
+        "subheadline": "Take the brave step, trust the process, and move toward your best self",
+        "headlineAccent": "your compass",
+        "headlinePrefix": "It is time to choose",
+        "headlineSuffix": "in life"
+      },
+      "trainers": {
+        "items": [
+          {
+            "name": "Tunku Nina Mansur",
+            "quote": "We begin with what is felt in the body, not with a polished answer.",
+            "initials": "TN"
+          },
+          {
+            "name": "Jonelle Huang",
+            "quote": "Not everything needs to be forced into completion. Sometimes it only needs to be heard first.",
+            "initials": "JH"
+          }
+        ],
+        "eyebrow": "Who's Teaching",
+        "headline": "Meet your workshop trainers.",
+        "roleLabel": "Trainer",
+        "subheadline": "Two trainers hold the process with calm, clarity, and safety for honesty.",
+        "instagramLabel": "Instagram"
+      },
+      "fasilitas": {
+        "items": [
+          {
+            "text": "A participation certificate for every attendee.",
+            "title": "Certificate"
+          },
+          {
+            "text": "An exclusive pin as a symbol of your inner compass journey.",
+            "title": "TICW Pin"
+          },
+          {
+            "text": "Two full days of guided practice with experienced trainers.",
+            "title": "2 Days of Training"
+          },
+          {
+            "text": "A notebook and pen to capture your personal reflections.",
+            "title": "Notebook + Pen"
+          },
+          {
+            "text": "A daily coffee break to connect with other participants.",
+            "title": "1x Coffee Break / day"
+          },
+          {
+            "text": "Lunch is provided to keep you energised through the session.",
+            "title": "1x Lunch / day"
+          }
+        ],
+        "eyebrow": "What You Get",
+        "headline": "What you will take home.",
+        "subheadline": "Every participant leaves with more than just the experience itself."
+      },
+      "photoProof": {
+        "eyebrow": "Inside The Room",
+        "headline": "Feel the process.",
+        "subheadline": "You will move, reflect, discuss, and leave with a lighter sense of self."
+      },
+      "testimonials": {
+        "items": [
+          {
+            "name": "Alya Rahman",
+            "role": "Participant Batch 2",
+            "text": "The space helped me notice what my body had been saying quietly. I left feeling softer and more spacious.",
+            "image": "/g1.jpeg"
+          },
+          {
+            "name": "Nadia Putri",
+            "role": "Participant Batch 2",
+            "text": "Nothing felt rushed or forced. The process was gentle, clear, and safe enough for honesty.",
+            "image": "/g2.jpeg"
+          },
+          {
+            "name": "Mira Sofia",
+            "role": "Participant Batch 3",
+            "text": "The reflection exercises were simple, but they opened things I had been carrying alone.",
+            "image": "/g3.jpeg"
+          },
+          {
+            "name": "Rania Yusuf",
+            "role": "Participant Batch 3",
+            "text": "The conversations reminded me that I do not have to figure everything out by myself.",
+            "image": "/g4.jpeg"
+          },
+          {
+            "name": "Dina Azzahra",
+            "role": "Participant Batch 2",
+            "text": "The trainers held the room with calm presence. I felt guided, not judged.",
+            "image": "/g5.jpeg"
+          },
+          {
+            "name": "Sarah Lim",
+            "role": "Participant Batch 3",
+            "text": "I arrived with a crowded mind and left with one small next step that finally felt possible.",
+            "image": "/ticw-makassar/ticw_makassar_1.jpeg"
+          },
+          {
+            "name": "Fara Hassan",
+            "role": "Participant Batch 3",
+            "text": "This workshop helped me name feelings I had only been holding in my body.",
+            "image": "/ticw-makassar/ticw_makassar_3.jpeg"
+          },
+          {
+            "name": "Liyana Noor",
+            "role": "Participant Batch 2",
+            "text": "I still remember learning to pause without immediately feeling guilty for needing rest.",
+            "image": "/ticw-makassar/ticw_makassar_5.jpeg"
+          },
+          {
+            "name": "Aisha Tan",
+            "role": "Participant Batch 3",
+            "text": "The process felt warm and human. It was like being given permission to come back to myself.",
+            "image": "/ticw-makassar/ticw_makassar_7.jpeg"
+          }
+        ],
+        "eyebrow": "Testimonials",
+        "headline": "What participants felt.",
+        "subheadline": "Participant reflections on safety, clarity, and the small shifts they carried home after the workshop."
+      },
+      "registrationMessage": "Hello, I would like to register for The Inner Compass Workshop Batch 4 Pekanbaru. Please send me the registration steps."
+    },
+    "id": {
+      "hero": {
+        "badge": "Hanya 40 Kursi",
+        "kicker": "The Inner Compass Workshop Batch 4 - Pekanbaru",
+        "eyebrow": "The Inner Compass Workshop Batch 4 - Pekanbaru",
+        "ctaLabel": "Daftar Sekarang!",
+        "eventLabels": {
+          "city": "Kota",
+          "date": "Tanggal",
+          "venue": "Tempat"
+        },
+        "subheadline": "Saat hidup terasa dikendalikan tuntutan, tubuh sering tahu arah pulang sebelum pikiran berani mengakuinya.",
+        "headlineLines": [
+          "Hidupmu,",
+          "Kamu Navigatornya."
+        ]
+      },
+      "name": "Bahasa Indonesia",
+      "label": "ID",
+      "footer": {
+        "eyebrow": "Investment & Contact",
+        "headline": "Tertarik ikut workshop ini?",
+        "cityLabel": "Pekanbaru",
+        "copyright": "© 2026 The Inner Compass Workshop. All Rights Reserved.",
+        "dateLabel": "29-30 Agustus",
+        "sponsorLabel": "Partners & Sponsors",
+        "capacityLabel": "40 Kursi",
+        "contactPrompt": "Pilih contact person yang paling mudah dihubungi.",
+        "whatsappLabel": "WhatsApp",
+        "investmentText": "Investment diinformasikan via WhatsApp",
+        "organizerLabel": "Organizer",
+        "sponsorLogoAlt": "Sponsor",
+        "organizerLogoAlt": "Organizer logo"
+      },
+      "empathy": {
+        "eyebrow": "Why This Workshop",
+        "headline": "Untuk kamu yang terlalu lama kuat sendirian.",
+        "paragraphs": [
+          "Kamu tetap menjawab “aman”, meski tubuh sudah lelah duluan.",
+          "Kalender penuh, kepala bising, tapi sulit memberi jeda untuk diri sendiri.",
+          "Ada beban yang tidak hilang karena terus ditahan sendirian.",
+          "Di sini, kamu belajar berhenti sebentar tanpa harus menjelaskan semuanya."
+        ],
+        "subheadline": "Dari luar terlihat sanggup. Di dalam, tubuh mungkin sudah lama meminta jeda."
+      },
+      "pillars": {
+        "items": [
+          {
+            "text": "Dipandu trainer yang memahami proses refleksi, emosi, dan dinamika peserta.",
+            "title": "Trainer Berpengalaman & Profesional"
+          },
+          {
+            "text": "Belajar lewat praktik langsung, bukan hanya duduk mendengar materi.",
+            "title": "Training Berasaskan Pengalaman"
+          },
+          {
+            "text": "Sesi berisi latihan, diskusi, dan proses bersama yang membuat peserta terlibat.",
+            "title": "Training yang Interaktif"
+          },
+          {
+            "text": "Latihan terpandu untuk mengenali ketegangan tubuh dan melepasnya perlahan.",
+            "title": "Tension & Trauma Releasing Exercise"
+          }
+        ],
+        "eyebrow": "Workshop Benefits",
+        "subheadline": "Berani melangkah, nikmati prosesnya menuju versi terbaik diri",
+        "headlineAccent": "kompas",
+        "headlinePrefix": "Saatnya menentukan",
+        "headlineSuffix": "hidupmu"
+      },
+      "trainers": {
+        "items": [
+          {
+            "name": "Tunku Nina Mansur",
+            "quote": "Kita mulai dari yang terasa di tubuh, bukan dari jawaban yang rapi.",
+            "initials": "TN"
+          },
+          {
+            "name": "Jonelle Huang",
+            "quote": "Tidak semua hal perlu dipaksa selesai. Kadang cukup didengar dulu.",
+            "initials": "JH"
+          }
+        ],
+        "eyebrow": "Who's Teaching",
+        "headline": "Kenali trainer workshop ini.",
+        "roleLabel": "Trainer",
+        "subheadline": "Dua trainer menjaga proses tetap tenang, jelas, dan aman untuk jujur.",
+        "instagramLabel": "Instagram"
+      },
+      "fasilitas": {
+        "items": [
+          {
+            "text": "Sertifikat partisipasi untuk setiap peserta yang hadir.",
+            "title": "Sertifikat"
+          },
+          {
+            "text": "Pin eksklusif sebagai simbol perjalanan kompas dalamanmu.",
+            "title": "TICW Pin"
+          },
+          {
+            "text": "Sesi latihan penuh dua hari bersama trainer berpengalaman.",
+            "title": "2 Hari Training"
+          },
+          {
+            "text": "Notebook dan pulpen untuk mencatat refleksi pribadimu.",
+            "title": "Notebook + Pulpen"
+          },
+          {
+            "text": "Rehat kopi setiap hari untuk menyambung obrolan dengan peserta lain.",
+            "title": "1x Coffee Break / hari"
+          },
+          {
+            "text": "Makan siang disediakan untuk menjaga energi sepanjang sesi.",
+            "title": "1x Lunch / hari"
+          }
+        ],
+        "eyebrow": "What You Get",
+        "headline": "Apa yang kamu dapatkan.",
+        "subheadline": "Setiap peserta pulang dengan lebih dari sekadar pengalaman."
+      },
+      "photoProof": {
+        "eyebrow": "Inside The Room",
+        "headline": "Rasakan prosesnya.",
+        "subheadline": "Kamu akan bergerak, refleksi, berdiskusi, lalu pulang dengan rasa lebih ringan."
+      },
+      "testimonials": {
+        "items": [
+          {
+            "name": "Alfian",
+            "role": "Peserta Batch 2",
+            "text": "Ruang ini membantu saya mendengar tubuh dengan lebih lembut. Saya pulang dengan rasa yang lebih lapang.",
+            "image": "/g1.jpeg"
+          },
+          {
+            "name": "Nadia Putri",
+            "role": "Peserta Batch 2",
+            "text": "Saya suka karena prosesnya tidak memaksa. Pelan, jelas, dan terasa aman untuk jujur.",
+            "image": "/g2.jpeg"
+          },
+          {
+            "name": "Mira Sofia",
+            "role": "Peserta Batch 3",
+            "text": "Latihan refleksinya sederhana, tapi membuka banyak hal yang selama ini saya simpan sendiri.",
+            "image": "/g3.jpeg"
+          },
+          {
+            "name": "Rania Yusuf",
+            "role": "Peserta Batch 3",
+            "text": "Diskusinya membuat saya sadar bahwa saya tidak perlu menyelesaikan semuanya sendirian.",
+            "image": "/g4.jpeg"
+          },
+          {
+            "name": "Dina Azzahra",
+            "role": "Peserta Batch 2",
+            "text": "Trainer menjaga ruangan dengan tenang. Saya merasa dipandu, bukan dihakimi.",
+            "image": "/g5.jpeg"
+          },
+          {
+            "name": "Sarah Lim",
+            "role": "Peserta Batch 3",
+            "text": "Saya datang dengan kepala penuh. Saya pulang dengan satu langkah kecil yang terasa mungkin.",
+            "image": "/ticw-makassar/ticw_makassar_1.jpeg"
+          },
+          {
+            "name": "Fara Hassan",
+            "role": "Peserta Batch 3",
+            "text": "Workshop ini membantu saya menamai rasa yang sebelumnya hanya saya tahan di badan.",
+            "image": "/ticw-makassar/ticw_makassar_3.jpeg"
+          },
+          {
+            "name": "Liyana Noor",
+            "role": "Peserta Batch 2",
+            "text": "Saya paling ingat momen saat kami belajar berhenti sebentar tanpa merasa bersalah.",
+            "image": "/ticw-makassar/ticw_makassar_5.jpeg"
+          },
+          {
+            "name": "Aisha Tan",
+            "role": "Peserta Batch 3",
+            "text": "Prosesnya hangat dan manusiawi. Rasanya seperti diberi izin untuk pulang ke diri sendiri.",
+            "image": "/ticw-makassar/ticw_makassar_7.jpeg"
+          }
+        ],
+        "eyebrow": "Testimonials",
+        "headline": "Cerita dari peserta.",
+        "subheadline": "Pengalaman peserta setelah menemukan ruang yang aman untuk merasa, memahami, dan kembali terkoneksi."
+      },
+      "registrationMessage": "Halo, saya ingin mendaftar The Inner Compass Workshop Batch 4 Pekanbaru. Mohon info langkah pendaftarannya."
+    },
+    "ms": {
+      "hero": {
+        "badge": "Hanya 40 Kerusi",
+        "kicker": "The Inner Compass Workshop Batch 4 - Pekanbaru",
+        "eyebrow": "The Inner Compass Workshop Batch 4 - Pekanbaru",
+        "ctaLabel": "Daftar Sekarang",
+        "eventLabels": {
+          "city": "Kota",
+          "date": "Tarikh",
+          "venue": "Tempat"
+        },
+        "subheadline": "Saat hidup terasa dikawal tuntutan, tubuh sering tahu arah pulang sebelum fikiran berani mengakuinya.",
+        "headlineLines": [
+          "Hidupmu,",
+          "Kamu Navigatornya."
+        ]
+      },
+      "name": "Bahasa Malaysia",
+      "label": "BM",
+      "footer": {
+        "eyebrow": "Investment & Contact",
+        "headline": "Tertarik ikut workshop ini?",
+        "cityLabel": "Pekanbaru",
+        "copyright": "© 2026 The Inner Compass Workshop. All Rights Reserved.",
+        "dateLabel": "29-30 Agustus",
+        "sponsorLabel": "Partners & Sponsors",
+        "capacityLabel": "40 Kerusi",
+        "contactPrompt": "Pilih contact person yang paling mudah dihubungi.",
+        "whatsappLabel": "WhatsApp",
+        "investmentText": "Investment diinformasikan via WhatsApp",
+        "organizerLabel": "Organizer",
+        "sponsorLogoAlt": "Sponsor",
+        "organizerLogoAlt": "Organizer logo"
+      },
+      "empathy": {
+        "eyebrow": "Why This Workshop",
+        "headline": "Untuk kamu yang terlalu lama kuat sendirian.",
+        "paragraphs": [
+          "Kamu tetap menjawab “baik”, walaupun tubuh sudah lelah terlebih dahulu.",
+          "Kalender penuh, kepala bising, tetapi sukar memberi ruang untuk diri sendiri.",
+          "Ada beban yang tidak hilang kerana terus ditahan sendirian.",
+          "Di sini, kamu belajar berhenti sebentar tanpa perlu menjelaskan semuanya."
+        ],
+        "subheadline": "Dari luar terlihat mampu. Di dalam, tubuh mungkin sudah lama meminta jeda."
+      },
+      "pillars": {
+        "items": [
+          {
+            "text": "Dipandu trainer yang memahami proses refleksi, emosi, dan dinamika peserta.",
+            "title": "Trainer Berpengalaman & Profesional"
+          },
+          {
+            "text": "Belajar melalui praktik langsung, bukan sekadar duduk mendengar materi.",
+            "title": "Training Berasaskan Pengalaman"
+          },
+          {
+            "text": "Sesi berisi latihan, diskusi, dan proses bersama yang membuat peserta terlibat.",
+            "title": "Training yang Interaktif"
+          },
+          {
+            "text": "Latihan terpandu untuk mengenali ketegangan tubuh dan melepaskannya perlahan-lahan.",
+            "title": "Tension & Trauma Releasing Exercise"
+          }
+        ],
+        "eyebrow": "Workshop Benefits",
+        "subheadline": "Berani melangkah, nikmati prosesnya menuju versi terbaik diri",
+        "headlineAccent": "kompas",
+        "headlinePrefix": "Saatnya menentukan",
+        "headlineSuffix": "hidupmu"
+      },
+      "trainers": {
+        "items": [
+          {
+            "name": "Tunku Nina Mansur",
+            "quote": "Kita mulai dari yang terasa di tubuh, bukan dari jawaban yang rapi.",
+            "initials": "TN"
+          },
+          {
+            "name": "Jonelle Huang",
+            "quote": "Tidak semua hal perlu dipaksa selesai. Kadang cukup didengar dulu.",
+            "initials": "JH"
+          }
+        ],
+        "eyebrow": "Who's Teaching",
+        "headline": "Kenali trainer workshop ini.",
+        "roleLabel": "Trainer",
+        "subheadline": "Dua trainer menjaga proses tetap tenang, jelas, dan aman untuk jujur.",
+        "instagramLabel": "Instagram"
+      },
+      "fasilitas": {
+        "items": [
+          {
+            "text": "Sijil penyertaan untuk setiap peserta yang hadir.",
+            "title": "Sijil"
+          },
+          {
+            "text": "Pin eksklusif sebagai simbol perjalanan kompas dalaman anda.",
+            "title": "TICW Pin"
+          },
+          {
+            "text": "Sesi latihan penuh dua hari bersama trainer berpengalaman.",
+            "title": "2 Hari Training"
+          },
+          {
+            "text": "Notebook dan pen untuk mencatat refleksi peribadi anda.",
+            "title": "Notebook + Pen"
+          },
+          {
+            "text": "Rehat kopi setiap hari untuk sambung bicara dengan peserta lain.",
+            "title": "1x Coffee Break / hari"
+          },
+          {
+            "text": "Makan tengah hari disediakan untuk menjaga tenaga sepanjang sesi.",
+            "title": "1x Lunch / hari"
+          }
+        ],
+        "eyebrow": "What You Get",
+        "headline": "Apa yang anda perolehi.",
+        "subheadline": "Setiap peserta membawa pulang lebih dari sekadar pengalaman."
+      },
+      "photoProof": {
+        "eyebrow": "Inside The Room",
+        "headline": "Rasakan prosesnya.",
+        "subheadline": "Kamu akan bergerak, refleksi, berdiskusi, lalu pulang dengan rasa lebih ringan."
+      },
+      "testimonials": {
+        "items": [
+          {
+            "name": "Alya Rahman",
+            "role": "Participant Batch 2",
+            "text": "Ruang ini membantu saya mendengar tubuh dengan lebih lembut. Saya pulang dengan rasa yang lebih lapang.",
+            "image": "/g1.jpeg"
+          },
+          {
+            "name": "Nadia Putri",
+            "role": "Participant Batch 2",
+            "text": "Saya suka karena prosesnya tidak memaksa. Pelan, jelas, dan terasa aman untuk jujur.",
+            "image": "/g2.jpeg"
+          },
+          {
+            "name": "Mira Sofia",
+            "role": "Participant Batch 3",
+            "text": "Latihan refleksinya sederhana, tetapi membuka banyak hal yang selama ini saya simpan sendiri.",
+            "image": "/g3.jpeg"
+          },
+          {
+            "name": "Rania Yusuf",
+            "role": "Participant Batch 3",
+            "text": "Diskusinya membuat saya sadar bahwa saya tidak perlu menyelesaikan semuanya sendirian.",
+            "image": "/g4.jpeg"
+          },
+          {
+            "name": "Dina Azzahra",
+            "role": "Participant Batch 2",
+            "text": "Trainer menjaga ruangan dengan tenang. Saya merasa dipandu, bukan dihakimi.",
+            "image": "/g5.jpeg"
+          },
+          {
+            "name": "Sarah Lim",
+            "role": "Participant Batch 3",
+            "text": "Saya datang dengan kepala penuh. Saya pulang dengan satu langkah kecil yang terasa mungkin.",
+            "image": "/ticw-makassar/ticw_makassar_1.jpeg"
+          },
+          {
+            "name": "Fara Hassan",
+            "role": "Participant Batch 3",
+            "text": "Workshop ini membantu saya menamai rasa yang sebelumnya hanya saya tahan di badan.",
+            "image": "/ticw-makassar/ticw_makassar_3.jpeg"
+          },
+          {
+            "name": "Liyana Noor",
+            "role": "Participant Batch 2",
+            "text": "Saya paling ingat momen saat kami belajar berhenti sebentar tanpa merasa bersalah.",
+            "image": "/ticw-makassar/ticw_makassar_5.jpeg"
+          },
+          {
+            "name": "Aisha Tan",
+            "role": "Participant Batch 3",
+            "text": "Prosesnya hangat dan manusiawi. Rasanya seperti diberi izin untuk pulang ke diri sendiri.",
+            "image": "/ticw-makassar/ticw_makassar_7.jpeg"
+          }
+        ],
+        "eyebrow": "Testimonials",
+        "headline": "Apa yang peserta rasakan.",
+        "subheadline": "Cerita dari peserta yang merasakan ruang refleksi, latihan tubuh, dan proses bersama."
+      },
+      "registrationMessage": "Halo, saya ingin mendaftar The Inner Compass Workshop Batch 4 Pekanbaru. Mohon info langkah pendaftarannya."
+    }
+  },
+  "contacts": [
+    {
+      "name": "Zai",
+      "phone": "+60 13 309 7710"
+    },
+    {
+      "name": "Uwie",
+      "phone": "+62811 7680 784"
+    },
+    {
+      "name": "Amad",
+      "phone": "+62895 4105 63816"
+    }
+  ],
+  "localeOrder": [
+    "ms",
+    "id",
+    "en"
+  ],
+  "photoGroups": {
+    "proof": [
+      [
+        "/g1.jpeg",
+        "/g6.jpeg",
+        "/g11.jpeg",
+        "/g16.jpeg"
+      ],
+      [
+        "/g2.jpeg",
+        "/g7.jpeg",
+        "/g12.jpeg"
+      ],
+      [
+        "/g3.jpeg",
+        "/g8.jpeg",
+        "/g13.jpeg"
+      ],
+      [
+        "/g4.jpeg",
+        "/g9.jpeg",
+        "/g14.jpeg"
+      ],
+      [
+        "/g5.jpeg",
+        "/g10.jpeg",
+        "/g15.jpeg"
+      ]
+    ],
+    "batchThree": [
+      [
+        "/ticw-makassar/ticw_makassar_1.jpeg",
+        "/ticw-makassar/ticw_makassar_2.jpeg"
+      ],
+      [
+        "/ticw-makassar/ticw_makassar_3.jpeg",
+        "/ticw-makassar/ticw_makassar_4.jpeg"
+      ],
+      [
+        "/ticw-makassar/ticw_makassar_5.jpeg",
+        "/ticw-makassar/ticw_makassar_6.jpeg"
+      ],
+      [
+        "/ticw-makassar/ticw_makassar_7.jpeg",
+        "/ticw-makassar/ticw_makassar_8.jpeg"
+      ],
+      [
+        "/ticw-makassar/ticw_makassar_9.jpeg",
+        "/ticw-makassar/ticw_makassar_10.jpeg"
+      ]
+    ]
+  },
+  "defaultLocale": "ms"
+}

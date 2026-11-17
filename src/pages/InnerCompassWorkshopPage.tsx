@@ -11,7 +11,7 @@ import { RegistrationModal } from '../components/workshop/RegistrationModal';
 import { TrainerProfiles } from '../components/TrainerProfiles';
 import { WorkshopTestimonials } from '../components/WorkshopTestimonials';
 import { WorkshopPillars } from '../components/WorkshopPillars';
-import { fetchInnerCompassContent } from '../content/innerCompassData';
+import { fetchInnerCompassContent, loadInnerCompassSnapshot } from '../content/innerCompassData';
 import {
   workshopBatches,
   type EventInfo,
@@ -23,6 +23,8 @@ import {
 import { createWhatsAppUrl } from '../lib/whatsapp';
 
 const localeStorageKey = 'inner-compass-workshop-locale';
+// How long to wait for Supabase before showing the bundled snapshot instead.
+const liveContentTimeoutMs = 3500;
 const fallbackLocale: WorkshopLocale = 'ms';
 
 function isWorkshopLocale(value: string | null): value is WorkshopLocale {
@@ -80,15 +82,40 @@ export function InnerCompassWorkshopPage() {
 
   useEffect(() => {
     let isMounted = true;
+    let hasLiveContent = false;
+    let isShowingSnapshot = false;
+
+    // Supabase (free plan) can be paused or slow to wake up. Rather than an
+    // error or an endless spinner, fall back to the build-time snapshot, and
+    // still swap in live content if it arrives later.
+    const showSnapshot = (reason: unknown) => {
+      if (!isMounted || hasLiveContent || isShowingSnapshot) return;
+      isShowingSnapshot = true;
+      console.warn('[inner-compass] Showing bundled content snapshot:', reason);
+      loadInnerCompassSnapshot()
+        .then((snapshot) => {
+          if (isMounted && !hasLiveContent) setData(snapshot);
+        })
+        .catch((error) => {
+          if (isMounted && !hasLiveContent) setLoadError(error instanceof Error ? error.message : 'Failed to load content.');
+        });
+    };
+
+    const fallbackTimer = window.setTimeout(() => showSnapshot('Supabase timeout'), liveContentTimeoutMs);
+
     fetchInnerCompassContent()
       .then((content) => {
-        if (isMounted) setData(content);
+        if (!isMounted) return;
+        hasLiveContent = true;
+        setLoadError(null);
+        setData(content);
       })
-      .catch((error) => {
-        if (isMounted) setLoadError(error instanceof Error ? error.message : 'Failed to load content.');
-      });
+      .catch(showSnapshot)
+      .finally(() => window.clearTimeout(fallbackTimer));
+
     return () => {
       isMounted = false;
+      window.clearTimeout(fallbackTimer);
     };
   }, []);
 
