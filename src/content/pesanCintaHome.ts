@@ -33,6 +33,7 @@ export type HomePageContent = {
   languageName: string;
   navigation: {
     about: string;
+    team: string;
     missions: string;
     activities: string;
   };
@@ -46,6 +47,15 @@ export type HomePageContent = {
     label: string;
     title: string;
     paragraphs: readonly string[];
+  };
+  team: {
+    label: string;
+    title: string;
+    summary: string;
+    posters: readonly {
+      src: string;
+      alt: string;
+    }[];
   };
   missions: {
     label: string;
@@ -92,6 +102,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
     languageName: 'Bahasa Indonesia',
     navigation: {
       about: 'Tentang',
+      team: 'Tim',
       missions: 'Misi',
       activities: 'Kegiatan',
     },
@@ -111,6 +122,21 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
       paragraphs: [
         'Di Pesan Cinta, kamu tidak perlu punya semua jawaban. Kami mempertemukan orang-orang yang ingin memahami diri, merawat hubungan, dan menjalani hidup dengan lebih hadir.',
         'Melalui percakapan, gerak, dan refleksi, kita belajar mendengar apa yang sering tenggelam oleh kesibukan—lalu melangkah pelan, bersama.',
+      ],
+    },
+    team: {
+      label: 'Tim kami',
+      title: 'Orang-orang di balik The Inner Compass.',
+      summary: 'Para trainer dan tim Makassar yang menyiapkan setiap ruang perjumpaan dengan hati.',
+      posters: [
+        {
+          src: '/uploads/team-trainers.jpeg',
+          alt: 'The Inner Compass Team, The Trainers: Tunku Nina Mansur dan Jonelle Huang',
+        },
+        {
+          src: '/uploads/team-makassar.jpeg',
+          alt: 'The Inner Compass Team Makassar: Jack, Gio Vanny, dan Jumran',
+        },
       ],
     },
     missions: {
@@ -234,6 +260,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
     languageName: 'Bahasa Malaysia',
     navigation: {
       about: 'Tentang',
+      team: 'Pasukan',
       missions: 'Misi',
       activities: 'Aktiviti',
     },
@@ -253,6 +280,21 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
       paragraphs: [
         'Di Pesan Cinta, kamu tidak perlu mempunyai semua jawapan. Kami mempertemukan orang yang ingin memahami diri, menjaga hubungan, dan menjalani hidup dengan lebih hadir.',
         'Melalui perbualan, gerak, dan refleksi, kita belajar mendengar apa yang sering tenggelam dalam kesibukan—kemudian melangkah perlahan-lahan, bersama.',
+      ],
+    },
+    team: {
+      label: 'Pasukan kami',
+      title: 'Orang-orang di sebalik The Inner Compass.',
+      summary: 'Para jurulatih dan pasukan Makassar yang menyediakan setiap ruang pertemuan dengan sepenuh hati.',
+      posters: [
+        {
+          src: '/uploads/team-trainers.jpeg',
+          alt: 'The Inner Compass Team, The Trainers: Tunku Nina Mansur dan Jonelle Huang',
+        },
+        {
+          src: '/uploads/team-makassar.jpeg',
+          alt: 'The Inner Compass Team Makassar: Jack, Gio Vanny, dan Jumran',
+        },
       ],
     },
     missions: {

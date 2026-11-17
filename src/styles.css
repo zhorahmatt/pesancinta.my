@@ -729,6 +729,50 @@ img {
   max-width: 48rem;
 }
 
+.pc-team .pc-team-summary {
+  max-width: 36rem;
+  margin-top: 1.25rem;
+  color: var(--pc-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.pc-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 4vw, 3rem);
+  max-width: 60rem;
+  margin: clamp(2.75rem, 6vw, 5rem) auto 0;
+}
+
+.pc-team-poster {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgb(232 189 103 / 0.32);
+  border-radius: 1.5rem;
+  background: rgb(16 62 88 / 0.72);
+  box-shadow: 0 1.5rem 3rem rgb(5 31 47 / 0.38);
+  transform: rotate(-1.25deg);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+
+.pc-team-poster:nth-child(even) {
+  transform: rotate(1.25deg) translateY(clamp(1rem, 3vw, 2.5rem));
+}
+
+.pc-team-poster:hover {
+  transform: rotate(0deg) translateY(-0.25rem);
+  box-shadow: 0 2rem 3.5rem rgb(5 31 47 / 0.45);
+}
+
+.pc-team-poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
 .pc-section-heading h2 {
   margin-top: 1rem;
 }
@@ -1002,6 +1046,27 @@ img {
     text-align: center;
   }
 
+  .pc-team {
+    padding-top: 7rem;
+  }
+
+  .pc-team .pc-team-summary {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .pc-team-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .pc-team-poster,
+  .pc-team-poster:nth-child(even),
+  .pc-team-poster:hover {
+    border-radius: 1.1rem;
+    transform: none;
+  }
+
   .pc-mission-supporting {
     padding-inline: 0;
   }
@@ -1066,7 +1131,8 @@ img {
 
 @media (prefers-reduced-motion: reduce) {
   .pc-language-toggle button,
-  .pc-cta {
+  .pc-cta,
+  .pc-team-poster {
     transition: none;
   }
 }

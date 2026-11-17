@@ -64,6 +64,7 @@ export function PesanCintaHomePage() {
 
           <div className="hidden items-center gap-0.5 md:flex">
             <a href="#tentang" className="rounded-lg px-3 py-1.5 text-sm font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.about}</a>
+            <a href="#tim" className="rounded-lg px-3 py-1.5 text-sm font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.team}</a>
             <a href="#misi" className="rounded-lg px-3 py-1.5 text-sm font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.missions}</a>
             <a href="#kegiatan" className="rounded-lg px-3 py-1.5 text-sm font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.activities}</a>
           </div>
@@ -118,6 +119,7 @@ export function PesanCintaHomePage() {
               </div>
               <div className="flex flex-col gap-1 px-3 pt-4">
                 <a href="#tentang" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2.5 text-base font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.about}</a>
+                <a href="#tim" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2.5 text-base font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.team}</a>
                 <a href="#misi" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2.5 text-base font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.missions}</a>
                 <a href="#kegiatan" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2.5 text-base font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.activities}</a>
               </div>
@@ -207,6 +209,24 @@ export function PesanCintaHomePage() {
             <figure className="pc-founder-portrait pc-founder-zai">
               <img src="/zai.png" alt="Zai, pendiri Pesan Cinta" loading="lazy" />
             </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="tim" className="pc-section pc-team" aria-labelledby="pc-team-title">
+        <div className="pc-shell">
+          <div className="pc-section-heading">
+            <p className="pc-kicker">{content.team.label}</p>
+            <h2 id="pc-team-title">{content.team.title}</h2>
+            <p className="pc-team-summary">{content.team.summary}</p>
+          </div>
+
+          <div className="pc-team-grid">
+            {content.team.posters.map((poster) => (
+              <figure key={poster.src} className="pc-team-poster">
+                <img src={poster.src} alt={poster.alt} loading="lazy" />
+              </figure>
+            ))}
           </div>
         </div>
       </section>
