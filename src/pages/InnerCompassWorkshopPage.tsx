@@ -255,6 +255,7 @@ export function InnerCompassWorkshopPage() {
         registrationMessage={effectiveRegistrationMessage}
         organizerLogos={currentBatch.organizerLogos}
         sponsorLogos={currentBatch.sponsorLogos}
+        locale={safeLocale}
       />
       <RegistrationModal
         isOpen={isRegisterOpen}

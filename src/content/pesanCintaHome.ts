@@ -94,6 +94,18 @@ export type HomePageContent = {
   };
 };
 
+export type HomeSectionKey = 'tentang' | 'tim' | 'misi' | 'kegiatan';
+
+/** Standalone routes for each navbar item, so they can be linked from other pages. */
+export const homeSectionPaths: Record<HomeSectionKey, string> = {
+  tentang: '/tentang',
+  tim: '/tim',
+  misi: '/misi',
+  kegiatan: '/kegiatan',
+};
+
+export const homeSectionOrder: readonly HomeSectionKey[] = ['tentang', 'tim', 'misi', 'kegiatan'];
+
 export const defaultHomeLocale: HomeLocale = 'id';
 export const homeLocaleOrder: readonly HomeLocale[] = ['id', 'ms'];
 

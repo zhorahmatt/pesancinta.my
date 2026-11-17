@@ -1,4 +1,5 @@
-import type { Contact, WorkshopContent } from '../content/landing';
+import type { Contact, WorkshopContent, WorkshopLocale } from '../content/landing';
+import { homeSectionOrder, homeSectionPaths, type HomeSectionKey } from '../content/pesanCintaHome';
 import { createWhatsAppUrl } from '../lib/whatsapp';
 import { CtaButton } from './CtaButton';
 
@@ -8,7 +9,19 @@ type ContactFooterProps = {
   registrationMessage: string;
   organizerLogos?: string[];
   sponsorLogos?: string[];
+  locale?: WorkshopLocale;
 };
+
+const pesanCintaLinkLabels: Record<WorkshopLocale, { heading: string; links: Record<HomeSectionKey, string> }> = {
+  ms: { heading: 'Kenali Pesan Cinta', links: { tentang: 'Tentang', tim: 'Pasukan', misi: 'Misi', kegiatan: 'Aktiviti' } },
+  id: { heading: 'Kenali Pesan Cinta', links: { tentang: 'Tentang', tim: 'Tim', misi: 'Misi', kegiatan: 'Kegiatan' } },
+  en: { heading: 'Get to know Pesan Cinta', links: { tentang: 'About', tim: 'Team', misi: 'Mission', kegiatan: 'Activities' } },
+};
+
+function getPesanCintaHref(section: HomeSectionKey, locale: WorkshopLocale) {
+  // The home site only offers ID and MS; English readers get its default language.
+  return locale === 'en' ? homeSectionPaths[section] : `${homeSectionPaths[section]}?lang=${locale}`;
+}
 
 const defaultOrganizerLogos = ['/startupglobal.png', '/pesancinta.png'];
 const defaultSponsorLogos = ['/logo-medina.svg'];
@@ -19,7 +32,10 @@ export function ContactFooter({
   registrationMessage,
   organizerLogos = defaultOrganizerLogos,
   sponsorLogos = defaultSponsorLogos,
+  locale = 'ms',
 }: ContactFooterProps) {
+  const pesanCintaLinks = pesanCintaLinkLabels[locale] ?? pesanCintaLinkLabels.ms;
+
   return (
     <footer className="relative isolate overflow-hidden border-t border-white/10 bg-page-deep px-5 py-18 sm:px-8 sm:py-24 lg:px-12 lg:py-28">
       <div className="mx-auto max-w-7xl">
@@ -80,7 +96,24 @@ export function ContactFooter({
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-white/14 pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+        <nav className="mt-14 border-t border-white/14 pt-6" aria-label={pesanCintaLinks.heading}>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{pesanCintaLinks.heading}</p>
+          <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {homeSectionOrder.map((section) => (
+              <li key={section}>
+                <a
+                  href={getPesanCintaHref(section, locale)}
+                  className="group flex min-h-14 items-center justify-between border border-white/14 px-4 py-3 font-serif text-lg font-semibold tracking-[-0.03em] text-primary transition-colors duration-300 hover:border-accent/45 hover:bg-page/[0.035] hover:text-accent"
+                >
+                  <span>{pesanCintaLinks.links[section]}</span>
+                  <span aria-hidden="true" className="text-sm text-muted transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-accent">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="mt-8 flex flex-col gap-3 border-t border-white/14 pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
           <p>{content.copyright}</p>
           <a
             href="/uploads/ssm.pdf"

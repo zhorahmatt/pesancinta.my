@@ -5,6 +5,10 @@ import {
   homeLocaleOrder,
   homeLocales,
   type HomeLocale,
+  homeSectionOrder,
+  homeSectionPaths,
+  type HomePageContent,
+  type HomeSectionKey,
 } from '../content/pesanCintaHome';
 import { trackCtaClick } from '../lib/tracking';
 import { createWhatsAppUrl } from '../lib/whatsapp';
@@ -29,6 +33,9 @@ function isHomeLocale(value: string | null): value is HomeLocale {
 function getInitialLocale(): HomeLocale {
   if (typeof window === 'undefined') return defaultHomeLocale;
 
+  const requestedLocale = new URLSearchParams(window.location.search).get('lang');
+  if (isHomeLocale(requestedLocale)) return requestedLocale;
+
   try {
     const storedLocale = window.localStorage.getItem(localeStorageKey);
     return isHomeLocale(storedLocale) ? storedLocale : defaultHomeLocale;
@@ -37,12 +44,20 @@ function getInitialLocale(): HomeLocale {
   }
 }
 
-export function PesanCintaHomePage() {
+
+function getNavigationLabel(content: HomePageContent, section: HomeSectionKey) {
+  const labels: Record<HomeSectionKey, string> = {
+    tentang: content.navigation.about,
+    tim: content.navigation.team,
+    misi: content.navigation.missions,
+    kegiatan: content.navigation.activities,
+  };
+
+  return labels[section];
+}
+
+function useHomeLocale() {
   const [locale, setLocale] = useState<HomeLocale>(getInitialLocale);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
-  const content = homeLocales[locale];
-  const marqueePhotos = [...heroMarqueePhotos, ...heroMarqueePhotos];
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -54,19 +69,46 @@ export function PesanCintaHomePage() {
     }
   }, [locale]);
 
+  return [locale, setLocale] as const;
+}
+
+type HomeHeaderProps = {
+  content: HomePageContent;
+  locale: HomeLocale;
+  onLocaleChange: (locale: HomeLocale) => void;
+  /** Section pages link to standalone routes; the home page scrolls to anchors. */
+  activeSection?: HomeSectionKey;
+};
+
+function HomeHeader({ content, locale, onLocaleChange, activeSection }: HomeHeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isSectionPage = activeSection !== undefined;
+  const navItems = homeSectionOrder.map((section) => ({
+    section,
+    href: isSectionPage ? homeSectionPaths[section] : `#${section}`,
+    label: getNavigationLabel(content, section),
+    isActive: section === activeSection,
+  }));
+
   return (
-    <main className="pesan-cinta-page">
+    <>
       <header className="sticky top-4 z-50 mx-auto w-[calc(100%-2rem)] max-w-4xl rounded-2xl border border-white/10 bg-page-deep/80 shadow-2xl backdrop-blur-2xl">
         <nav className="flex items-center justify-between px-2 py-1.5 sm:px-4 sm:py-2">
-          <a href="#utama" className="flex items-center gap-1 rounded-lg px-1 py-1 transition-colors hover:bg-white/5 sm:gap-2 sm:px-1.5" aria-label="Pesan Cinta">
+          <a href={isSectionPage ? '/' : '#utama'} className="flex items-center gap-1 rounded-lg px-1 py-1 transition-colors hover:bg-white/5 sm:gap-2 sm:px-1.5" aria-label="Pesan Cinta">
             <img className="h-20 w-20 -my-6 object-contain sm:h-32 sm:w-32 sm:-my-11" src="/pesancinta.png" alt="Pesan Cinta" />
           </a>
 
           <div className="hidden items-center gap-0.5 md:flex">
-            <a href="#tentang" className="rounded-lg px-3 py-1.5 text-sm font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.about}</a>
-            <a href="#tim" className="rounded-lg px-3 py-1.5 text-sm font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.team}</a>
-            <a href="#misi" className="rounded-lg px-3 py-1.5 text-sm font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.missions}</a>
-            <a href="#kegiatan" className="rounded-lg px-3 py-1.5 text-sm font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.activities}</a>
+            {navItems.map((item) => (
+              <a
+                key={item.section}
+                href={item.href}
+                aria-current={item.isActive ? 'page' : undefined}
+                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-white/5 hover:text-accent ${item.isActive ? 'text-accent' : 'text-primary/72'}`}
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
 
           <div className="flex items-center gap-2">
@@ -76,7 +118,7 @@ export function PesanCintaHomePage() {
                   key={option}
                   type="button"
                   aria-pressed={locale === option}
-                  onClick={() => setLocale(option)}
+                  onClick={() => onLocaleChange(option)}
                 >
                   {option.toUpperCase()}
                 </button>
@@ -118,15 +160,282 @@ export function PesanCintaHomePage() {
                 </button>
               </div>
               <div className="flex flex-col gap-1 px-3 pt-4">
-                <a href="#tentang" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2.5 text-base font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.about}</a>
-                <a href="#tim" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2.5 text-base font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.team}</a>
-                <a href="#misi" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2.5 text-base font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.missions}</a>
-                <a href="#kegiatan" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2.5 text-base font-medium text-primary/72 transition-colors hover:bg-white/5 hover:text-accent">{content.navigation.activities}</a>
+                {navItems.map((item) => (
+                  <a
+                    key={item.section}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={item.isActive ? 'page' : undefined}
+                    className={`rounded-lg px-3 py-2.5 text-base font-medium transition-colors hover:bg-white/5 hover:text-accent ${item.isActive ? 'text-accent' : 'text-primary/72'}`}
+                  >
+                    {item.label}
+                  </a>
+                ))}
               </div>
             </motion.aside>
           </>
         )}
       </AnimatePresence>
+    </>
+  );
+}
+
+type SectionProps = {
+  content: HomePageContent;
+};
+
+function AboutSection({ content }: SectionProps) {
+  return (
+    <section id="tentang" className="pc-section pc-about" aria-labelledby="pc-about-title">
+      <div className="pc-shell pc-about-grid">
+        <p className="pc-kicker">{content.about.label}</p>
+        <div>
+          <h2 id="pc-about-title">{content.about.title}</h2>
+          {content.about.paragraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
+      </div>
+
+      <div className="pc-shell pc-about-founders" aria-label="Pendiri Pesan Cinta">
+        <p className="pc-about-tagline">We stand for a World where love leads, heals and connect us.</p>
+        <div className="pc-founder-portraits">
+          <figure className="pc-founder-portrait pc-founder-mimi">
+            <img src="/mimi.png" alt="Mimi, pendiri Pesan Cinta" loading="lazy" />
+          </figure>
+          <figure className="pc-founder-portrait pc-founder-zai">
+            <img src="/zai.png" alt="Zai, pendiri Pesan Cinta" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function TeamSection({ content }: SectionProps) {
+  return (
+    <section id="tim" className="pc-section pc-team" aria-labelledby="pc-team-title">
+      <div className="pc-shell">
+        <div className="pc-section-heading">
+          <p className="pc-kicker">{content.team.label}</p>
+          <h2 id="pc-team-title">{content.team.title}</h2>
+          <p className="pc-team-summary">{content.team.summary}</p>
+        </div>
+
+        <div className="pc-team-grid">
+          {content.team.posters.map((poster) => (
+            <figure key={poster.src} className="pc-team-poster">
+              <img src={poster.src} alt={poster.alt} loading="lazy" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MissionsSection({ content }: SectionProps) {
+  return (
+    <section id="misi" className="pc-section pc-missions" aria-labelledby="pc-missions-title">
+      <div className="pc-shell">
+        <div className="pc-section-heading">
+          <p className="pc-kicker">{content.missions.label}</p>
+          <h2 id="pc-missions-title">{content.missions.title}</h2>
+        </div>
+
+        <div className="pc-mission-grid">
+          <article className="pc-mission-featured">
+            <img src={content.missions.featured.media} alt="Peserta mengikuti sesi Pesan Cinta" loading="lazy" />
+            <div>
+              <h3>{content.missions.featured.title}</h3>
+              <p>{content.missions.featured.description}</p>
+            </div>
+          </article>
+
+          <div className="pc-mission-supporting">
+            {content.missions.supporting.map((mission) => (
+              <article key={mission.title}>
+                <h3>{mission.title}</h3>
+                <p>{mission.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ActivitiesSection({ content }: SectionProps) {
+  return (
+    <section id="kegiatan" className="pc-section pc-activities" aria-labelledby="pc-activities-title">
+      <div className="pc-shell">
+        <div className="pc-section-heading">
+          <p className="pc-kicker">{content.activities.label}</p>
+          <h2 id="pc-activities-title">{content.activities.title}</h2>
+        </div>
+
+        <div className="pc-past-event">
+          <div className="pc-past-copy">
+            <p className="pc-event-label">{content.activities.past.label}</p>
+            <h3>{content.activities.past.title}</h3>
+            <p>{content.activities.past.summary}</p>
+          </div>
+          <div className="pc-gallery" aria-label={content.activities.past.title}>
+            {content.activities.past.gallery?.map((photo, index) => (
+              <img
+                key={photo}
+                className={`pc-gallery-image pc-gallery-image-${index + 1}`}
+                src={photo}
+                alt="Kegiatan dan perjumpaan Pesan Cinta"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </div>
+
+        {(content.activities.upcomingEvents ?? [content.activities.upcoming]).map((upcomingEvent, eventIdx) => (
+          <article key={upcomingEvent.title + eventIdx} className="pc-upcoming-event">
+            <img src={upcomingEvent.media} alt={upcomingEvent.title} loading="lazy" />
+            <div className="pc-upcoming-copy">
+              <p className="pc-event-label">{upcomingEvent.label}</p>
+              <h3>{upcomingEvent.title}</h3>
+              {upcomingEvent.tagline && (
+                <p className="font-serif italic text-accent text-base sm:text-lg mt-1 mb-2">
+                  "{upcomingEvent.tagline}"
+                </p>
+              )}
+              <p>{upcomingEvent.summary}</p>
+              <dl className="pc-event-details">
+                {upcomingEvent.date && (
+                  <div>
+                    <dt>{content.activities.detailsLabels.date}</dt>
+                    <dd>{upcomingEvent.date}</dd>
+                  </div>
+                )}
+                {upcomingEvent.duration && (
+                  <div>
+                    <dt>{content.activities.detailsLabels.duration}</dt>
+                    <dd>{upcomingEvent.duration}</dd>
+                  </div>
+                )}
+                {upcomingEvent.venue && (
+                  <div className="pc-detail-wide">
+                    <dt>{content.activities.detailsLabels.venue}</dt>
+                    <dd>{upcomingEvent.venue}{upcomingEvent.city ? `, ${upcomingEvent.city}` : ''}</dd>
+                  </div>
+                )}
+                {upcomingEvent.organizer && (
+                  <div>
+                    <dt>{content.activities.detailsLabels.organizer}</dt>
+                    <dd>{upcomingEvent.organizer}</dd>
+                  </div>
+                )}
+                {upcomingEvent.poweredBy && (
+                  <div className="pc-detail-wide">
+                    <dt>{content.activities.detailsLabels.poweredBy}</dt>
+                    <dd>{upcomingEvent.poweredBy}</dd>
+                  </div>
+                )}
+                {upcomingEvent.trainers && (
+                  <div className="pc-detail-wide">
+                    <dt>{content.activities.detailsLabels.trainers}</dt>
+                    <dd>{upcomingEvent.trainers}</dd>
+                  </div>
+                )}
+              </dl>
+
+              {upcomingEvent.contacts && upcomingEvent.contacts.length > 0 && (
+                <div className="mt-6 border-t border-white/10 pt-4">
+                  <p className="text-xs uppercase font-bold tracking-wider text-accent mb-2">
+                    {content.activities.detailsLabels.contact}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {upcomingEvent.contacts.map((contact) => (
+                      <a
+                        key={contact.phone}
+                        href={createWhatsAppUrl(contact.phone, `Halo ${contact.name}, saya ingin bertanya mengenai ${upcomingEvent.title}`)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-primary transition-colors hover:border-accent hover:bg-accent/10 hover:text-accent"
+                      >
+                        <span aria-hidden="true">💬</span>
+                        <span>{contact.phone} ({contact.name})</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {upcomingEvent.cta && (
+                <a
+                  className="pc-cta"
+                  href={upcomingEvent.cta.href || content.activities.upcoming.cta?.href || '/the-inner-compass-workshop'}
+                  onClick={() =>
+                    trackCtaClick({
+                      location: `home-upcoming-event-${eventIdx + 1}`,
+                      target: upcomingEvent.cta!.trackingTarget,
+                    })
+                  }
+                >
+                  {upcomingEvent.cta.label}
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function HomeFooter({ content }: SectionProps) {
+  return (
+    <footer className="w-full border-t border-white/10 bg-gradient-to-b from-page to-page-deep text-white">
+      <div className="mx-auto max-w-7xl px-6 py-16 flex flex-col items-center sm:py-20">
+        <div className="flex items-center justify-center gap-5 mb-6">
+          <img className="h-36 w-36 -my-10 object-contain sm:h-40 sm:w-40 sm:-my-10" src="/pesancinta.png" alt="Pesan Cinta" />
+          <div className="h-12 w-px bg-white/10" />
+          <img className="h-32 w-32 -my-8 object-contain sm:h-36 sm:w-36 sm:-my-8" src="/startupglobal.png" alt="Startup Global" />
+        </div>
+        <p className="max-w-xl text-center text-sm font-normal leading-relaxed text-primary/80">
+          {content.footer.statement}
+        </p>
+      </div>
+      <div className="border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col items-center gap-2 text-center text-xs font-medium text-primary/60 sm:flex-row sm:justify-between">
+          <span>{content.footer.copyright}</span>
+          <a
+            href="/uploads/ssm.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-primary/40 transition-colors hover:text-accent"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            SSM Verified Business
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+const sectionComponents: Record<HomeSectionKey, (props: SectionProps) => React.JSX.Element> = {
+  tentang: AboutSection,
+  tim: TeamSection,
+  misi: MissionsSection,
+  kegiatan: ActivitiesSection,
+};
+
+export function PesanCintaHomePage() {
+  const [locale, setLocale] = useHomeLocale();
+  const prefersReducedMotion = useReducedMotion();
+  const content = homeLocales[locale];
+  const marqueePhotos = [...heroMarqueePhotos, ...heroMarqueePhotos];
+
+  return (
+    <main className="pesan-cinta-page">
+      <HomeHeader content={content} locale={locale} onLocaleChange={setLocale} />
 
       <section id="utama" className="pc-hero pc-hero-marquee" aria-labelledby="pc-hero-title">
         <div className="pc-hero-content">
@@ -189,221 +498,29 @@ export function PesanCintaHomePage() {
         </div>
       </section>
 
-      <section id="tentang" className="pc-section pc-about" aria-labelledby="pc-about-title">
-        <div className="pc-shell pc-about-grid">
-          <p className="pc-kicker">{content.about.label}</p>
-          <div>
-            <h2 id="pc-about-title">{content.about.title}</h2>
-            {content.about.paragraphs.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-        </div>
+      <AboutSection content={content} />
+      <TeamSection content={content} />
+      <MissionsSection content={content} />
+      <ActivitiesSection content={content} />
+      <HomeFooter content={content} />
+    </main>
+  );
+}
 
-        <div className="pc-shell pc-about-founders" aria-label="Pendiri Pesan Cinta">
-          <p className="pc-about-tagline">We stand for a World where love leads, heals and connect us.</p>
-          <div className="pc-founder-portraits">
-            <figure className="pc-founder-portrait pc-founder-mimi">
-              <img src="/mimi.png" alt="Mimi, pendiri Pesan Cinta" loading="lazy" />
-            </figure>
-            <figure className="pc-founder-portrait pc-founder-zai">
-              <img src="/zai.png" alt="Zai, pendiri Pesan Cinta" loading="lazy" />
-            </figure>
-          </div>
-        </div>
-      </section>
+export function PesanCintaSectionPage({ section }: { section: HomeSectionKey }) {
+  const [locale, setLocale] = useHomeLocale();
+  const content = homeLocales[locale];
+  const SectionContent = sectionComponents[section];
 
-      <section id="tim" className="pc-section pc-team" aria-labelledby="pc-team-title">
-        <div className="pc-shell">
-          <div className="pc-section-heading">
-            <p className="pc-kicker">{content.team.label}</p>
-            <h2 id="pc-team-title">{content.team.title}</h2>
-            <p className="pc-team-summary">{content.team.summary}</p>
-          </div>
+  useEffect(() => {
+    document.title = `${getNavigationLabel(content, section)} · Pesan Cinta`;
+  }, [content, section]);
 
-          <div className="pc-team-grid">
-            {content.team.posters.map((poster) => (
-              <figure key={poster.src} className="pc-team-poster">
-                <img src={poster.src} alt={poster.alt} loading="lazy" />
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="misi" className="pc-section pc-missions" aria-labelledby="pc-missions-title">
-        <div className="pc-shell">
-          <div className="pc-section-heading">
-            <p className="pc-kicker">{content.missions.label}</p>
-            <h2 id="pc-missions-title">{content.missions.title}</h2>
-          </div>
-
-          <div className="pc-mission-grid">
-            <article className="pc-mission-featured">
-              <img src={content.missions.featured.media} alt="Peserta mengikuti sesi Pesan Cinta" loading="lazy" />
-              <div>
-                <h3>{content.missions.featured.title}</h3>
-                <p>{content.missions.featured.description}</p>
-              </div>
-            </article>
-
-            <div className="pc-mission-supporting">
-              {content.missions.supporting.map((mission) => (
-                <article key={mission.title}>
-                  <h3>{mission.title}</h3>
-                  <p>{mission.description}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="kegiatan" className="pc-section pc-activities" aria-labelledby="pc-activities-title">
-        <div className="pc-shell">
-          <div className="pc-section-heading">
-            <p className="pc-kicker">{content.activities.label}</p>
-            <h2 id="pc-activities-title">{content.activities.title}</h2>
-          </div>
-
-          <div className="pc-past-event">
-            <div className="pc-past-copy">
-              <p className="pc-event-label">{content.activities.past.label}</p>
-              <h3>{content.activities.past.title}</h3>
-              <p>{content.activities.past.summary}</p>
-            </div>
-            <div className="pc-gallery" aria-label={content.activities.past.title}>
-              {content.activities.past.gallery?.map((photo, index) => (
-                <img
-                  key={photo}
-                  className={`pc-gallery-image pc-gallery-image-${index + 1}`}
-                  src={photo}
-                  alt="Kegiatan dan perjumpaan Pesan Cinta"
-                  loading="lazy"
-                />
-              ))}
-            </div>
-          </div>
-
-          {(content.activities.upcomingEvents ?? [content.activities.upcoming]).map((upcomingEvent, eventIdx) => (
-            <article key={upcomingEvent.title + eventIdx} className="pc-upcoming-event">
-              <img src={upcomingEvent.media} alt={upcomingEvent.title} loading="lazy" />
-              <div className="pc-upcoming-copy">
-                <p className="pc-event-label">{upcomingEvent.label}</p>
-                <h3>{upcomingEvent.title}</h3>
-                {upcomingEvent.tagline && (
-                  <p className="font-serif italic text-accent text-base sm:text-lg mt-1 mb-2">
-                    "{upcomingEvent.tagline}"
-                  </p>
-                )}
-                <p>{upcomingEvent.summary}</p>
-                <dl className="pc-event-details">
-                  {upcomingEvent.date && (
-                    <div>
-                      <dt>{content.activities.detailsLabels.date}</dt>
-                      <dd>{upcomingEvent.date}</dd>
-                    </div>
-                  )}
-                  {upcomingEvent.duration && (
-                    <div>
-                      <dt>{content.activities.detailsLabels.duration}</dt>
-                      <dd>{upcomingEvent.duration}</dd>
-                    </div>
-                  )}
-                  {upcomingEvent.venue && (
-                    <div className="pc-detail-wide">
-                      <dt>{content.activities.detailsLabels.venue}</dt>
-                      <dd>{upcomingEvent.venue}{upcomingEvent.city ? `, ${upcomingEvent.city}` : ''}</dd>
-                    </div>
-                  )}
-                  {upcomingEvent.organizer && (
-                    <div>
-                      <dt>{content.activities.detailsLabels.organizer}</dt>
-                      <dd>{upcomingEvent.organizer}</dd>
-                    </div>
-                  )}
-                  {upcomingEvent.poweredBy && (
-                    <div className="pc-detail-wide">
-                      <dt>{content.activities.detailsLabels.poweredBy}</dt>
-                      <dd>{upcomingEvent.poweredBy}</dd>
-                    </div>
-                  )}
-                  {upcomingEvent.trainers && (
-                    <div className="pc-detail-wide">
-                      <dt>{content.activities.detailsLabels.trainers}</dt>
-                      <dd>{upcomingEvent.trainers}</dd>
-                    </div>
-                  )}
-                </dl>
-
-                {upcomingEvent.contacts && upcomingEvent.contacts.length > 0 && (
-                  <div className="mt-6 border-t border-white/10 pt-4">
-                    <p className="text-xs uppercase font-bold tracking-wider text-accent mb-2">
-                      {content.activities.detailsLabels.contact}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {upcomingEvent.contacts.map((contact) => (
-                        <a
-                          key={contact.phone}
-                          href={createWhatsAppUrl(contact.phone, `Halo ${contact.name}, saya ingin bertanya mengenai ${upcomingEvent.title}`)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-primary transition-colors hover:border-accent hover:bg-accent/10 hover:text-accent"
-                        >
-                          <span aria-hidden="true">💬</span>
-                          <span>{contact.phone} ({contact.name})</span>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {upcomingEvent.cta && (
-                  <a
-                    className="pc-cta"
-                    href={upcomingEvent.cta.href || content.activities.upcoming.cta?.href || '/the-inner-compass-workshop'}
-                    onClick={() =>
-                      trackCtaClick({
-                        location: `home-upcoming-event-${eventIdx + 1}`,
-                        target: upcomingEvent.cta!.trackingTarget,
-                      })
-                    }
-                  >
-                    {upcomingEvent.cta.label}
-                  </a>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <footer className="w-full border-t border-white/10 bg-gradient-to-b from-page to-page-deep text-white">
-        <div className="mx-auto max-w-7xl px-6 py-16 flex flex-col items-center sm:py-20">
-          <div className="flex items-center justify-center gap-5 mb-6">
-            <img className="h-36 w-36 -my-10 object-contain sm:h-40 sm:w-40 sm:-my-10" src="/pesancinta.png" alt="Pesan Cinta" />
-            <div className="h-12 w-px bg-white/10" />
-            <img className="h-32 w-32 -my-8 object-contain sm:h-36 sm:w-36 sm:-my-8" src="/startupglobal.png" alt="Startup Global" />
-          </div>
-          <p className="max-w-xl text-center text-sm font-normal leading-relaxed text-primary/80">
-            {content.footer.statement}
-          </p>
-        </div>
-        <div className="border-t border-white/10">
-          <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col items-center gap-2 text-center text-xs font-medium text-primary/60 sm:flex-row sm:justify-between">
-            <span>{content.footer.copyright}</span>
-            <a
-              href="/uploads/ssm.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-primary/40 transition-colors hover:text-accent"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-              SSM Verified Business
-            </a>
-          </div>
-        </div>
-      </footer>
+  return (
+    <main className={`pesan-cinta-page pc-section-page pc-section-page-${section}`}>
+      <HomeHeader content={content} locale={locale} onLocaleChange={setLocale} activeSection={section} />
+      <SectionContent content={content} />
+      <HomeFooter content={content} />
     </main>
   );
 }

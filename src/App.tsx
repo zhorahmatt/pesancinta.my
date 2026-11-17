@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { InnerCompassWorkshopPage } from './pages/InnerCompassWorkshopPage';
-import { PesanCintaHomePage } from './pages/PesanCintaHomePage';
+import { homeSectionOrder, homeSectionPaths, type HomeSectionKey } from './content/pesanCintaHome';
+import { PesanCintaHomePage, PesanCintaSectionPage } from './pages/PesanCintaHomePage';
 
 const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage').then((module) => ({ default: module.AdminDashboardPage })));
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage').then((module) => ({ default: module.AdminLoginPage })));
@@ -12,6 +13,11 @@ const WorkshopEditorPage = lazy(() => import('./pages/admin/WorkshopEditorPage')
 const DashboardPage = lazy(() => import('./pages/admin/DashboardPage').then((module) => ({ default: module.DashboardPage })));
 const UsersPage = lazy(() => import('./pages/admin/UsersPage').then((module) => ({ default: module.UsersPage })));
 const WorkshopPublicPage = lazy(() => import('./pages/WorkshopPublicPage').then((module) => ({ default: module.WorkshopPublicPage })));
+
+function getHomeSection(pathname: string): HomeSectionKey | undefined {
+  const normalizedPath = pathname.replace(/\/$/, '') || '/';
+  return homeSectionOrder.find((section) => homeSectionPaths[section] === normalizedPath);
+}
 
 function RouteLoader() {
   return <main className="grid min-h-svh place-items-center bg-page-deep text-primary">Loading...</main>;
@@ -97,6 +103,11 @@ export default function App() {
         <WorkshopPublicPage slug={slug} />
       </Suspense>
     );
+  }
+
+  const homeSection = getHomeSection(window.location.pathname);
+  if (homeSection) {
+    return <PesanCintaSectionPage section={homeSection} />;
   }
 
   return <PesanCintaHomePage />;
