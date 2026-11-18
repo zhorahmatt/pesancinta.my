@@ -13,6 +13,7 @@ import { WorkshopTestimonials } from '../components/WorkshopTestimonials';
 import { WorkshopPillars } from '../components/WorkshopPillars';
 import { fetchInnerCompassContent, loadInnerCompassSnapshot } from '../content/innerCompassData';
 import {
+  defaultWorkshopBatchId,
   workshopBatches,
   type EventInfo,
   type InnerCompassData,
@@ -42,15 +43,19 @@ function getStoredLocale(): WorkshopLocale {
   }
 }
 
+function isWorkshopBatchId(value: string | null | undefined): value is WorkshopBatchId {
+  return !!value && Object.prototype.hasOwnProperty.call(workshopBatches, value);
+}
+
+// Reads ?batch=5 / ?batch=batch-5 or #batch-5. Unknown or retired batches
+// (e.g. old ?batch=4 links) fall back to the default batch.
 function getInitialBatch(): WorkshopBatchId {
-  if (typeof window === 'undefined') return '4';
-  const params = new URLSearchParams(window.location.search);
-  const b = params.get('batch');
-  if (b === '5' || b === 'batch-5') return '5';
-  if (b === '4' || b === 'batch-4') return '4';
-  if (window.location.hash.includes('batch-5')) return '5';
-  if (window.location.hash.includes('batch-4')) return '4';
-  return '4';
+  if (typeof window === 'undefined') return defaultWorkshopBatchId;
+  const param = new URLSearchParams(window.location.search).get('batch')?.replace(/^batch-/, '');
+  if (isWorkshopBatchId(param)) return param;
+  const hashBatch = window.location.hash.match(/batch-(\w+)/)?.[1];
+  if (isWorkshopBatchId(hashBatch)) return hashBatch;
+  return defaultWorkshopBatchId;
 }
 
 export function InnerCompassWorkshopPage() {
@@ -64,7 +69,7 @@ export function InnerCompassWorkshopPage() {
   const [isHeroInView, setIsHeroInView] = useState(true);
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const currentBatch = workshopBatches[batchId] ?? workshopBatches['4'];
+  const currentBatch = workshopBatches[batchId] ?? workshopBatches[defaultWorkshopBatchId];
 
   const handleBatchChange = (newBatch: WorkshopBatchId) => {
     setBatchId(newBatch);
@@ -75,10 +80,7 @@ export function InnerCompassWorkshopPage() {
     }
   };
 
-  const batchOptions = [
-    { id: '4' as const, label: 'Batch 4 · Kota Kinabalu' },
-    { id: '5' as const, label: 'Batch 5 · Makassar' },
-  ];
+  const batchOptions = Object.values(workshopBatches).map(({ id, label }) => ({ id, label }));
 
   useEffect(() => {
     let isMounted = true;
@@ -234,6 +236,14 @@ export function InnerCompassWorkshopPage() {
     badge: currentBatch.badge,
   };
 
+  // The footer strip comes from CMS content shared by all batches, so the
+  // date and city follow the selected batch instead.
+  const footerContent = {
+    ...content.footer,
+    dateLabel: effectiveEvent.date,
+    cityLabel: currentBatch.cityLabel,
+  };
+
   const languageOptions = data.localeOrder.map((code) => ({
     locale: code,
     label: data.locales[code].label,
@@ -277,7 +287,7 @@ export function InnerCompassWorkshopPage() {
         <Fragment key={section.key}>{sectionRegistry[section.key]}</Fragment>
       ))}
       <ContactFooter
-        content={content.footer}
+        content={footerContent}
         contacts={effectiveContacts}
         registrationMessage={effectiveRegistrationMessage}
         organizerLogos={currentBatch.organizerLogos}
@@ -287,7 +297,7 @@ export function InnerCompassWorkshopPage() {
       <RegistrationModal
         isOpen={isRegisterOpen}
         onClose={() => setIsRegisterOpen(false)}
-        eventKey={`inner-compass-batch-${batchId}`}
+        eventKey={currentBatch.eventKey}
         locale={safeLocale}
         whatsappPhone={registrationContact.phone}
         registrationMessage={effectiveRegistrationMessage}

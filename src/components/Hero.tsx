@@ -1,4 +1,4 @@
-import type { EventInfo, WorkshopContent } from '../content/landing';
+import type { EventInfo, WorkshopBatchId, WorkshopContent } from '../content/landing';
 import { CtaButton } from './CtaButton';
 
 type HeroProps = {
@@ -6,9 +6,9 @@ type HeroProps = {
   event: EventInfo;
   registrationUrl: string;
   onRegister?: () => void;
-  batch?: '4' | '5';
-  onBatchChange?: (batch: '4' | '5') => void;
-  batches?: readonly { id: '4' | '5'; label: string }[];
+  batch?: WorkshopBatchId;
+  onBatchChange?: (batch: WorkshopBatchId) => void;
+  batches?: readonly { id: WorkshopBatchId; label: string }[];
 };
 
 export function Hero({ content, event, registrationUrl, onRegister, batch, onBatchChange, batches }: HeroProps) {

@@ -46,7 +46,9 @@ test('Pesan Cinta home content is bilingual and CMS-ready', () => {
   assert.match(homeContent, /export type HomePageContent/);
   assert.match(homeContent, /homeLocales/);
   assert.match(homeContent, /\/the-inner-compass-workshop/);
-  assert.match(homeContent, /The Inner Compass Workshop Batch 4/);
+  assert.match(homeContent, /The Inner Compass Escape Bali Batch 5/);
+  assert.match(homeContent, /The Inner Compass Workshop Batch 6/);
+  assert.doesNotMatch(homeContent, /Kota Kinabalu/);
 });
 
 test('both landing pages use the brighter shared ocean palette and workshop typography', () => {
@@ -396,7 +398,7 @@ test('CMS MVP release checklist covers auth, RLS, registration, capacity, and ex
   assert.match(rls, /public\.is_cms_admin\(\)/);
 });
 
-test('workshop landing page content matches simplified Batch 4 PRD', () => {
+test('workshop landing page content matches the Batch 5 Bali and Batch 6 Makassar flyers', () => {
   const app = read('./App.tsx');
   const content = read('./content/landing.ts');
   const contentJson = read('../supabase/seed/innerCompassSeed.json');
@@ -417,10 +419,13 @@ test('workshop landing page content matches simplified Batch 4 PRD', () => {
 
   assert.match(homeHtml, /<title>Pesan Cinta<\/title>/);
   assert.match(homeHtml, /og:title" content="Pesan Cinta"/);
-  assert.match(workshopHtml, /<title>The Inner Compass Workshop Batch 4 Pekanbaru<\/title>/);
-  assert.match(workshopHtml, /og:title" content="The Inner Compass Workshop Batch 4 Pekanbaru"/);
-  assert.match(workshopHtml, /og:image" content="https:\/\/pesancinta\.my\/ticw_pekanbaru\.jpeg"/);
-  assert.match(workshopHtml, /twitter:image" content="https:\/\/pesancinta\.my\/ticw_pekanbaru\.jpeg"/);
+  assert.match(workshopHtml, /<title>The Inner Compass Batch 5 Bali &amp; Batch 6 Makassar<\/title>/);
+  assert.match(workshopHtml, /og:title" content="The Inner Compass Batch 5 Bali &amp; Batch 6 Makassar"/);
+  assert.match(workshopHtml, /og:image" content="https:\/\/pesancinta\.my\/uploads\/ticw-batch-5-bali\.jpeg"/);
+  assert.match(workshopHtml, /twitter:image" content="https:\/\/pesancinta\.my\/uploads\/ticw-batch-5-bali\.jpeg"/);
+  assert.match(content, /22-24 Januari 2027/);
+  assert.match(content, /17-18 April 2027/);
+  assert.doesNotMatch(content, /Kota Kinabalu/);
   assert.match(viteConfig, /the-inner-compass-workshop\/index\.html/);
   assert.match(vercelConfig, /"source": "\/the-inner-compass-workshop"/);
   assert.match(vercelConfig, /"destination": "\/the-inner-compass-workshop\/index\.html"/);

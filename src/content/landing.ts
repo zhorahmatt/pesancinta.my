@@ -152,13 +152,17 @@ export interface InnerCompassData {
   locales: Record<WorkshopLocale, WorkshopContent>;
 }
 
-export type WorkshopBatchId = '4' | '5';
+export type WorkshopBatchId = '5' | '6';
 
 export interface WorkshopBatch {
   id: WorkshopBatchId;
   label: string;
   badge: string;
   tagline: string;
+  /** Stored with each registration; keep unique per event so batches never mix. */
+  eventKey: string;
+  /** Short city shown in the footer strip next to the date. */
+  cityLabel: string;
   event: EventInfo;
   contacts: Contact[];
   organizerLogos: string[];
@@ -168,54 +172,60 @@ export interface WorkshopBatch {
   registrationMessage: Record<WorkshopLocale, string>;
 }
 
+export const defaultWorkshopBatchId: WorkshopBatchId = '5';
+
 export const workshopBatches: Record<WorkshopBatchId, WorkshopBatch> = {
-  '4': {
-    id: '4',
-    label: 'Batch 4 · Kota Kinabalu',
-    badge: 'Batch 4 Sabah',
-    tagline: 'Navigasi Hidup Cara Sendiri',
-    event: {
-      name: 'The Inner Compass Workshop Batch 4',
-      city: 'Malaysia',
-      venue: 'Kota Kinabalu',
-      date: '24-25 Oktober 2026',
-      time: '09.00 - 18.00 MYT',
-      capacity: '50 Kursi',
-      organizers: ['Start-Up Global'],
-      partners: ['Pesan Cinta', 'Rantau Putra'],
-    },
-    contacts: [
-      { name: 'Mimi', phone: '+6014 863 2020' },
-      { name: 'Zai', phone: '+6013 309 7710' },
-    ],
-    organizerLogos: ['/startupglobal.png', '/pesancinta.png'],
-    sponsorLogos: ['/logo-medina.svg'],
-    defaultLocale: 'ms',
-    heroKicker: {
-      ms: '2 Hari Bengkel · 24-25 Okt 2026 · Kota Kinabalu',
-      id: '2 Hari Workshop · 24-25 Okt 2026 · Kota Kinabalu',
-      en: '2-Day Workshop · 24-25 Oct 2026 · Kota Kinabalu',
-    },
-    registrationMessage: {
-      ms: 'Salam, saya berminat untuk mendaftar The Inner Compass Workshop Batch 4 di Kota Kinabalu (24-25 Okt 2026). Boleh kongsikan maklumat lanjut?',
-      id: 'Halo, saya tertarik untuk mendaftar The Inner Compass Workshop Batch 4 di Kota Kinabalu (24-25 Okt 2026). Boleh minta info pendaftaran?',
-      en: 'Hello, I would like to register for The Inner Compass Workshop Batch 4 in Kota Kinabalu (24-25 Oct 2026). Could you share more details?',
-    },
-  },
   '5': {
     id: '5',
-    label: 'Batch 5 · Makassar',
-    badge: 'Batch 5 Makassar',
+    label: 'Batch 5 · Bali',
+    badge: 'Batch 5 Bali',
     tagline: 'Hidupmu, Kamu Navigatornya!',
+    eventKey: 'inner-compass-batch-5-bali',
+    cityLabel: 'Denpasar, Bali',
     event: {
-      name: 'The Inner Compass Workshop Batch 5',
-      city: 'Makassar, Indonesia',
-      venue: 'Four Point Hotel Makassar',
-      date: '31 Oktober - 1 November 2026',
+      name: 'The Inner Compass Escape Bali Batch 5',
+      city: 'Indonesia',
+      venue: 'Denpasar, Bali',
+      date: '22-24 Januari 2027',
       time: '09.00 - 18.00 WITA',
       capacity: '50 Kursi',
       organizers: ['Pesan Cinta'],
-      partners: ['Kemas Ki', 'Makanja Factory', 'Qofftea'],
+      partners: ['Jalan Bareng Yuk!', 'Sultanah'],
+    },
+    contacts: [
+      { name: 'Febry', phone: '+62 818 0822 2993' },
+      { name: 'Zai', phone: '+6013 309 7710' },
+    ],
+    organizerLogos: ['/pesancinta.png'],
+    sponsorLogos: ['/logo-medina.svg'],
+    defaultLocale: 'id',
+    heroKicker: {
+      ms: '3 Hari Bengkel · 22-24 Jan 2027 · Denpasar, Bali',
+      id: '3 Hari Workshop · 22-24 Jan 2027 · Denpasar, Bali',
+      en: '3-Day Workshop · 22-24 Jan 2027 · Denpasar, Bali',
+    },
+    registrationMessage: {
+      ms: 'Salam, saya berminat untuk mendaftar The Inner Compass Escape Bali Batch 5 di Denpasar, Bali (22-24 Jan 2027). Boleh kongsikan maklumat lanjut?',
+      id: 'Halo, saya tertarik untuk mendaftar The Inner Compass Escape Bali Batch 5 di Denpasar, Bali (22-24 Jan 2027). Boleh minta info pendaftaran?',
+      en: 'Hello, I would like to register for The Inner Compass Escape Bali Batch 5 in Denpasar, Bali (22-24 Jan 2027). Could you share more details?',
+    },
+  },
+  '6': {
+    id: '6',
+    label: 'Batch 6 · Makassar',
+    badge: 'Batch 6 Makassar',
+    tagline: 'Hidupmu, Kamu Navigatornya!',
+    eventKey: 'inner-compass-batch-6-makassar',
+    cityLabel: 'Makassar',
+    event: {
+      name: 'The Inner Compass Workshop Batch 6',
+      city: 'Indonesia',
+      venue: 'Kota Makassar',
+      date: '17-18 April 2027',
+      time: '09.00 - 18.00 WITA',
+      capacity: '50 Kursi',
+      organizers: ['Pesan Cinta'],
+      partners: ['Jeckstore', 'Kemas Ki', 'Makanja Factory', 'Qofftea'],
     },
     contacts: [
       { name: 'Vanny', phone: '+62 813 5667 6933' },
@@ -225,14 +235,14 @@ export const workshopBatches: Record<WorkshopBatchId, WorkshopBatch> = {
     sponsorLogos: ['/logo-medina.svg'],
     defaultLocale: 'id',
     heroKicker: {
-      ms: '2 Hari Bengkel · 31 Okt - 1 Nov 2026 · Makassar',
-      id: '2 Hari Workshop · 31 Okt - 1 Nov 2026 · Makassar',
-      en: '2-Day Workshop · 31 Oct - 1 Nov 2026 · Makassar',
+      ms: '2 Hari Bengkel · 17-18 Apr 2027 · Makassar',
+      id: '2 Hari Workshop · 17-18 Apr 2027 · Makassar',
+      en: '2-Day Workshop · 17-18 Apr 2027 · Makassar',
     },
     registrationMessage: {
-      ms: 'Salam, saya berminat untuk mendaftar The Inner Compass Workshop Batch 5 di Makassar (31 Okt - 1 Nov 2026). Boleh kongsikan maklumat lanjut?',
-      id: 'Halo, saya tertarik untuk mendaftar The Inner Compass Workshop Batch 5 di Makassar (31 Okt - 1 Nov 2026). Boleh minta info pendaftaran?',
-      en: 'Hello, I would like to register for The Inner Compass Workshop Batch 5 in Makassar (31 Okt - 1 Nov 2026). Could you share more details?',
+      ms: 'Salam, saya berminat untuk mendaftar The Inner Compass Workshop Batch 6 di Makassar (17-18 Apr 2027). Boleh kongsikan maklumat lanjut?',
+      id: 'Halo, saya tertarik untuk mendaftar The Inner Compass Workshop Batch 6 di Makassar (17-18 Apr 2027). Boleh minta info pendaftaran?',
+      en: 'Hello, I would like to register for The Inner Compass Workshop Batch 6 in Makassar (17-18 Apr 2027). Could you share more details?',
     },
   },
 };
