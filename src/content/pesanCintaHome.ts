@@ -139,7 +139,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
     team: {
       label: 'Tim kami',
       title: 'Orang-orang di balik The Inner Compass.',
-      summary: 'Para trainer serta tim Makassar dan Bali yang menyiapkan setiap ruang perjumpaan dengan hati.',
+      summary: 'Para trainer serta tim Malaysia, Makassar dan Bali yang menyiapkan setiap ruang perjumpaan dengan hati.',
       posters: [
         {
           src: '/uploads/team-trainers.jpeg',
@@ -301,7 +301,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
     team: {
       label: 'Pasukan kami',
       title: 'Orang-orang di sebalik The Inner Compass.',
-      summary: 'Para jurulatih serta pasukan Makassar dan Bali yang menyediakan setiap ruang pertemuan dengan sepenuh hati.',
+      summary: 'Para jurulatih serta pasukan Malaysia, Makassar dan Bali yang menyediakan setiap ruang pertemuan dengan sepenuh hati.',
       posters: [
         {
           src: '/uploads/team-trainers.jpeg',
