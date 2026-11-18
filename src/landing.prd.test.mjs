@@ -421,8 +421,8 @@ test('workshop landing page content matches the Batch 5 Bali and Batch 6 Makassa
   assert.match(homeHtml, /og:title" content="Pesan Cinta"/);
   assert.match(workshopHtml, /<title>The Inner Compass Batch 5 Bali &amp; Batch 6 Makassar<\/title>/);
   assert.match(workshopHtml, /og:title" content="The Inner Compass Batch 5 Bali &amp; Batch 6 Makassar"/);
-  assert.match(workshopHtml, /og:image" content="https:\/\/pesancinta\.my\/uploads\/ticw-batch-5-bali\.jpeg"/);
-  assert.match(workshopHtml, /twitter:image" content="https:\/\/pesancinta\.my\/uploads\/ticw-batch-5-bali\.jpeg"/);
+  assert.match(workshopHtml, /og:image" content="https:\/\/pesancinta\.my\/uploads\/ticw-batch-5-bali-2027\.jpeg"/);
+  assert.match(workshopHtml, /twitter:image" content="https:\/\/pesancinta\.my\/uploads\/ticw-batch-5-bali-2027\.jpeg"/);
   assert.match(content, /22-24 Januari 2027/);
   assert.match(content, /17-18 April 2027/);
   assert.doesNotMatch(content, /Kota Kinabalu/);
