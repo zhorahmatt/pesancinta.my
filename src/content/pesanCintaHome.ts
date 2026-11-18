@@ -139,7 +139,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
     team: {
       label: 'Tim kami',
       title: 'Orang-orang di balik The Inner Compass.',
-      summary: 'Para trainer dan tim Makassar yang menyiapkan setiap ruang perjumpaan dengan hati.',
+      summary: 'Para trainer serta tim Makassar dan Bali yang menyiapkan setiap ruang perjumpaan dengan hati.',
       posters: [
         {
           src: '/uploads/team-trainers.jpeg',
@@ -148,6 +148,10 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
         {
           src: '/uploads/team-makassar.jpeg',
           alt: 'The Inner Compass Team Makassar: Jack, Gio Vanny, dan Jumran',
+        },
+        {
+          src: '/uploads/team-bali.jpeg',
+          alt: 'The Inner Compass Team Bali: Julia (Entrepreneur) dan Febry (Caregiver)',
         },
       ],
     },
@@ -297,7 +301,7 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
     team: {
       label: 'Pasukan kami',
       title: 'Orang-orang di sebalik The Inner Compass.',
-      summary: 'Para jurulatih dan pasukan Makassar yang menyediakan setiap ruang pertemuan dengan sepenuh hati.',
+      summary: 'Para jurulatih serta pasukan Makassar dan Bali yang menyediakan setiap ruang pertemuan dengan sepenuh hati.',
       posters: [
         {
           src: '/uploads/team-trainers.jpeg',
@@ -306,6 +310,10 @@ export const homeLocales: Record<HomeLocale, HomePageContent> = {
         {
           src: '/uploads/team-makassar.jpeg',
           alt: 'The Inner Compass Team Makassar: Jack, Gio Vanny, dan Jumran',
+        },
+        {
+          src: '/uploads/team-bali.jpeg',
+          alt: 'The Inner Compass Team Bali: Julia (Entrepreneur) dan Febry (Caregiver)',
         },
       ],
     },

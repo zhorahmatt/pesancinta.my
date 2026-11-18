@@ -739,9 +739,9 @@ img {
 
 .pc-team-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.25rem, 4vw, 3rem);
-  max-width: 60rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  max-width: 72rem;
   margin: clamp(2.75rem, 6vw, 5rem) auto 0;
 }
 
